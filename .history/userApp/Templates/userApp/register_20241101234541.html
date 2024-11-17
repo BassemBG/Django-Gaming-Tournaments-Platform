@@ -1,0 +1,154 @@
+<!DOCTYPE html>
+<html lang="en">
+    {% load static %}
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="{% static 'users/style.css' %}">
+    <title>Register New User</title>
+    <link href="https://fonts.googleapis.com/css?family=Hind&display=swap" rel="stylesheet">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.4.1/jquery.min.js" charset="utf-8"></script>
+   
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <title>Gaming</title>
+    <link rel="icon" href="{% static 'img/favicon.png' %}">
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="{% static 'css/bootstrap.min.css' %}">
+    <!-- animate CSS -->
+    <link rel="stylesheet" href="{% static 'css/animate.css' %}">
+    <!-- owl carousel CSS -->
+    <link rel="stylesheet" href="{% static 'css/owl.carousel.min.css' %}">
+    <!-- font awesome CSS -->
+    <link rel="stylesheet" href="{% static 'css/all.css' %}">
+    <!-- flaticon CSS -->
+    <link rel="stylesheet" href="{% static 'css/flaticon.css' %}">
+    <link rel="stylesheet" href="{% static 'css/themify-icons.css' %}">
+    <!-- style CSS -->
+    <link rel="stylesheet" href="{% static 'css/style.css' %}">
+    <link rel="stylesheet" href="{% static 'css/style2.css' %}">
+</head>
+<body>
+    <div class="body_bg">
+        <!-- Header part start-->
+        <header class="main_menu single_page_menu">
+            <div class="container">
+                <nav class="navbar navbar-expand-lg navbar-light">
+                    <a class="navbar-brand" href="{% url 'home' %}"> 
+                        <img src="{% static 'img/logo.png' %}" alt="logo"> 
+                    </a>
+                    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
+                            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+                        <span class="menu_icon"><i class="fas fa-bars"></i></span>
+                    </button>
+                    <div class="collapse navbar-collapse main-menu-item" id="navbarSupportedContent">
+                        <ul class="navbar-nav">
+                            <li class="nav-item"><a class="nav-link" href="{% url 'home' %}">Home</a></li>
+                            <li class="nav-item"><a class="nav-link" href="">Fighter</a></li>
+                            <li class="nav-item"><a class="nav-link" href="">Team</a></li>
+                            <li class="nav-item dropdown">
+                                <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" 
+                                   data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Blog</a>
+                                <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                                    <a class="dropdown-item" href="">Blog</a>
+                                    <a class="dropdown-item" href="">Single Blog</a>
+                                </div>
+                            </li>
+                            <li class="nav-item"><a class="nav-link" href="">Contact</a></li>
+                        </ul>
+                    </div>
+                    <a href="{% url 'register' %}" class="btn_1 d-none d-sm-block">Sign Up</a>
+                    <a href="{% url 'login' %}" class="btn_1 d-none d-sm-block">Login</a>
+                </nav>
+            </div>
+        </header>
+        <!-- Header part end-->
+    </div>     
+    <div class="login-form">
+        
+        <div class="logo"><img src="{% static 'images/logo.png' %}" alt="logo"></div>
+
+        <h6>Register</h6>
+
+        <form method="POST" action="{% url 'register' %}">
+            {% csrf_token %}  <!-- CSRF protection -->
+            <pre>   
+
+            </pre>
+         
+            <div class="textbox">
+                <input type="text" name="username" placeholder="Username" value="{{ form.username.value|default:'' }}">
+                {% if form.username.errors %}
+                <span class="check-message">{{ form.username.errors.0 }}</span>
+                {% endif %}
+            </div>
+            <div class="textbox">
+                <input type="text" name="cin" placeholder="Cin" value="{{ form.username.value|default:'' }}">
+                {% if form.username.errors %}
+                <span class="check-message">{{ form.username.errors.0 }}</span>
+                {% endif %}
+            </div>
+
+            <div class="textbox">
+                <input type="email" name="email" placeholder="Email" value="{{ form.email.value|default:'' }}">
+                {% if form.email.errors %}
+                <span class="check-message">{{ form.email.errors.0 }}</span>
+                {% endif %}
+            </div>
+
+            <div class="textbox">
+                <input type="text" name="first_name" placeholder="First Name" value="{{ form.first_name.value|default:'' }}">
+                {% if form.first_name.errors %}
+                <span class="check-message">{{ form.first_name.errors.0 }}</span>
+                {% endif %}
+            </div>
+
+            <div class="textbox">
+                <input type="text" name="last_name" placeholder="Last Name" value="{{ form.last_name.value|default:'' }}">
+                {% if form.last_name.errors %}
+                <span class="check-message">{{ form.last_name.errors.0 }}</span>
+                {% endif %}
+            </div>
+
+            <div class="textbox">
+                <input type="password" name="password" placeholder="Password">
+                {% if form.password.errors %}
+                <span class="check-message">{{ form.password.errors.0 }}</span>
+                {% endif %}
+            </div>
+
+            <div class="textbox">
+                <input type="password" name="confirm_password" placeholder="Confirm Password">
+                {% if form.confirm_password.errors %}
+                <span class="check-message">{{ form.confirm_password.errors.0 }}</span>
+                {% endif %}
+            </div>
+
+            <div class="textbox">
+                <select name="role">
+                    <option value="player">Player</option>
+                    <option value="admin">Admin</option>
+                    <option value="moderator">Moderator</option>
+                </select>
+                {% if form.role.errors %}
+                <span class="check-message">{{ form.role.errors.0 }}</span>
+                {% endif %}
+            </div>
+
+            <input type="submit" value="Register" class="login-btn">
+        </form>
+
+        <div class="dont-have-account">
+            Already have an account? 
+            <a href="{% url 'login' %}">Log In</a>
+        </div>
+
+    </div>
+
+    <script type="text/javascript">
+        // Custom JS to handle the submit button and any visual logic
+    </script>
+</body>
+</html>

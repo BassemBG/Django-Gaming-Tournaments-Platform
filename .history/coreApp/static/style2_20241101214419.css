@@ -1,0 +1,50 @@
+/* Banner Section Styles */
+.banner_part {
+    position: relative;
+    padding: 150px 0; /* Adjusts vertical spacing for a taller section */
+    background-color: #0f0f16; /* Dark background color */
+    color: white;
+    text-align: center;
+}
+
+.banner_part .container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+}
+
+.banner_text {
+    max-width: 600px;
+    margin: 0 auto;
+    text-align: center;
+}
+
+.banner_text h1 {
+    font-size: 3em;
+    font-weight: 700;
+    line-height: 1.2;
+    margin-bottom: 20px;
+    color: white; /* Bright white for emphasis */
+}
+
+.banner_text p {
+    font-size: 1.2em;
+    margin-bottom: 30px;
+    color: #c0c0c0; /* Slightly gray for contrast */
+}
+
+.banner_text .btn_1 {
+    display: inline-block;
+    padding: 15px 30px;
+    background: linear-gradient(90deg, #ff416c, #ff4b2b); /* Gradient background for button */
+    color: white;
+    font-weight: bold;
+    text-decoration: none;
+    border-radius: 5px;
+    transition: background 0.3s;
+}
+
+.banner_text .btn_1:hover {
+    background: linear-gradient(90deg, #ff4b2b, #ff416c); /* Inverse gradient on hover */
+}

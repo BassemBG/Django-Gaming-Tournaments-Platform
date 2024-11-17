@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="en">
+    {% load static %}
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="{% static 'users/style.css' %}">
+    <title>Register New User</title>
+    <link href="https://fonts.googleapis.com/css?family=Hind&display=swap" rel="stylesheet">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.4.1/jquery.min.js" charset="utf-8"></script>
+</head>
+<body>
+    <a href="{% url 'home' %}">Home</a>
+    <div class="login-form">
+        
+        <div class="logo"><img src="{% static 'images/logo.png' %}" alt="logo"></div>
+
+        <h6>Register</h6>
+
+        <form method="POST" action="{% url 'register' %}">
+            {% csrf_token %}  <!-- CSRF protection -->
+            <pre>   
+
+            </pre>
+         
+            <div class="textbox">
+                <input type="text" name="username" placeholder="Username" value="{{ form.username.value|default:'' }}">
+                {% if form.username.errors %}
+                <span class="check-message">{{ form.username.errors.0 }}</span>
+                {% endif %}
+            </div>
+            <div class="textbox">
+                <input type="text" name="username" placeholder="Username" value="{{ form.username.value|default:'' }}">
+                {% if form.username.errors %}
+                <span class="check-message">{{ form.username.errors.0 }}</span>
+                {% endif %}
+            </div>
+
+            <div class="textbox">
+                <input type="email" name="email" placeholder="Email" value="{{ form.email.value|default:'' }}">
+                {% if form.email.errors %}
+                <span class="check-message">{{ form.email.errors.0 }}</span>
+                {% endif %}
+            </div>
+
+            <div class="textbox">
+                <input type="text" name="first_name" placeholder="First Name" value="{{ form.first_name.value|default:'' }}">
+                {% if form.first_name.errors %}
+                <span class="check-message">{{ form.first_name.errors.0 }}</span>
+                {% endif %}
+            </div>
+
+            <div class="textbox">
+                <input type="text" name="last_name" placeholder="Last Name" value="{{ form.last_name.value|default:'' }}">
+                {% if form.last_name.errors %}
+                <span class="check-message">{{ form.last_name.errors.0 }}</span>
+                {% endif %}
+            </div>
+
+            <div class="textbox">
+                <input type="password" name="password" placeholder="Password">
+                {% if form.password.errors %}
+                <span class="check-message">{{ form.password.errors.0 }}</span>
+                {% endif %}
+            </div>
+
+            <div class="textbox">
+                <input type="password" name="confirm_password" placeholder="Confirm Password">
+                {% if form.confirm_password.errors %}
+                <span class="check-message">{{ form.confirm_password.errors.0 }}</span>
+                {% endif %}
+            </div>
+
+            <div class="textbox">
+                <select name="role">
+                    <option value="player">Player</option>
+                    <option value="admin">Admin</option>
+                    <option value="moderator">Moderator</option>
+                </select>
+                {% if form.role.errors %}
+                <span class="check-message">{{ form.role.errors.0 }}</span>
+                {% endif %}
+            </div>
+
+            <input type="submit" value="Register" class="login-btn">
+        </form>
+
+        <div class="dont-have-account">
+            Already have an account? 
+            <a href="{% url 'login' %}">Log In</a>
+        </div>
+
+    </div>
+
+    <script type="text/javascript">
+        // Custom JS to handle the submit button and any visual logic
+    </script>
+</body>
+</html>
