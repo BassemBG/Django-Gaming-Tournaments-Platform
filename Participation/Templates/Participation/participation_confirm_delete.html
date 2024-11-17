@@ -3,17 +3,122 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Delete Conference</title>
+    <title>Delete Participation</title>
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            font-family: 'Arial', sans-serif;
+            background: linear-gradient(45deg, #000000, #0d1b2a, #1e2a47);
+            background-size: 300% 300%;
+            animation: gradientAnimation 6s ease infinite;
+            color: #fff;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+        }
+
+        @keyframes gradientAnimation {
+            0% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
+        }
+
+        .container {
+            text-align: center;
+            padding: 2rem;
+            background-color: rgba(0, 0, 0, 0.9); /* Even darker container */
+            border-radius: 15px;
+            max-width: 500px;
+            width: 100%;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.5);
+        }
+
+        h1 {
+            font-size: 2rem;
+            margin-bottom: 20px;
+            text-transform: uppercase;
+            font-weight: 700;
+            letter-spacing: 2px;
+            text-shadow: 2px 2px 5px rgba(0, 0, 0, 0.6);
+        }
+
+        p {
+            font-size: 1.2rem;
+            color: #f5f5f5;
+            margin-bottom: 20px;
+        }
+
+        .amount {
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: #ff8000;
+        }
+
+        .btn {
+            padding: 15px 25px;
+            font-size: 1.2rem;
+            text-transform: uppercase;
+            border-radius: 5px;
+            border: none;
+            cursor: pointer;
+            margin: 10px;
+            transition: background-color 0.3s ease, transform 0.3s ease;
+            box-shadow: 0 5px 10px rgba(255, 51, 0, 0.3);
+        }
+
+        .delete-btn {
+            background-color: #ff3300;
+            color: #fff;
+        }
+
+        .delete-btn:hover {
+            background-color: #ff6600;
+            transform: translateY(-3px);
+        }
+
+        .cancel-btn {
+            background-color: #444;
+            color: #fff;
+        }
+
+        .cancel-btn:hover {
+            background-color: #666;
+        }
+
+        @media (max-width: 600px) {
+            .container {
+                padding: 1rem;
+            }
+
+            h1 {
+                font-size: 1.8rem;
+            }
+
+            p {
+                font-size: 1rem;
+            }
+
+            .btn {
+                padding: 12px;
+                font-size: 1rem;
+            }
+        }
+    </style>
 </head>
 <body>
-    <h1>Delete Conference</h1>
-    <p>Are you sure you want to delete the conference "{{ Participation.tournament }}"?</p>
-    
-    <form method="post">
-        {% csrf_token %}
-        <button type="submit">Yes, delete</button>
-        <a href="">Cancel</a> <!-- Adjust the URL name and parameters -->
 
-    </form>
+    <div class="container">
+        <h1>Delete Participation</h1>
+        <p>Are you sure you want to delete your participation in the tournament <span class="amount">{{ participation.tournament.name }}</span>?</p>
+        
+        <form method="post">
+            {% csrf_token %}
+            <button type="submit" class="btn delete-btn">Yes, delete</button>
+            <a href="{% url 'participationList' participation.participant.cin %}" class="btn cancel-btn">Cancel</a>
+        </form>
+    </div>
+
 </body>
 </html>

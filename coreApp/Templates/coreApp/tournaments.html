@@ -171,7 +171,8 @@
 									
 									{% if user.is_authenticated %}
 										<td><a href="#" onclick="checkCondition('{{ tournament.id }}'); return false;"><p  id="RegisterCan_{{ tournament.id|add:1 }}">Register</p></a>
-											<form id="{{ tournament.id }}" action="{% url 'register_participation' %}" style="display: none;" method="post" >
+											<form id="{{ tournament.id }}" action="{% url 'process_payment' tournament.id %}"  style="display: none;" method="post" > 
+												{% comment %} action="{% url 'register_participation' %}" {% endcomment %}
 												{% csrf_token %}
 												<div>Team_Name</div>
 												<input type="team_name" name="team_name" required>
