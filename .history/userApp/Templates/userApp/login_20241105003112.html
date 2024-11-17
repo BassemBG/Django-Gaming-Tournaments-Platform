@@ -1,0 +1,187 @@
+{% load static %}
+<!doctype html>
+<html lang="zxx">
+<head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <title>Gaming</title>
+    <link rel="icon" href="{% static 'img/favicon.png' %}">
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="{% static 'css/bootstrap.min.css' %}">
+    <!-- animate CSS -->
+    <link rel="stylesheet" href="{% static 'css/animate.css' %}">
+    <!-- owl carousel CSS -->
+    <link rel="stylesheet" href="{% static 'css/owl.carousel.min.css' %}">
+    <!-- font awesome CSS -->
+    <link rel="stylesheet" href="{% static 'css/all.css' %}">
+    <!-- flaticon CSS -->
+    <link rel="stylesheet" href="{% static 'css/flaticon.css' %}">
+    <link rel="stylesheet" href="{% static 'css/themify-icons.css' %}">
+    <!-- style CSS -->
+    <link rel="stylesheet" href="{% static 'css/style.css' %}">
+    <link rel="stylesheet" href="{% static 'css/style2.css' %}">
+
+    <style>
+        /* Custom CSS to style the login form */
+        .banner_part {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            min-height: 100vh;
+            background-color: #f8f9fa;
+        }
+        .login-form-container {
+            max-width: 400px;
+            width: 100%;
+            padding: 20px;
+            background: rgba(232, 231, 231, 0); /* Darker transparent background */
+            border-radius: 8px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            text-align: center;
+        }
+        .login-form-container h1 {
+            margin-bottom: 20px;
+            font-size: 24px;
+            color: #fff; /* White text color for contrast */
+        }
+        .login-form-container .form-group {
+            margin-bottom: 15px;
+        }
+        .login-form-container input[type="text"],
+        .login-form-container input[type="password"] {
+            width: 100%;
+            padding: 10px;
+            margin-top: 10px;
+            border-radius: 5px;
+            border: 1px solid #ccc;
+            box-sizing: border-box;
+        }
+        .login-form-container input[type="submit"] {
+            width: 100%;
+            padding: 10px;
+            margin-top: 15px;
+            border-radius: 5px;
+            border: none;
+            background-color: #ff0000; /* Red background for the button */
+            color: white;
+            font-size: 16px;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+        .login-form-container input[type="submit"]:hover {
+            background-color: #cc0000;
+        }
+        .login-form-container .dont-have-account {
+            margin-top: 15px;
+            font-size: 14px;
+            color: #fff; /* White text color for contrast */
+        }
+        .login-form-container .dont-have-account a {
+            color: #007bff;
+            text-decoration: none;
+        }
+    </style>
+    
+    
+</head>
+<body>
+    <div class="body_bg">
+        <!-- Header part start-->
+        <header class="main_menu single_page_menu">
+            <div class="container">
+                <nav class="navbar navbar-expand-lg navbar-light">
+                    <a class="navbar-brand" href="{% url 'home' %}">
+                        <img src="{% static 'img/logo.png' %}" alt="logo">
+                    </a>
+                    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
+                            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+                        <span class="menu_icon"><i class="fas fa-bars"></i></span>
+                    </button>
+                    <div class="collapse navbar-collapse main-menu-item" id="navbarSupportedContent">
+                        <ul class="navbar-nav">
+                            <li class="nav-item"><a class="nav-link" href="{% url 'home' %}">Home</a></li>
+                            <li class="nav-item"><a class="nav-link" href="">Fighter</a></li>
+                            <li class="nav-item"><a class="nav-link" href="#games-table">Our Games</a></li>
+                            <li class="nav-item dropdown">
+                                <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button"
+                                   data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Blog</a>
+                                <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                                    <a class="dropdown-item" href="">Blog</a>
+                                    <a class="dropdown-item" href="">Single Blog</a>
+                                </div>
+                            </li>
+                            <li class="nav-item"><a class="nav-link" href="">Contact</a></li>
+                        </ul>
+                    </div>
+                    <a href="{% url 'register' %}" class="btn_1 d-none d-sm-block">Sign Up</a>
+                    <a href="{% url 'login' %}" class="btn_1 d-none d-sm-block">Login</a>
+                </nav>
+            </div>
+        </header>
+        <!-- Header part end-->
+        
+        <!-- Banner part start-->
+        <section class="banner_part">
+            <div class="login-form-container">
+                <h1>Login</h1>
+                <form method="POST" action="{% url 'login' %}">
+                    {% csrf_token %}
+                    <div class="form-group">
+                        <input type="text" name="username" placeholder="Username" required />
+                    </div>
+                    <div class="form-group">
+                        <input type="password" name="password" placeholder="Password" required />
+                    </div>
+                    <input type="submit" value="Login" class="btn_1 d-none d-sm-block">
+                    <div class="dont-have-account">
+                        Don't have an account? <a href="{% url 'register' %}">Sign Up</a>
+                    </div>
+                </form>
+            </div>
+        </section>
+        <!-- Banner part end-->
+
+        <!-- Footer part start-->
+        <footer class="footer_part">
+            <div class="footer_top">
+                <div class="container">
+                    <div class="row">
+                        <div class="col-sm-6 col-lg-3">
+                            <a href="{% url 'home' %}" class="footer_logo_iner">
+                                <img src="{% static 'img/logo.png' %}" alt="logo">
+                            </a>
+                        </div>
+                        <div class="col-sm-6 col-lg-3">
+                            <h4>Contact Info</h4>
+                            <p>Phone: +8880 44338899</p>
+                            <p>Email: info@colorlib.com</p>
+                        </div>
+                        <div class="col-sm-6 col-lg-3">
+                            <h4>Important Links</h4>
+                            <ul class="list-unstyled">
+                                <li><a href="#">WHMCS-bridge</a></li>
+                                <li><a href="#">Search Domain</a></li>
+                            </ul>
+                        </div>
+                        <div class="col-sm-6 col-lg-3">
+                            <h4>Newsletter</h4>
+                            <form target="_blank" action="#" method="get" class="subscribe_form">
+                                <input type="email" name="email" placeholder="Email Address">
+                                <button type="submit" class="newsletter-submit"><i class="far fa-paper-plane"></i></button>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </footer>
+        <!-- Footer part end-->
+    </div>
+
+    <!-- JavaScript Plugins -->
+    <script src="{% static 'js/jquery-1.12.1.min.js' %}"></script>
+    <script src="{% static 'js/popper.min.js' %}"></script>
+    <script src="{% static 'js/bootstrap.min.js' %}"></script>
+    <script src="{% static 'js/custom.js' %}"></script>
+</body>
+</html>

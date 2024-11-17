@@ -1,0 +1,42 @@
+/* CSS for the banner part section */
+.banner_partt {
+    position: relative;
+    padding: 100px 0; /* Adjusts top and bottom padding */
+    background: url('path-to-banner-image.jpg') no-repeat center center; /* Replace with actual image path */
+    background-size: cover; /* Ensures background covers the section */
+    text-align: center;
+    color: white; /* Sets text color for visibility on background */
+}
+
+.banner_part .container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100%; /* Makes container fill the height */
+}
+
+.banner_text {
+    max-width: 600px;
+    margin: 0 auto; /* Centers the text within the container */
+}
+
+.banner_text h1 {
+    font-size: 3em; /* Adjusts the title size */
+    font-weight: bold;
+}
+
+.banner_text p {
+    font-size: 1.2em; /* Adjusts paragraph font size */
+    margin-top: 10px;
+    margin-bottom: 20px;
+}
+
+.banner_text .btn_1 {
+    display: inline-block;
+    padding: 10px 20px;
+    background-color: #ff5733; /* Change to your preferred color */
+    color: white;
+    text-decoration: none;
+    border-radius: 5px;
+    font-weight: bold;
+}

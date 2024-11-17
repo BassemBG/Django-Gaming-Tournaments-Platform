@@ -1,0 +1,290 @@
+<!doctype html>
+<html lang="zxx">
+{% load static %}
+<head>
+	<!-- Required meta tags -->
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+	<title>gaming</title>
+	<link rel="icon" href="{% static 'img/favicon.png' %}">
+	<!-- Bootstrap CSS -->
+	<link rel="stylesheet" href="{% static 'css/bootstrap.min.css' %}">
+	<!-- animate CSS -->
+	<link rel="stylesheet" href="{% static 'css/animate.css' %}">
+	<!-- owl carousel CSS -->
+	<link rel="stylesheet" href="{% static 'css/owl.carousel.min.css' %}">
+	<!-- font awesome CSS -->
+	<link rel="stylesheet" href="{% static 'css/all.css' %}">
+	<!-- flaticon CSS -->
+	<link rel="stylesheet" href="{% static 'css/flaticon.css' %}">
+	<link rel="stylesheet" href="{% static 'css/themify-icons.css' %}">
+	<link rel="stylesheet" href="{% static 'css/nice-select.css' %}">
+	<!-- font awesome CSS -->
+	<link rel="stylesheet" href="{% static 'css/magnific-popup.css' %}">
+	<!-- swiper CSS -->
+	<link rel="stylesheet" href="{% static 'css/slick.css' %}">
+	<!-- style CSS -->
+	<link rel="stylesheet" href="{% static 'css/style.css' %}">
+
+	<!--::table style start::-->
+	<style>
+		.body_bg {
+			background-color: #000; /* Dark background for the body */
+		}
+		.table-custom {
+			width: 80%; /* Increased width of the table */
+			margin: -150px auto 20px auto; /* Negative margin-top to move it up slightly */
+			background-color: rgba(0, 0, 0, 0); /* Increased transparency for the table */
+			color: rgb(0, 0, 0); /* White text color */
+			border-radius: 8px; /* Rounded corners */
+			overflow: hidden; /* Prevents border radius from being clipped */
+			box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3); /* Shadow effect */
+		}
+		.table-custom thead {
+			background: linear-gradient(to right, red, #8B008B); /* Darker purple for the header */
+		}
+		.table-custom th {
+			color: white; /* White text color for headers */
+			padding: 20px; /* Increased padding for table header */
+			text-align: center; /* Center text alignment */
+			border: none; /* No border */
+		}
+		.table-custom th:hover {
+			background: linear-gradient(to right, darkred, #4B0082); /* Darker gradient on hover */
+		}
+		.table-custom td {
+			padding: 15px; /* Increased padding for table cells */
+			text-align: center; /* Center text alignment */
+			border-bottom: 1px solid rgba(255, 255, 255, 0.1); /* Light border for separation */
+		}
+		.table-custom tr:hover {
+			background-color: rgba(255, 255, 255, 0.1); /* Light hover effect on rows */
+		}
+		h1 {
+			color: white; /* White color for the heading */
+			margin-bottom: 20px; /* Space below the heading */
+			text-align: center; /* Center the heading */
+		}
+	</style>
+	<!--::table style end::-->
+</head>
+
+<body>
+	<!--::header part start::-->
+	<header class="main_menu single_page_menu">
+		<div class="container">
+			<div class="row align-items-center">
+				<div class="col-lg-12">
+					<nav class="navbar navbar-expand-lg navbar-light">
+						<a class="navbar-brand" href=""> <img src="{% static 'img/logo.png' %}" alt="logo"> </a>
+						<button class="navbar-toggler" type="button" data-toggle="collapse"
+							data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent"
+							aria-expanded="false" aria-label="Toggle navigation">
+							<span class="menu_icon"><i class="fas fa-bars"></i></span>
+						</button>
+						<div class="collapse navbar-collapse main-menu-item" id="navbarSupportedContent">
+							<ul class="navbar-nav">
+								<li class="nav-item">
+									<a class="nav-link" href="">Home</a>
+								</li>
+								<li class="nav-item">
+									<a class="nav-link" href="">fighter</a>
+								</li>
+								<li class="nav-item">
+									<a class="nav-link" href="">team</a>
+								</li>
+								<li class="nav-item dropdown">
+									<a class="nav-link dropdown-toggle" href="" id="navbarDropdown"
+										role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+										Blog
+									</a>
+									<div class="dropdown-menu" aria-labelledby="navbarDropdown">
+										<a class="dropdown-item" href=""> blog</a>
+										<a class="dropdown-item" href="">Single blog</a>
+									</div>
+								</li>
+								<li class="nav-item dropdown">
+									<a class="nav-link dropdown-toggle" href="" id="navbarDropdown1"
+										role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+										pages
+									</a>
+									<div class="dropdown-menu" aria-labelledby="navbarDropdown1">
+										<a class="dropdown-item" href="{% url 'Tournaments_View' %}">Tournaments</a>
+									</div>
+								</li>
+								<li class="nav-item">
+									<a class="nav-link" href="">Contact</a>
+								</li>
+							</ul>
+						</div>
+						{% if user.is_authenticated %}
+							<a class="nav-link" href="{% url 'logout' %}">Logout</a>
+							<a class="nav-link" href="{% url 'profile' user.cin %}">Profile</a>
+						{% else %}
+						<a href="{% url 'login' %}" class="btn_1 d-none d-sm-block">Login</a>
+						<a href="#" class="btn_1 d-none d-sm-block">Sign Up</a>
+						{% endif %}
+						
+					</nav>
+				</div>
+			</div>
+		</div>
+	</header>
+	<!-- Header part end-->
+
+	<!-- breadcrumb start-->
+	<section class="breadcrumb breadcrumb_bg">
+		<div class="container">
+			<div class="row">
+				<div class="col-lg-12">
+					<div class="breadcrumb_iner text-center">
+						<div class="breadcrumb_iner_item">
+							<h2>Tournaments</h2>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</section>
+	<!-- breadcrumb start-->
+<pre>
+
+
+</pre>
+	<div class="element_page black">
+		<!-- Start Sample Area -->
+		<section class="sample-text-area">
+			<div class="container box_1170">
+				<p class="sample-text">
+					<ul>
+                        <li>Sponsors_list:</li>
+                        {% for sponsor in sponsors %}
+                            <pre>      </pre><li>
+                                <a href="{{ sponsor.website }}" target="_blank">{{ sponsor.name }}</a>
+                            </li>
+                        {% endfor %}
+                    </ul>
+
+				</p>
+			</div>
+		</section>
+		<!-- End Sample Area -->
+	</div>
+
+	<!--::footer_part start::-->
+	<footer class="footer_part black">
+		<div class="footer_top">
+			<div class="container">
+				<div class="row">
+					<div class="col-sm-6 col-lg-3">
+						<div class="single_footer_part">
+							<a href="" class="footer_logo_iner"> <img src="{% static 'img/logo.png' %}" alt="#"> </a>
+							<p>Heaven fruitful doesn't over lesser days appear creeping seasons so behold bearing
+								days
+								open
+							</p>
+						</div>
+					</div>
+					<div class="col-sm-6 col-lg-3">
+						<div class="single_footer_part">
+							<h4>Contact Info</h4>
+							<p>Address : Your address goes
+								here, your demo address.
+								Bangladesh.</p>
+							<p>Phone : +8880 44338899</p>
+							<p>Email : info@colorlib.com</p>
+						</div>
+					</div>
+					<div class="col-sm-6 col-lg-3">
+						<div class="single_footer_part">
+							<h4>Important Link</h4>
+							<ul class="list-unstyled">
+								<li><a href=""> WHMCS-bridge</a></li>
+								<li><a href="">Search Domain</a></li>
+								<li><a href="">My Account</a></li>
+								<li><a href="">Shopping Cart</a></li>
+								<li><a href="">Our Shop</a></li>
+							</ul>
+						</div>
+					</div>
+					<div class="col-sm-6 col-lg-3">
+						<div class="single_footer_part">
+							<h4>Newsletter</h4>
+							<p>Heaven fruitful doesn't over lesser in days. Appear creeping seasons deve behold
+								bearing
+								days
+								open
+							</p>
+							<div id="mc_embed_signup">
+								<form target="_blank"
+									action="https://spondonit.us12.list-manage.com/subscribe/post?u=1462626880ade1ac87bd9c93a&amp;id=92a4423d01"
+									method="get" class="subscribe_form relative mail_part">
+									<input type="email" name="email" id="newsletter-form-email"
+										placeholder="Email Address" class="placeholder hide-on-focus"
+										onfocus="this.placeholder = ''" onblur="this.placeholder = ' Email Address '">
+									<button type="submit" name="submit" id="newsletter-submit"
+										class="email_icon newsletter-submit button-contactForm"><i
+											class="far fa-paper-plane"></i></button>
+									<div class="mt-10 info"></div>
+								</form>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+		<div class="copygight_text">
+			<div class="container">
+				<div class="row align-items-center">
+					<div class="col-lg-8">
+						<div class="copyright_text">
+							<P><!-- Link back to Colorlib can't be removed. Template is licensed under CC BY 3.0. -->
+Copyright &copy;<script>document.write(new Date().getFullYear());</script> All rights reserved | This template is made with <i class="ti-heart" aria-hidden="true"></i> by <a href="https://colorlib.com" target="_blank">Colorlib</a>
+<!-- Link back to Colorlib can't be removed. Template is licensed under CC BY 3.0. --></P>
+						</div>
+					</div>
+					<div class="col-lg-4">
+						<div class="footer_icon social_icon">
+							<ul class="list-unstyled">
+								<li><a href="#" class="single_social_icon"><i class="fab fa-facebook-f"></i></a>
+								</li>
+								<li><a href="#" class="single_social_icon"><i class="fab fa-twitter"></i></a></li>
+								<li><a href="#" class="single_social_icon"><i class="fas fa-globe"></i></a></li>
+								<li><a href="#" class="single_social_icon"><i class="fab fa-behance"></i></a></li>
+							</ul>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</footer>
+	<!--::footer_part end::-->
+	<!-- jquery plugins here-->
+	<script src="{% static 'js/jquery-1.12.1.min.js' %}"></script>
+	<!-- popper js -->
+	<script src="{% static 'js/popper.min.js' %}"></script>
+	<!-- bootstrap js -->
+	<script src="{% static 'js/bootstrap.min.js' %}"></script>
+	<!-- easing js -->
+	<script src="{% static 'js/jquery.magnific-popup.js' %}"></script>
+	<!-- swiper js -->
+	<script src="{% static 'js/swiper.min.js' %}"></script>
+	<!-- swiper js -->
+	<script src="{% static 'js/masonry.pkgd.js' %}"></script>
+	<!-- particles js -->
+	<script src="{% static 'js/owl.carousel.min.js' %}"></script>
+	<script src="{% static 'js/jquery.nice-select.min.js' %}"></script>
+	<!-- slick js -->
+	<script src="{% static 'js/slick.min.js' %}"></script>
+	<script src="{% static 'js/jquery.counterup.min.js' %}"></script>
+	<script src="{% static 'js/waypoints.min.js' %}"></script>
+	<script src="{% static 'js/contact.js' %}"></script>
+	<script src="{% static 'js/jquery.ajaxchimp.min.js' %}"></script>
+	<script src="{% static 'js/jquery.form.js' %}"></script>
+	<script src="{% static 'js/jquery.validate.min.js' %}"></script>
+	<script src="{% static 'js/mail-script.js' %}"></script>
+	<!-- custom js -->
+	<script src="{% static 'js/custom.js' %}"></script>
+</body>
+
+</html>

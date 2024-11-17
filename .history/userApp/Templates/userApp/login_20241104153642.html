@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+    {% load static %}
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="{% static 'user/style.css' %}">
+    <title>Login</title>
+</head>
+<body>
+    <a href="{% url 'home' %}">Home</a>
+    <div class="login-form">
+        <h6>Login</h6>
+
+        <!-- Display messages -->
+        {% if messages %}
+            {% for message in messages %}
+                <div class="alert {% if message.tags %}{{ message.tags }}{% endif %}">
+                    {{ message }}
+                </div>
+            {% endfor %}
+        {% endif %}
+
+        <form method="POST" action="{% url 'login' %}">
+            {% csrf_token %}
+            <div class="textbox">
+                <input type="text" name="username" placeholder="Username" required />
+            </div>
+            <div class="textbox">
+                <input type="password" name="password" placeholder="Password" required />
+            </div>
+            <input type="submit" value="Login" class="login-btn">
+            <div class="dont-have-account">
+                Don't have an account? 
+                <a href="{% url 'register' %}">Sign Up</a>
+            </div>
+        </form>
+    </div>
+</body>
+</html>
