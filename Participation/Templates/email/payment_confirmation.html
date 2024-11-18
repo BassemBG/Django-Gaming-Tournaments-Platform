@@ -88,8 +88,8 @@
             <p>Your registration is now confirmed, and you are officially enrolled in the tournament.</p>
 
             <p><strong>Team Name:</strong> {{ participation.team_name }}</p>
-            <p><strong>Payment Amount:</strong> ${{ participation.payment.amount }}</p>
-            <p><strong>Payment Date:</strong> {{ participation.payment.created_at|date:"F j, Y" }}</p>
+            <p><strong>Payment Amount:</strong> ${{ participation.tournament.price }}</p>
+            <p><strong>Tournament Start Date:</strong> {{ participation.tournament.start_date }}</p>
 
             <p>We wish you the best of luck in the tournament! Thank you for your participation!</p>
 
