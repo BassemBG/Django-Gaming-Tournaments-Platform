@@ -144,6 +144,31 @@ def payment_success(request, participation_id):
         # If the status is not "pending," display an appropriate message or handle it as needed
         return render(request, 'Payment/payment_error.html', {'message': 'Payment already completed or failed'})
 
+    # Send the confirmation email
+    send_confirmation_email(participation_instance)
+
 
     return render(request, 'Payment/payment_success.html', {'payment': payment})
+
+
+# mailing feat
+from django.core.mail import send_mail
+from django.template.loader import render_to_string
+from django.utils.html import strip_tags
+
+def send_confirmation_email(participation_instance):
+    subject = f'Payment Confirmation for Tournament {participation_instance.tournament.name}'
+    to_email = participation_instance.participant.email
+
+    # Render HTML email content using a template
+    html_message = render_to_string('email/payment_confirmation.html', {'participation': participation_instance})
+    plain_message = strip_tags(html_message)
+
+    send_mail(
+        subject,
+        plain_message,
+        'bassembg.contact@gmail.com',  # The sender email
+        [to_email],  # Recipient email
+        html_message=html_message,  # HTML version of the email
+    )
 

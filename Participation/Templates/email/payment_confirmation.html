@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Payment Confirmation</title>
+    <style>
+        /* General Email Styles */
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f4f4f4;
+            color: #333;
+        }
+        .email-container {
+            max-width: 600px;
+            margin: 0 auto;
+            background-color: #fff;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+        }
+        .header {
+            text-align: center;
+            padding-bottom: 20px;
+        }
+        .header h1 {
+            color: #00bcd4;
+        }
+        .content {
+            padding: 20px;
+            border-top: 1px solid #eee;
+            margin-top: 20px;
+        }
+        .content p {
+            line-height: 1.6;
+        }
+        .highlight {
+            font-weight: bold;
+            color: #00bcd4;
+        }
+        .footer {
+            text-align: center;
+            padding-top: 20px;
+            font-size: 12px;
+            color: #777;
+        }
+        .button {
+            display: inline-block;
+            padding: 12px 20px;
+            background-color: #00bcd4;
+            color: #fff;
+            font-size: 16px;
+            text-decoration: none;
+            border-radius: 4px;
+            text-align: center;
+            margin-top: 15px;
+        }
+        .button:hover {
+            background-color: #0288d1;
+        }
+        .important {
+            color: #ff5722;
+            font-weight: bold;
+        }
+        @media (max-width: 600px) {
+            .email-container {
+                width: 100%;
+                padding: 10px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="email-container">
+        <!-- Email Header -->
+        <div class="header">
+            <h1>Payment Successful</h1>
+        </div>
+
+        <!-- Email Content -->
+        <div class="content">
+            <p>Hello <span class="highlight">{{ participation.participant.first_name }}</span>,</p>
+
+            <p>We are excited to inform you that your payment for the <span class="highlight">{{ participation.tournament.name }}</span> has been successfully completed.</p>
+
+            <p>Your registration is now confirmed, and you are officially enrolled in the tournament.</p>
+
+            <p><strong>Team Name:</strong> {{ participation.team_name }}</p>
+            <p><strong>Payment Amount:</strong> ${{ participation.payment.amount }}</p>
+            <p><strong>Payment Date:</strong> {{ participation.payment.created_at|date:"F j, Y" }}</p>
+
+            <p>We wish you the best of luck in the tournament! Thank you for your participation!</p>
+
+            <a href="{{ tournament.url }}" class="button">View Tournament Details</a>
+        </div>
+
+        <!-- Footer -->
+        <div class="footer">
+            <p>For any inquiries, contact us at <a href="mailto:support@gaming.com">support@gaming.com</a>.</p>
+            <p>&copy; {{ current_year }} Tournament Team. All rights reserved.</p>
+        </div>
+    </div>
+</body>
+</html>
