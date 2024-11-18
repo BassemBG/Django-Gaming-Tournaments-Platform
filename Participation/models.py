@@ -12,7 +12,7 @@ class participation(models.Model):
         unique_together = ('participant', 'tournament')
         
 class Payment(models.Model):
-    participation = models.ForeignKey(participation, on_delete=models.CASCADE)
+    participation = models.ForeignKey(participation, on_delete=models.CASCADE, related_name='payment')
     amount = models.DecimalField(max_digits=10, decimal_places=2)
     stripe_payment_intent_id = models.CharField(max_length=255)
     created_at = models.DateTimeField(auto_now_add=True)
