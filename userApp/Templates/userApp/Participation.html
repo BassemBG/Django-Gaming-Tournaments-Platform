@@ -275,9 +275,26 @@
 
 									</div>
 								</div>
-								<div class="cancel-button-container">
-									<a href="{% url 'delete_participation' participation.id %}" class="cancel-button">Cancel Participation</a>
+								<div class="button-container d-flex justify-content-center">
+									{% if participation.payment.all %}
+										{% with participation.payment.first as payment %}
+											{% if payment.status == 'pending' %}
+												<form method="POST" action="{% url 'process_payment' participation.tournament.id %}" class="me-2">
+													{% csrf_token %}
+													<button type="submit" class="btn btn-success">Complete Payment</button>
+												</form>
+												<a href="{% url 'delete_participation' participation.id %}" class="btn btn-danger mx-auto">Cancel Participation</a>
+											{% else %}
+												<!-- Only the cancel button is shown and centered -->
+												<a href="{% url 'delete_participation' participation.id %}" class="btn btn-danger mx-auto">Cancel Participation</a>
+											{% endif %}
+										{% endwith %}
+									{% else %}
+										<!-- Centered cancel button if no payment exists -->
+										<a href="{% url 'delete_participation' participation.id %}" class="btn btn-danger mx-auto">Cancel Participation</a>
+									{% endif %}
 								</div>
+															
 							</div>
 							
 							

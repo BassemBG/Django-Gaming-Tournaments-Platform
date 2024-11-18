@@ -1,0 +1,119 @@
+<!-- payment_success.html -->
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Payment Successful</title>
+    <style>
+      body {
+        margin: 0;
+        padding: 0;
+        font-family: "Arial", sans-serif;
+        background: linear-gradient(45deg, #2a2a2a, #b60000, #9c1f1f);
+        background-size: 300% 300%;
+        animation: gradientAnimation 5s ease infinite;
+        color: #fff;
+        height: 100vh;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+      }
+
+      @keyframes gradientAnimation {
+        0% {
+          background-position: 0% 50%;
+        }
+        50% {
+          background-position: 100% 50%;
+        }
+        100% {
+          background-position: 0% 50%;
+        }
+      }
+
+      .container {
+        text-align: center;
+        padding: 2rem;
+        background-color: rgba(0, 0, 0, 0.7);
+        border-radius: 15px;
+        max-width: 90%;
+        width: 500px;
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.4);
+      }
+
+      h1 {
+        font-size: 2.5rem;
+        margin-bottom: 20px;
+        font-weight: 700;
+        text-transform: uppercase;
+        letter-spacing: 2px;
+        text-shadow: 2px 2px 5px rgba(0, 0, 0, 0.6);
+      }
+
+      p {
+        font-size: 1.2rem;
+        margin-bottom: 20px;
+        color: #f5f5f5;
+      }
+
+      .amount {
+        font-size: 1.5rem;
+        font-weight: 700;
+        color: #ff8000;
+      }
+
+      .cta-buttons {
+        margin-top: 30px;
+      }
+
+      .cta-buttons a {
+        display: inline-block;
+        padding: 10px 25px;
+        background-color: #ff3300;
+        color: #fff;
+        font-size: 1rem;
+        text-decoration: none;
+        border-radius: 5px;
+        margin: 10px;
+        box-shadow: 0 5px 15px rgba(255, 51, 0, 0.2);
+        transition: all 0.3s ease;
+      }
+
+      .cta-buttons a:hover {
+        background-color: #ff6600;
+        transform: translateY(-3px);
+        box-shadow: 0 7px 20px rgba(255, 51, 0, 0.3);
+      }
+
+      @media (max-width: 600px) {
+        h1 {
+          font-size: 2rem;
+        }
+
+        .container {
+          width: 90%;
+          padding: 1rem;
+        }
+
+        .cta-buttons a {
+          padding: 8px 20px;
+          font-size: 0.9rem;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <div class="container">
+      <h1>Error!</h1>
+      <p>{{message}}</p>
+      <div class="cta-buttons">
+        <a
+          href="{% url 'participationList' payment.participation.participant.cin %}"
+          >Check My Participations</a
+        >
+        <a href="{% url 'Tournaments_View' %}">Discover More Tournaments</a>
+      </div>
+    </div>
+  </body>
+</html>

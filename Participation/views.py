@@ -67,43 +67,57 @@ from TournamentApp.models import tournament
 stripe.api_key = settings.STRIPE_TEST_SECRET_KEY
 
 def process_payment(request, tournament_id):
-    print("Form submitted for tournament:", tournament_id)
     tournament_instance = get_object_or_404(tournament, id=tournament_id)
     amount_in_cents = int(tournament_instance.price * 100)
 
-    # Create a new participation instance
-    participation_instance = participation.objects.create(
+    # Check if the user is already participating in the tournament, in the case of paying from participation list in profile
+    participation_instance = participation.objects.filter(
         participant=request.user,
-        tournament=tournament_instance,
-        team_name=request.POST.get('team_name')
-    )
+        tournament=tournament_instance
+    ).first()
+
+    #in the case of paying after registering for tournament and choosing name directly : the first time
+    if not participation_instance:
+        # Create a new participation instance if one does not exist
+        participation_instance = participation.objects.create(
+            participant=request.user,
+            tournament=tournament_instance,
+            team_name=request.POST.get('team_name')  # Ensure 'team_name' is sent from the form
+        )
 
     if request.method == 'POST':
         intent = stripe.PaymentIntent.create(
             amount=amount_in_cents,
-            currency='usd',  # Adjust the currency if needed
+            currency='usd',
             metadata={'participation_id': participation_instance.id, 'tournament_id': tournament_instance.id}
         )
 
-        # Save the payment info to the database (status = "pending")
-        payment = Payment.objects.create(
+        # Check if a pending payment exists, or create a new one
+        payment, created = Payment.objects.get_or_create(
             participation=participation_instance,
-            amount=tournament_instance.price,
-            stripe_payment_intent_id=intent['id'],
-            status="pending"
+            defaults={
+                'amount': tournament_instance.price,
+                'stripe_payment_intent_id': intent['id'],
+                'status': "pending"
+            }
         )
+
+        if not created:
+            # Update intent ID if a pending payment already exists
+            payment.stripe_payment_intent_id = intent['id']
+            payment.save()
 
         return render(request, 'Payment/payment_form.html', {
             'participation': participation_instance,
             'tournament': tournament_instance,
             'stripe_public_key': settings.STRIPE_TEST_PUBLISHABLE_KEY,
-            'client_secret': intent.client_secret  # Pass the client secret to the frontend
+            'client_secret': intent.client_secret
         })
 
     return render(request, 'Payment/payment_form.html', {
         'tournament': tournament_instance
     })
-
+    
 
 
 
@@ -113,14 +127,23 @@ def payment_success(request, participation_id):
     # Fetch the participation instance
     participation_instance = get_object_or_404(participation, id=participation_id)
     
-    # Assuming payment was successful, update the participation status and create a final record
-    #participation_instance.status = "confirmed"  # or whatever you want to update
-    participation_instance.save()
+    # Retrieve the associated payment instance
+    try:
+        payment = Payment.objects.get(participation=participation_instance)
+    except Payment.DoesNotExist:
+        # Handle the case where the payment record does not exist
+        return render(request, 'Payment/payment_error.html', {'message': 'Payment record not found'})
 
-    # Optionally, save the payment success
-    payment = Payment.objects.get(participation=participation_instance)
-    payment.status = "completed"
-    payment.save()
+    # Check if the payment status is "pending" before updating it
+    if payment.status == "pending":
+        payment.status = "completed"
+        payment.save()
+        # Optionally, save or update the participation instance if needed
+        participation_instance.save()
+    else:
+        # If the status is not "pending," display an appropriate message or handle it as needed
+        return render(request, 'Payment/payment_error.html', {'message': 'Payment already completed or failed'})
+
 
     return render(request, 'Payment/payment_success.html', {'payment': payment})
 
