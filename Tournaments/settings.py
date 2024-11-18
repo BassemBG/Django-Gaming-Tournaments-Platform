@@ -146,12 +146,3 @@ AUTH_USER_MODEL = 'userApp.user'
 STRIPE_TEST_SECRET_KEY = 'sk_test_51QMFVUGsg0pFHBpjbEZaxmmjeOZPfAGVPtlL8p6t2Gw8VuDUFekemwFFhHi6qOUnb7Z7YncPr9G7N9XWmVIJRz04003TIZl2Hw'
 STRIPE_TEST_PUBLISHABLE_KEY = 'pk_test_51QMFVUGsg0pFHBpjk1mAXqGpCDVdmcND3v3CfVp72Yt7xC1BczXcTjGQEkpYW4Fz9ImXW43PUnWUDEtfDjmdlIBA00YtS5JDDZ'
  
-
-# Mailing SMTP Config 
-EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
-EMAIL_HOST = 'smtp.gmail.com'  # email provider
-EMAIL_PORT = 587
-EMAIL_USE_TLS = True
-EMAIL_HOST_USER = 'bgbassem8@gmail.com'  # Your email address
-EMAIL_HOST_PASSWORD = 'ngwj plen jvfv gczo'  # Your email password
-DEFAULT_FROM_EMAIL = 'bgbassem8@gmail.com'
