@@ -157,6 +157,7 @@ from django.template.loader import render_to_string
 from django.utils.html import strip_tags
 
 def send_confirmation_email(participation_instance):
+    
     subject = f'Payment Confirmation for Tournament {participation_instance.tournament.name}'
     to_email = participation_instance.participant.email
 
@@ -171,4 +172,3 @@ def send_confirmation_email(participation_instance):
         [to_email],  # Recipient email
         html_message=html_message,  # HTML version of the email
     )
-
