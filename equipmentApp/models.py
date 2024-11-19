@@ -1,6 +1,6 @@
 from django.core.validators import MaxValueValidator, MinValueValidator, RegexValidator
 from django.db import models
-
+#this an integration test hihi
 class Equipment(models.Model):
     DISP_EQ = [
         ("Disponible", "Disponible"),
@@ -24,3 +24,4 @@ class Equipment(models.Model):
         return f"{self.name} - {self.type} - {self.brand} - {self.model}"
     def is_available(self):
         return self.stock_quantity >= 0
+    
