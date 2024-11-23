@@ -27,48 +27,99 @@
 	<link rel="stylesheet" href="{% static 'css/style.css' %}">
 
 	<!--::table style start::-->
-	<style>
-		.body_bg {
-			background-color: #000; /* Dark background for the body */
-		}
-		.table-custom {
-			width: 80%; /* Increased width of the table */
-			margin: -150px auto 20px auto; /* Negative margin-top to move it up slightly */
-			background-color: rgba(0, 0, 0, 0); /* Increased transparency for the table */
-			color: rgb(0, 0, 0); /* White text color */
-			border-radius: 8px; /* Rounded corners */
-			overflow: hidden; /* Prevents border radius from being clipped */
-			box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3); /* Shadow effect */
-		}
-		.table-custom thead {
-			background: linear-gradient(to right, red, #8B008B); /* Darker purple for the header */
-		}
-		.table-custom th {
-			color: white; /* White text color for headers */
-			padding: 20px; /* Increased padding for table header */
-			text-align: center; /* Center text alignment */
-			border: none; /* No border */
-		}
-		.table-custom th:hover {
-			background: linear-gradient(to right, darkred, #4B0082); /* Darker gradient on hover */
-		}
-		.table-custom td {
-			padding: 15px; /* Increased padding for table cells */
-			text-align: center; /* Center text alignment */
-			border-bottom: 1px solid rgba(255, 255, 255, 0.1); /* Light border for separation */
-		}
-		.table-custom tr:hover {
-			background-color: rgba(255, 255, 255, 0.1); /* Light hover effect on rows */
-		}
-		h1 {
-			color: white; /* White color for the heading */
-			margin-bottom: 20px; /* Space below the heading */
-			text-align: center; /* Center the heading */
-		}
-	</style>
 	<!--::table style end::-->
 </head>
-
+<style>
+	.flip-card {
+		background-color: transparent;
+		width: 190px;
+		height: 254px;
+		perspective: 1000px;
+		font-family: sans-serif;
+		margin: 5px; /* Small margin between cards */
+	}
+	
+	.title, .flip-card-front p, .flip-card-back p {
+		font-size: 1.5em;
+		font-weight: 900;
+		text-align: center;
+		margin: 0;
+		color: white !important; /* Ensure all text on the card is white */
+	}
+	
+	.flip-card-inner {
+		position: relative;
+		width: 100%;
+		height: 100%;
+		text-align: center;
+		transition: transform 0.8s;
+		transform-style: preserve-3d;
+	}
+	
+	.flip-card:hover .flip-card-inner {
+		transform: rotateY(180deg);
+	}
+	
+	.flip-card-front, .flip-card-back {
+		box-shadow: 0 8px 14px 0 rgba(0,0,0,0.2);
+		position: absolute;
+		display: flex;
+		flex-direction: column;
+		justify-content: center;
+		width: 100%;
+		height: 100%;
+		-webkit-backface-visibility: hidden;
+		backface-visibility: hidden;
+		border-radius: 1rem;
+		color: white !important; /* Ensure all text on the front and back is white */
+		text-align: center; /* Align text to center */
+	}
+	
+	.flip-card-front {
+		background: linear-gradient(120deg, bisque 60%, rgb(255, 231, 222) 88%, rgb(255, 211, 195) 40%, rgba(255, 127, 80, 0.603) 48%);
+		padding: 0;
+		border: 5px solid #fb000b; /* Set bold border color */
+		border-radius: 1rem; /* Rounded corners for the front */
+	}
+	
+	.flip-card-front:hover {
+		border-color: #c70197; /* Change border color on hover */
+	}
+	
+	.flip-card-back {
+		background: linear-gradient(120deg, #fb000b 30%, #c70197 88%, #e3014c 40%);
+		transform: rotateY(180deg);
+		padding: 1rem;
+	}
+	
+	.flip-card-front img {
+		width: 100%;
+		height: 100%;
+		object-fit: cover;
+		border-radius: 1rem; /* Rounded corners for the image */
+	}
+	
+	/* Ensuring 3 cards per row with minimal space */
+	.equipment-cards {
+		display: grid;
+		grid-template-columns: repeat(3, 1fr); /* 3 cards per row */
+		gap: 10px; /* Small gap between cards */
+		margin-top: 20px;
+	}
+	
+	@media screen and (max-width: 1200px) {
+		.equipment-cards {
+			grid-template-columns: repeat(2, 1fr); /* 2 cards per row on smaller screens */
+		}
+	}
+	
+	@media screen and (max-width: 768px) {
+		.equipment-cards {
+			grid-template-columns: 1fr; /* 1 card per row on mobile */
+		}
+	}
+				
+</style>
 <body>
 	<!--::header part start::-->
 	<header class="main_menu single_page_menu">
@@ -125,103 +176,50 @@
 				<div class="col-lg-12">
 					<div class="breadcrumb_iner text-center">
 						<div class="breadcrumb_iner_item">
-							<h2>Tournaments</h2>
+							<h2>Equipments</h2>
 						</div>
 					</div>
 				</div>
 			</div>
 		</div>
 	</section>
-	<!-- breadcrumb start-->
 <pre>
-
-
 </pre>
 	<div class="element_page black">
 		<!-- Start Sample Area -->
 		<section class="sample-text-area">
 			<div class="container box_1170">
 				<p class="sample-text">
-					<table class="table-custom" > <!-- Add an ID here -->
-						<thead>
-							<tr>
-								<th>name</th>
-								<th>description</th>
-								<th>start_date</th>
-								<th>location</th>
-								<th>status</th>
-								<th>price</th>
-								<th>prize</th>
-								<th>team_size</th>
-								<th>game</th>
-							</tr>
-						</thead>
-						<tbody>
-							{% for tournament in tournaments %}
-								<tr>
-									<td>{{ tournament.name }}</td>
-									<td>{{ tournament.description }}</td>
-									<td>{{ tournament.start_date }}</td>
-									<td>{{ tournament.location }}</td>
-									<td>{{ tournament.status }}</td>
-									<td>{{ tournament.prize }}</td>
-									<td>{{ tournament.price }}</td>
-									<td>{{ tournament.team_size }}</td>
-									<td>{{ tournament.game }}</td>
-									
-									{% if user.is_authenticated %}
-										<td><a href="#" onclick="checkCondition('{{ tournament.id }}'); return false;"><p  id="RegisterCan_{{ tournament.id|add:1 }}">Register</p></a>
-											<form id="{{ tournament.id }}" action="{% url 'process_payment' tournament.id %}"  style="display: none;" method="post" > 
-												{% comment %} action="{% url 'register_participation' %}" {% endcomment %}
-												{% csrf_token %}
-												<div>Team_Name</div>
-												<input type="team_name" name="team_name" required>
-												<input id="userCin" type="text" name="user" required value="{{ user.cin }}" hidden>
-												<input id="tournamentId"  type="text" name="tournament" required value="{{ tournament.id }}" hidden  >
-												<input type="submit" value="Submit" onclick="checkCondition()">
-											</form>
-										</td>
-									{% endif %}
-								</tr>
-							{% empty %}
-								<tr>
-									<td colspan="8">No tournaments available.</td>
-								</tr>
+					{% if equipments.exists %} <!-- Check if the queryset has equipment -->
+						<div class="equipment-cards">
+							{% for equipment in equipments %}
+							<div class="flip-card">
+								<div class="flip-card-inner">
+									<div class="flip-card-front">
+										{% if equipment.eq_image %}
+											<img src="{{ equipment.eq_image.url }}" alt="Equipment Image">
+										{% else %}
+											<p>No Image Available</p>
+										{% endif %}
+									</div>
+									<div class="flip-card-back">
+										<p class="title">Details</p>
+										<p>{{ equipment.description }}</p> <!-- Display description or other details -->
+									</div>
+								</div>
+							</div>							
 							{% endfor %}
-						</tbody>
-					</table>
+						</div>
+					{% else %}
+						<p>No equipment available</p> <!-- In case no equipment exists -->
+					{% endif %}
+
 
 				</p>
 			</div>
 		</section>
 		<!-- End Sample Area -->
 	</div>
-	<script>
-		// Function to toggle form visibility based on a condition
-		function checkCondition(tournamentId) {
-			const form = document.getElementById(tournamentId);
-			if (form.style.display === "none" || form.style.display === "") {
-				document.getElementById("userCin").value = "{{ user.cin }}"; 
-				document.getElementById("tournamentId").value = tournamentId;
-				form.style.display = "block";  // Show the form if it's hidden
-				const id2 = parseInt(tournamentId) + 1;
-				const pTag = document.getElementById("RegisterCan_" + id2);
-				
-				if (pTag) {
-					pTag.innerHTML = "Cancel";
-				}
-			} else {
-				form.style.display = "none";   // Hide the form if it's displayed
-				const id2 = parseInt(tournamentId) + 1;
-				const pTag = document.getElementById("RegisterCan_" + id2);
-				
-				if (pTag) {
-					pTag.innerHTML = "Register";
-				}
-			}
-			
-		  }
-	</script>
 	<!--::footer_part start::-->
 	<footer class="footer_part black">
 		<div class="footer_top">
@@ -230,56 +228,16 @@
 					<div class="col-sm-6 col-lg-3">
 						<div class="single_footer_part">
 							<a href="" class="footer_logo_iner"> <img src="{% static 'img/logo.png' %}" alt="#"> </a>
-							<p>Heaven fruitful doesn't over lesser days appear creeping seasons so behold bearing
-								days
-								open
-							</p>
 						</div>
 					</div>
 					<div class="col-sm-6 col-lg-3">
 						<div class="single_footer_part">
 							<h4>Contact Info</h4>
-							<p>Address : Your address goes
-								here, your demo address.
-								Bangladesh.</p>
-							<p>Phone : +8880 44338899</p>
-							<p>Email : info@colorlib.com</p>
+							<p>Address : 1, Pôle Technologique, 2 Rue André Ampère، Ariana 2083</p>
+							<p>Phone : +216 72 555 638</p>
+							<p>Email : GameMasterLeague@gmail.com</p>
 						</div>
 					</div>
-					<div class="col-sm-6 col-lg-3">
-						<div class="single_footer_part">
-							<h4>Important Link</h4>
-							<ul class="list-unstyled">
-								<li><a href=""> WHMCS-bridge</a></li>
-								<li><a href="">Search Domain</a></li>
-								<li><a href="">My Account</a></li>
-								<li><a href="">Shopping Cart</a></li>
-								<li><a href="">Our Shop</a></li>
-							</ul>
-						</div>
-					</div>
-					<div class="col-sm-6 col-lg-3">
-						<div class="single_footer_part">
-							<h4>Newsletter</h4>
-							<p>Heaven fruitful doesn't over lesser in days. Appear creeping seasons deve behold
-								bearing
-								days
-								open
-							</p>
-							<div id="mc_embed_signup">
-								<form target="_blank"
-									action="https://spondonit.us12.list-manage.com/subscribe/post?u=1462626880ade1ac87bd9c93a&amp;id=92a4423d01"
-									method="get" class="subscribe_form relative mail_part">
-									<input type="email" name="email" id="newsletter-form-email"
-										placeholder="Email Address" class="placeholder hide-on-focus"
-										onfocus="this.placeholder = ''" onblur="this.placeholder = ' Email Address '">
-									<button type="submit" name="submit" id="newsletter-submit"
-										class="email_icon newsletter-submit button-contactForm"><i
-											class="far fa-paper-plane"></i></button>
-									<div class="mt-10 info"></div>
-								</form>
-							</div>
-						</div>
 					</div>
 				</div>
 			</div>
