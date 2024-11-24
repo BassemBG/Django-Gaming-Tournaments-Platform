@@ -1,76 +1,78 @@
+{% load static %}
+
 <!doctype html>
 <html lang="zxx">
-{% load static %}
-<head>
-	<!-- Required meta tags -->
-	<meta charset="utf-8">
-	<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-	<title>GML</title>
-	<link rel="icon" href="{% static 'img/favicon.png' %}">
-	<!-- Bootstrap CSS -->
-	<link rel="stylesheet" href="{% static 'css/bootstrap.min.css' %}">
-	<!-- animate CSS -->
-	<link rel="stylesheet" href="{% static 'css/animate.css' %}">
-	<!-- owl carousel CSS -->
-	<link rel="stylesheet" href="{% static 'css/owl.carousel.min.css' %}">
-	<!-- font awesome CSS -->
-	<link rel="stylesheet" href="{% static 'css/all.css' %}">
-	<!-- flaticon CSS -->
-	<link rel="stylesheet" href="{% static 'css/flaticon.css' %}">
-	<link rel="stylesheet" href="{% static 'css/themify-icons.css' %}">
-	<link rel="stylesheet" href="{% static 'css/nice-select.css' %}">
-	<!-- font awesome CSS -->
-	<link rel="stylesheet" href="{% static 'css/magnific-popup.css' %}">
-	<!-- swiper CSS -->
-	<link rel="stylesheet" href="{% static 'css/slick.css' %}">
-	<!-- style CSS -->
-	<link rel="stylesheet" href="{% static 'css/style.css' %}">
 
-	<!--::table style start::-->
-	<style>
-		.body_bg {
-			background-color: #000; /* Dark background for the body */
-		}
-		.table-custom {
-			width: 80%; /* Increased width of the table */
-			margin: -150px auto 20px auto; /* Negative margin-top to move it up slightly */
-			background-color: rgba(0, 0, 0, 0); /* Increased transparency for the table */
-			color: rgb(0, 0, 0); /* White text color */
-			border-radius: 8px; /* Rounded corners */
-			overflow: hidden; /* Prevents border radius from being clipped */
-			box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3); /* Shadow effect */
-		}
-		.table-custom thead {
-			background: linear-gradient(to right, red, #8B008B); /* Darker purple for the header */
-		}
-		.table-custom th {
-			color: white; /* White text color for headers */
-			padding: 20px; /* Increased padding for table header */
-			text-align: center; /* Center text alignment */
-			border: none; /* No border */
-		}
-		.table-custom th:hover {
-			background: linear-gradient(to right, darkred, #4B0082); /* Darker gradient on hover */
-		}
-		.table-custom td {
-			padding: 15px; /* Increased padding for table cells */
-			text-align: center; /* Center text alignment */
-			border-bottom: 1px solid rgba(255, 255, 255, 0.1); /* Light border for separation */
-		}
-		.table-custom tr:hover {
-			background-color: rgba(255, 255, 255, 0.1); /* Light hover effect on rows */
-		}
-		h1 {
-			color: white; /* White color for the heading */
-			margin-bottom: 20px; /* Space below the heading */
-			text-align: center; /* Center the heading */
-		}
-	</style>
-	<!--::table style end::-->
+<head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <title>Gaming</title>
+    <link rel="icon" href="{% static 'gamesman/img/favicon.png' %}"> <!-- Use static for the favicon -->
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="{% static 'gamesman/css/bootstrap.min.css' %}">
+    <!-- Animate CSS -->
+    <link rel="stylesheet" href="{% static 'gamesman/css/animate.css' %}">
+    <!-- Owl carousel CSS -->
+    <link rel="stylesheet" href="{% static 'gamesman/css/owl.carousel.min.css' %}">
+    <!-- Font Awesome CSS -->
+    <link rel="stylesheet" href="{% static 'gamesman/css/all.css' %}">
+    <!-- Flaticon CSS -->
+    <link rel="stylesheet" href="{% static 'gamesman/css/flaticon.css' %}">
+    <link rel="stylesheet" href="{% static 'gamesman/css/themify-icons.css' %}">
+    <!-- Magnific Popup CSS -->
+    <link rel="stylesheet" href="{% static 'gamesman/css/magnific-popup.css' %}">
+    <!-- Swiper CSS -->
+    <link rel="stylesheet" href="{% static 'gamesman/css/slick.css' %}">
+    <!-- Style CSS -->
+    <link rel="stylesheet" href="{% static 'gamesman/css/style.css' %}">
 </head>
 
+<style>
+    .body_bg {
+        background-color: #000000; /* Dark background for the body */
+    }
+    .table-custom {
+        width: 80%; /* Increased width of the table */
+        margin: -150px auto 20px auto; /* Negative margin-top to move it up slightly */
+        background-color: rgb(254, 250, 250); /* Increased transparency for the table */
+        color: rgb(0, 0, 0); /* White text color */
+        border-radius: 8px; /* Rounded corners */
+        overflow: hidden; /* Prevents border radius from being clipped */
+        box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3); /* Shadow effect */
+    }
+    .table-custom thead {
+        background: linear-gradient(to right, red, #8B008B); /* Darker purple for the header */
+    }
+    .table-custom th {
+        color: white; /* White text color for headers */
+        padding: 20px; /* Increased padding for table header */
+        text-align: center; /* Center text alignment */
+        border: none; /* No border */
+    }
+    .table-custom th:hover {
+        background: linear-gradient(to right, darkred, #4B0082); /* Darker gradient on hover */
+    }
+    .table-custom td {
+        padding: 15px; /* Increased padding for table cells */
+        text-align: center; /* Center text alignment */
+        border-bottom: 1px solid rgba(255, 255, 255, 0.1); /* Light border for separation */
+    }
+    .table-custom tr:hover {
+        background-color: rgba(255, 255, 255, 0.1); /* Light hover effect on rows */
+    }
+    h1 {
+        color: white; /* White color for the heading */
+        margin-bottom: 20px; /* Space below the heading */
+        text-align: center; /* Center the heading */
+    }
+</style>
+
 <body>
-	<!--::header part start::-->
+
+
+<div class="body_bg">
+    <!--::header part start::-->
 	<header class="main_menu single_page_menu">
 		<div class="container">
 			<div class="row align-items-center">
@@ -100,7 +102,7 @@
 										<a class="dropdown-item" href="">Single Blog</a>
 									</div>
 								</li>
-								<li class="nav-item"><a class="nav-link" href=" {% url 'Equipments_View' %}">Equipments</a></li>
+								<li class="nav-item"><a class="nav-link" href="">Contact</a></li>
 							</ul>
 						</div>
 						{% if user.is_authenticated %}
@@ -118,8 +120,7 @@
 	</header>
 	<!-- Header part end-->
 
-	<!-- breadcrumb start-->
-	<section class="breadcrumb breadcrumb_bg">
+    <section class="breadcrumb breadcrumb_bg">
 		<div class="container">
 			<div class="row">
 				<div class="col-lg-12">
@@ -133,148 +134,436 @@
 		</div>
 	</section>
 	<!-- breadcrumb start-->
-<pre>
+   
 
+     
+        
+         <div align="center">
 
-</pre>
-	<div class="element_page black">
-		<!-- Start Sample Area -->
-		<section class="sample-text-area">
-			<div class="container box_1170">
-				<p class="sample-text">
-					<table class="table-custom" id="games-table"> <!-- Add an ID here -->
-                        <thead>
-                            <tr>
-                                <th>Title</th>
-                                <th>Genre</th>
-                                <th>Platform</th>
-                                <th>Release Date</th>
-                                <th>Developer</th>
-                                <th>Publisher</th>
-                                <th>Number of Players</th>
-                                <th>File Size</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            {% for game in games %}
+    </div>
+      <div class="  " >
+        <div align="center">
+            <h1>Our Games</h1>
+            <head>
+                <meta charset="UTF-8">
+                
+                <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+                <input type="text" id="search-box" placeholder="Search games by title..." autocomplete="off">
+            </head>
+            <br>
+            <br>
+            <br>
+            <br>
+            <br>
+            <br>
+            <br>
+            <br>
+            <br>
+           
+           
+             <!-- Title added here -->
+             <table class="table-custom" id="games-table">
+                <thead>
+                    <tr>
+                        <th>Title</th>
+                        <th>Genre</th>
+                        <th>Platform</th>
+                        <th>Release Date</th>
+                        <th>Developer</th>
+                        <th>Publisher</th>
+                        <th>Number of Players</th>
+                        <th>File Size</th>
+                    </tr>
+                </thead>
+                <tbody id="games-body">
+                    {% for game in games %}
+                        <tr>
+                            <td>{{ game.Game_Title }}</td>
+                            <td>{{ game.Genre }}</td>
+                            <td>{{ game.Platform }}</td>
+                            <td>{{ game.Release_Date }}</td>
+                            <td>{{ game.Developer }}</td>
+                            <td>{{ game.Publisher }}</td>
+                            <td>{{ game.Nb_Players }}</td>
+                            <td>{{ game.File_Size }}</td>
+                        </tr>
+                    {% empty %}
+                        <tr>
+                            <td colspan="8">No games available.</td>
+                        </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+            
+            <br><br><br><br>
+            <p>
+                <a href="?sort=players_asc" id="sort-players-asc">Sort by Players (Ascending)</a> |
+                <a href="?sort=players_desc" id="sort-players-desc">Sort by Players (Descending)</a> |
+                <a href="?" id="reset-sort">Reset Sort</a>
+            </p>
+            
+            <!-- Platform Filter -->
+            <label for="platformFilter">Filter by Platform:</label>
+            <select id="platformFilter">
+                <option value="">All Platforms</option>
+                <option value="PC">PC</option>
+                <option value="Xbox">Xbox</option>
+                <option value="PlayStation">PlayStation</option>
+                <!-- Add more platforms as needed -->
+            </select>
+            
+            <!-- Publisher Filter -->
+            <label for="publisherFilter">Filter by Publisher:</label>
+            <select id="publisherFilter">
+                <option value="">All Publishers</option>
+                <option value="Rockstar Games">Rockstar Games</option>
+                <option value="Electronic Arts (EA)">Electronic Arts (EA)</option>
+                <option value="Ubisoft">Ubisoft</option>
+                <option value="Epic Games">Epic Games</option>
+                <!-- Add more publishers as needed -->
+            </select>
+            
+            <!-- Developer Filter -->
+            <label for="developerFilter">Filter by Developer:</label>
+            <select id="developerFilter">
+                <option value="">All Developers</option>
+                <option value="Rockstar Games">Rockstar Games</option>
+                <option value="Naughty Dog">Naughty Dog</option>
+                <option value="Electronic Arts">Electronic Arts</option>
+                <option value="Ubisoft">Ubisoft</option>
+                <!-- Add more developers as needed -->
+            </select>
+            
+            <!-- Include jQuery -->
+            <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+            
+            <script>
+                // Function to update the table with new data
+                function updateTable(games) {
+                    $('#games-body').empty(); // Clear existing rows
+            
+                    if (games.length > 0) {
+                        games.forEach(function(game) {
+                            $('#games-body').append(`
                                 <tr>
-                                    <td>{{ game.Game_Title }}</td>
-                                    <td>{{ game.Genre }}</td>
-                                    <td>{{ game.Platform }}</td>
-                                    <td>{{ game.Release_Date }}</td>
-                                    <td>{{ game.Developer }}</td>
-                                    <td>{{ game.Publisher }}</td>
-                                    <td>{{ game.Nb_Players }}</td>
-                                    <td>{{ game.File_Size }}</td>
+                                    <td>${game.Game_Title}</td>
+                                    <td>${game.Genre}</td>
+                                    <td>${game.Platform}</td>
+                                    <td>${game.Release_Date}</td>
+                                    <td>${game.Developer}</td>
+                                    <td>${game.Publisher}</td>
+                                    <td>${game.Nb_Players}</td>
+                                    <td>${game.File_Size}</td>
                                 </tr>
-                            {% empty %}
-                                <tr>
-                                    <td colspan="8">No games available.</td>
-                                </tr>
-                            {% endfor %}
-                        </tbody>
-                    </table>
+                            `);
+                        });
+                    } else {
+                        $('#games-body').append('<tr><td colspan="8">No games found.</td></tr>');
+                    }
+                }
+            
+                // Filter for platform, publisher, and developer
+                $('#platformFilter, #publisherFilter, #developerFilter').on('change', function() {
+                    var platform = $('#platformFilter').val();
+                    var publisher = $('#publisherFilter').val();
+                    var developer = $('#developerFilter').val();
+                    
+                    $.ajax({
+                        url: '{% url "Games_list" %}',
+                        data: {
+                            'platform': platform,
+                            'publisher': publisher,
+                            'developer': developer
+                        },
+                        dataType: 'json',
+                        success: function(data) {
+                            updateTable(data.games);
+                        },
+                        error: function() {
+                            alert('Failed to fetch filtered games.');
+                        }
+                    });
+                });
+            
+                // Sorting buttons
+                $('#sort-players-asc').on('click', function(e) {
+                    e.preventDefault();
+                    $.ajax({
+                        url: '?sort=players_asc',
+                        type: 'GET',
+                        dataType: 'json',
+                        success: function(response) {
+                            updateTable(response.games);
+                        },
+                        error: function() {
+                            alert('Failed to fetch sorted games.');
+                        }
+                    });
+                });
+            
+                $('#sort-players-desc').on('click', function(e) {
+                    e.preventDefault();
+                    $.ajax({
+                        url: '?sort=players_desc',
+                        type: 'GET',
+                        dataType: 'json',
+                        success: function(response) {
+                            updateTable(response.games);
+                        },
+                        error: function() {
+                            alert('Failed to fetch sorted games.');
+                        }
+                    });
+                });
+            
+                $('#reset-sort').on('click', function(e) {
+                    e.preventDefault();
+                    $.ajax({
+                        url: '?',
+                        type: 'GET',
+                        dataType: 'json',
+                        success: function(response) {
+                            updateTable(response.games);
+                        },
+                        error: function() {
+                            alert('Failed to reset the sort.');
+                        }
+                    });
+                });
+            
+                // Initial load (for when the page is loaded without filter)
+                $(document).ready(function() {
+                    $.ajax({
+                        url: '{% url "Games_list" %}',
+                        data: {
+                            'platform': $('#platformFilter').val(),
+                            'publisher': $('#publisherFilter').val(),
+                            'developer': $('#developerFilter').val()
+                        },
+                        dataType: 'json',
+                        success: function(data) {
+                            updateTable(data.games);
+                        }
+                    });
+                });
+            </script>
+            
+            <script>
+                $(document).ready(function() {
+                    $('#search-box').on('input', function() {
+                        var query = $(this).val();
+                        $.ajax({
+                            url: "{% url 'search_games' %}",
+                            data: {
+                                'q': query
+                            },
+                            dataType: 'json',
+                            success: function(data) {
+                                $('#games-table tbody').empty();
+                                if (data.games.length > 0) {
+                                    data.games.forEach(function(game) {
+                                        $('#games-table tbody').append(`
+                                            <tr>
+                                                <td>${game.Game_Title}</td>
+                                                <td>${game.Genre}</td>
+                                                <td>${game.Platform}</td>
+                                                <td>${game.Release_Date}</td>
+                                                <td>${game.Developer}</td>
+                                                <td>${game.Publisher}</td>
+                                                <td>${game.Nb_Players}</td>
+                                                <td>${game.File_Size}</td>
+                                            </tr>
+                                        `);
+                                    });
+                                } else {
+                                    $('#games-table tbody').append('<tr><td colspan="8">No games found.</td></tr>');
+                                }
+                            }
+                        });
+                    });
+                });
+            </script>
+            
+            <h1>Game Statistics by Genre</h1>
+        </div>    
+<canvas id="genreChart" width="400" height="200"></canvas>
 
-				</p>
-			</div>
-		</section>
-		<!-- End Sample Area -->
-	</div>
+<script>
+    // Get genre statistics from the Django context
+    const genreStats = JSON.parse('{{ genre_counts|escapejs }}');  // Safely parse the genre statistics
 
-	<!--::footer_part start::-->
-	<footer class="footer_part black">
-		<div class="footer_top">
-			<div class="container">
-				<div class="row">
-					<div class="col-sm-6 col-lg-3">
-						<div class="single_footer_part">
-							<a href="" class="footer_logo_iner"> <img src="{% static 'img/logo.png' %}" alt="#"> </a>
-							<p>Heaven fruitful doesn't over lesser days appear creeping seasons so behold bearing
-								days
-								open
-							</p>
-						</div>
-					</div>
-					<div class="col-sm-6 col-lg-3">
-						<div class="single_footer_part">
-							<h4>Contact Info</h4>
-							<h4>Contact Info</h4>
-							<p>Address : 1, Pôle Technologique, 2 Rue André Ampère، Ariana 2083</p>
-							<p>Phone : +216 72 555 638</p>
-							<p>Email : GameMasterLeague@gmail.com</p>
-						</div>
-					</div>
-					<div class="col-sm-6 col-lg-3">
-							<div id="mc_embed_signup">
-								<form target="_blank"
-									action="https://spondonit.us12.list-manage.com/subscribe/post?u=1462626880ade1ac87bd9c93a&amp;id=92a4423d01"
-									method="get" class="subscribe_form relative mail_part">
-									<input type="email" name="email" id="newsletter-form-email"
-										placeholder="Email Address" class="placeholder hide-on-focus"
-										onfocus="this.placeholder = ''" onblur="this.placeholder = ' Email Address '">
-									<button type="submit" name="submit" id="newsletter-submit"
-										class="email_icon newsletter-submit button-contactForm"><i
-											class="far fa-paper-plane"></i></button>
-									<div class="mt-10 info"></div>
-								</form>
-							</div>
-						</div>
-					</div>
-				</div>
-			</div>
-		</div>
-		<div class="copygight_text">
-			<div class="container">
-				<div class="row align-items-center">
-					<div class="col-lg-8">
-						<div class="copyright_text">
-							<P><!-- Link back to Colorlib can't be removed. Template is licensed under CC BY 3.0. -->
+    const labels = Object.keys(genreStats);  // Extract genre names
+    const data = Object.values(genreStats);  // Extract the count of games for each genre
+
+    // Create a chart using Chart.js
+    const ctx = document.getElementById('genreChart').getContext('2d');
+    const genreChart = new Chart(ctx, {
+        type: 'bar',
+        data: {
+            labels: labels,
+            datasets: [{
+                label: 'Number of Games by Genre',
+                data: data,
+                backgroundColor: 'rgba(75, 192, 192, 0.2)',
+                borderColor: 'rgba(75, 192, 192, 1)',
+                borderWidth: 1
+            }]
+        },
+        options: {
+            scales: {
+                y: {
+                    beginAtZero: true
+                }
+            }
+        }
+    });
+</script>
+
+<div class="genre-stats">
+    <h2>Number of Games by Genre</h2>
+    <ul>
+        {% for genre, count in genre_counts.items %}
+            <li>{{ genre }}: {{ count }} games</li>
+        {% empty %}
+            <li>No genre statistics available.</li>
+        {% endfor %}
+    </ul>
+</div>
+
+        
+        
+       
+
+        <!--::footer_part start::-->
+        <footer class="footer_part">
+            <div class="footer_top">
+                <div class="container">
+                    <div class="row">
+                        <div class="col-sm-6 col-lg-3">
+                            <div class="single_footer_part">
+                                <a href="index.html" class="footer_logo_iner"> <img src="img/logo.png" alt="#"> </a>
+                                <p>Heaven fruitful doesn't over lesser days appear creeping seasons so behold bearing
+                                    days
+                                    open
+                                </p>
+                            </div>
+                        </div>
+                        <div class="col-sm-6 col-lg-3">
+                            <div class="single_footer_part">
+                                <h4>Contact Info</h4>
+                                <p>Address : Your address goes
+                                    here, your demo address.
+                                    Bangladesh.</p>
+                                <p>Phone : +8880 44338899</p>
+                                <p>Email : info@colorlib.com</p>
+                            </div>
+                        </div>
+                        <div class="col-sm-6 col-lg-3">
+                            <div class="single_footer_part">
+                                <h4>Important Link</h4>
+                                <ul class="list-unstyled">
+                                    <li><a href=""> WHMCS-bridge</a></li>
+                                    <li><a href="">Search Domain</a></li>
+                                    <li><a href="">My Account</a></li>
+                                    <li><a href="">Shopping Cart</a></li>
+                                    <li><a href="">Our Shop</a></li>
+                                </ul>
+                            </div>
+                        </div>
+                        <div class="col-sm-6 col-lg-3">
+                            <div class="single_footer_part">
+                                <h4>Newsletter</h4>
+                                <p>Heaven fruitful doesn't over lesser in days. Appear creeping seasons deve behold
+                                    bearing
+                                    days
+                                    open
+                                </p>
+                                <div id="mc_embed_signup">
+                                    <form target="_blank"
+                                        action="https://spondonit.us12.list-manage.com/subscribe/post?u=1462626880ade1ac87bd9c93a&amp;id=92a4423d01"
+                                        method="get" class="subscribe_form relative mail_part">
+                                        <input type="email" name="email" id="newsletter-form-email"
+                                            placeholder="Email Address" class="placeholder hide-on-focus"
+                                            onfocus="this.placeholder = ''"
+                                            onblur="this.placeholder = ' Email Address '">
+                                        <button type="submit" name="submit" id="newsletter-submit"
+                                            class="email_icon newsletter-submit button-contactForm"><i
+                                                class="far fa-paper-plane"></i></button>
+                                        <div class="mt-10 info"></div>
+                                    </form>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="copygight_text">
+                <div class="container">
+                    <div class="row align-items-center">
+                        <div class="col-lg-8">
+                            <div class="copyright_text">
+                                <P><!-- Link back to Colorlib can't be removed. Template is licensed under CC BY 3.0. -->
 Copyright &copy;<script>document.write(new Date().getFullYear());</script> All rights reserved | This template is made with <i class="ti-heart" aria-hidden="true"></i> by <a href="https://colorlib.com" target="_blank">Colorlib</a>
 <!-- Link back to Colorlib can't be removed. Template is licensed under CC BY 3.0. --></P>
-						</div>
-					</div>
-					<div class="col-lg-4">
-						<div class="footer_icon social_icon">
-							<ul class="list-unstyled">
-								<li><a href="#" class="single_social_icon"><i class="fab fa-facebook-f"></i></a>
-								</li>
-								<li><a href="#" class="single_social_icon"><i class="fab fa-twitter"></i></a></li>
-								<li><a href="#" class="single_social_icon"><i class="fas fa-globe"></i></a></li>
-								<li><a href="#" class="single_social_icon"><i class="fab fa-behance"></i></a></li>
-							</ul>
-						</div>
-					</div>
-				</div>
-			</div>
-		</div>
-	</footer>
-	<!--::footer_part end::-->
-	<!-- jquery plugins here-->
-	<script src="{% static 'js/jquery-1.12.1.min.js' %}"></script>
-	<!-- popper js -->
-	<script src="{% static 'js/popper.min.js' %}"></script>
-	<!-- bootstrap js -->
-	<script src="{% static 'js/bootstrap.min.js' %}"></script>
-	<!-- easing js -->
-	<script src="{% static 'js/jquery.magnific-popup.js' %}"></script>
-	<!-- swiper js -->
-	<script src="{% static 'js/swiper.min.js' %}"></script>
-	<!-- swiper js -->
-	<script src="{% static 'js/masonry.pkgd.js' %}"></script>
-	<!-- particles js -->
-	<script src="{% static 'js/owl.carousel.min.js' %}"></script>
-	<script src="{% static 'js/jquery.nice-select.min.js' %}"></script>
-	<!-- slick js -->
-	<script src="{% static 'js/slick.min.js' %}"></script>
-	<script src="{% static 'js/jquery.counterup.min.js' %}"></script>
-	<script src="{% static 'js/waypoints.min.js' %}"></script>
-	<script src="{% static 'js/contact.js' %}"></script>
-	<script src="{% static 'js/jquery.ajaxchimp.min.js' %}"></script>
-	<script src="{% static 'js/jquery.form.js' %}"></script>
-	<script src="{% static 'js/jquery.validate.min.js' %}"></script>
-	<script src="{% static 'js/mail-script.js' %}"></script>
-	<!-- custom js -->
-	<script src="{% static 'js/custom.js' %}"></script>
+                            </div>
+                        </div>
+                        <div class="col-lg-4">
+                            <div class="footer_icon social_icon">
+                                <ul class="list-unstyled">
+                                    <li><a href="#" class="single_social_icon"><i class="fab fa-facebook-f"></i></a>
+                                    </li>
+                                    <li><a href="#" class="single_social_icon"><i class="fab fa-twitter"></i></a></li>
+                                    <li><a href="#" class="single_social_icon"><i class="fas fa-globe"></i></a></li>
+                                    <li><a href="#" class="single_social_icon"><i class="fab fa-behance"></i></a></li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </footer>
+        <!--::footer_part end::-->
+    </div>
+
+
+    <!-- jquery plugins here-->
+    <script src="js/jquery-1.12.1.min.js"></script>
+    <!-- popper js -->
+    <script src="js/popper.min.js"></script>
+    <!-- bootstrap js -->
+    <script src="js/bootstrap.min.js"></script>
+    <!-- easing js -->
+    <script src="js/jquery.magnific-popup.js"></script>
+    <!-- swiper js -->
+    <script src="js/swiper.min.js"></script>
+    <!-- swiper js -->
+    <script src="js/masonry.pkgd.js"></script>
+    <!-- particles js -->
+    <script src="js/owl.carousel.min.js"></script>
+    <script src="js/jquery.nice-select.min.js"></script>
+    <!-- slick js -->
+    <script src="js/slick.min.js"></script>
+    <script src="js/jquery.counterup.min.js"></script>
+    <script src="js/waypoints.min.js"></script>
+    <script src="js/contact.js"></script>
+    <script src="js/jquery.ajaxchimp.min.js"></script>
+    <script src="js/jquery.form.js"></script>
+    <script src="js/jquery.validate.min.js"></script>
+    <script src="js/mail-script.js"></script>
+    <!-- custom js -->
+    <script src="js/custom.js"></script>
 </body>
+<script>
+    document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+        anchor.addEventListener('click', function(e) {
+            e.preventDefault();
+
+            document.querySelector(this.getAttribute('href')).scrollIntoView({
+                behavior: 'smooth'
+            });
+        });
+    });
+</script>
 
 </html>
+

@@ -5,7 +5,7 @@
 	<!-- Required meta tags -->
 	<meta charset="utf-8">
 	<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-	<title>GML</title>
+	<title>gaming</title>
 	<link rel="icon" href="{% static 'img/favicon.png' %}">
 	<!-- Bootstrap CSS -->
 	<link rel="stylesheet" href="{% static 'css/bootstrap.min.css' %}">
@@ -403,7 +403,6 @@
 		<section class="sample-text-area">
 			<div class="container box_1170">
 				<p class="sample-text">
-
 					{% if equipments.exists %} <!-- Check if the queryset has equipment -->
 					<!-- Custom Search Bar without Icon -->
 					<div class="container">
@@ -506,25 +505,22 @@
 			document.addEventListener("DOMContentLoaded", () => {
 				const searchBox = document.getElementById("search-box");
 				const equipmentCards = document.querySelectorAll(".flip-card");
-		
+			
 				searchBox.addEventListener("input", () => {
 					const searchValue = searchBox.value.toLowerCase();
-		
+			
 					equipmentCards.forEach(card => {
-						// Combine all text fields for the card
-						const cardText = card.querySelector(".flip-card-back").textContent.toLowerCase();
-		
-						// Check if search value matches any part of the card's text
-						if (cardText.includes(searchValue)) {
-							card.style.display = "block"; // Show the card
+						const description = card.querySelector(".flip-card-back p:nth-of-type(2)")?.textContent.toLowerCase() || "";
+			
+						if (description.includes(searchValue)) {
+							card.style.display = "block"; 
 						} else {
-							card.style.display = "none"; // Hide the card
+							card.style.display = "none"; 
 						}
 					});
 				});
 			});
 		</script>
-		
 		
 		<!-- End Sample Area -->
 	</div>
