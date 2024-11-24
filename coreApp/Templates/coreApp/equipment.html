@@ -5,7 +5,7 @@
 	<!-- Required meta tags -->
 	<meta charset="utf-8">
 	<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-	<title>gaming</title>
+	<title>GML</title>
 	<link rel="icon" href="{% static 'img/favicon.png' %}">
 	<!-- Bootstrap CSS -->
 	<link rel="stylesheet" href="{% static 'css/bootstrap.min.css' %}">
@@ -87,6 +87,9 @@
 	}
 	
 	.flip-card-back {
+		margin: 5px 0;
+    	font-weight: normal;
+    	color: white; /* Normal text color */
 		background: linear-gradient(120deg, #fb000b 30%, #c70197 88%, #e3014c 40%);
 		transform: rotateY(180deg);
 		padding: 1rem;
@@ -106,7 +109,12 @@
 		gap: 10px; /* Small gap between cards */
 		margin-top: 20px;
 	}
-	
+
+	.flip-card-back p.title {
+		margin: 5px 0;
+		font-weight: bold;
+		color: white; /* Title text color */
+	}
 	@media screen and (max-width: 1200px) {
 		.equipment-cards {
 			grid-template-columns: repeat(2, 1fr); /* 2 cards per row on smaller screens */
@@ -118,7 +126,52 @@
 			grid-template-columns: 1fr; /* 1 card per row on mobile */
 		}
 	}
-				
+			
+</style>
+<style>
+	.container {
+		position: relative;
+		--size-button: 40px; /* This can be removed if you no longer need it */
+		color: white;
+	  }
+	  
+	  .input {
+		padding-left: 10px; /* Adjust the padding to make room for the text */
+		height: 40px; /* Set height for the input */
+		font-size: 15px;
+		border: none;
+		color: #fff;
+		outline: none;
+		width: 200px; /* Default width before focus */
+		transition: all ease 0.3s;
+		background: linear-gradient(45deg, #fb000b, #c70197, #e3014c); /* Gradient background */
+		box-shadow: 1.5px 1.5px 3px #0e0e0e, 
+					-1.5px -1.5px 3px rgb(95 94 94 / 25%), 
+					inset 0px 0px 0px #0e0e0e, 
+					inset 0px 0px 0px #5f5e5e;
+		border-radius: 50px;
+		cursor: pointer;
+	  }
+	  
+	  .input::placeholder {
+		color: white; /* Set the placeholder text color to white */
+	  }
+	  
+	  .input:focus,
+	  .input:not(:invalid) {
+		width: 250px; /* Expand width on focus */
+		cursor: text;
+		background: linear-gradient(45deg, #e3014c, #c70197, #fb000b); /* Gradient background */
+		box-shadow: 0px 0px 0px #0e0e0e, 
+					0px 0px 0px rgb(95 94 94 / 25%), 
+					inset 1.5px 1.5px 3px #0e0e0e, 
+					inset -1.5px -1.5px 3px #5f5e5e;
+	  }
+	  
+	  .input:focus {
+		cursor: text;
+	  }
+	   
 </style>
 <body>
 	<!--::header part start::-->
@@ -190,32 +243,54 @@
 		<section class="sample-text-area">
 			<div class="container box_1170">
 				<p class="sample-text">
+
 					{% if equipments.exists %} <!-- Check if the queryset has equipment -->
-                	<input type="text" id="search-box" placeholder="Search equipments..." autocomplete="off">
-						<div class="equipment-cards">
-							{% for equipment in equipments %}
-							<div class="flip-card">
-								<div class="flip-card-inner">
-									<div class="flip-card-front">
-										{% if equipment.eq_image %}
-											<img src="{{ equipment.eq_image.url }}" alt="Equipment Image">
-										{% else %}
-											<p>No Image Available</p>
-										{% endif %}
-									</div>
-									<div class="flip-card-back">
-										<p class="title">Details</p>
-										<p>{{ equipment.description }}</p> <!-- Display description or other details -->
-									</div>
+					<!-- Custom Search Bar without Icon -->
+					<div class="container">
+						<input 
+							type="text" 
+							id="search-box" 
+							class="input"
+							required="" 
+							placeholder="Type to search..." 
+							autocomplete="off" 
+						>
+					</div>
+				
+					<div class="equipment-cards">
+						{% for equipment in equipments %}
+						<div class="flip-card">
+							<div class="flip-card-inner">
+								<div class="flip-card-front">
+									{% if equipment.eq_image %}
+										<img src="{{ equipment.eq_image.url }}" alt="Equipment Image" style="border-radius: 10px;">
+									{% else %}
+										<p>No Image Available</p>
+									{% endif %}
 								</div>
-							</div>							
-							{% endfor %}
+								<div class="flip-card-back" style="background-color: #c70197; color: white; text-align: left; padding: 15px;">
+									<p>
+										<span style="font-weight: bold; font-size: 1em;">Name:</span> 
+										<span style="font-size: 0.75em;">{{ equipment.name }}</span>
+									</p>
+									<p>
+										<span style="font-weight: bold; font-size: 1em;">Brand:</span> 
+										<span style="font-size: 0.75em;">{{ equipment.brand }}</span>
+									</p>
+									<p>
+										<span style="font-weight: bold; font-size: 1em;">Type:</span> 
+										<span style="font-size: 0.75em;">{{ equipment.type }}</span>
+									</p>
+								</div>
+							</div>
 						</div>
-					{% else %}
-						<p>No equipment available</p> <!-- In case no equipment exists -->
-					{% endif %}
-
-
+						{% endfor %}
+					</div>
+				{% else %}
+					<p>No equipment available</p> <!-- In case no equipment exists -->
+				{% endif %}
+				
+		
 				</p>
 			</div>
 		</section>
@@ -223,22 +298,25 @@
 			document.addEventListener("DOMContentLoaded", () => {
 				const searchBox = document.getElementById("search-box");
 				const equipmentCards = document.querySelectorAll(".flip-card");
-			
+		
 				searchBox.addEventListener("input", () => {
 					const searchValue = searchBox.value.toLowerCase();
-			
+		
 					equipmentCards.forEach(card => {
-						const description = card.querySelector(".flip-card-back p:nth-of-type(2)")?.textContent.toLowerCase() || "";
-			
-						if (description.includes(searchValue)) {
-							card.style.display = "block"; 
+						// Combine all text fields for the card
+						const cardText = card.querySelector(".flip-card-back").textContent.toLowerCase();
+		
+						// Check if search value matches any part of the card's text
+						if (cardText.includes(searchValue)) {
+							card.style.display = "block"; // Show the card
 						} else {
-							card.style.display = "none"; 
+							card.style.display = "none"; // Hide the card
 						}
 					});
 				});
 			});
 		</script>
+		
 		
 		<!-- End Sample Area -->
 	</div>
