@@ -30,21 +30,12 @@
 	<!--::table style end::-->
 </head>
 <style>
+	/* Flip Card Styling */
 	.flip-card {
 		background-color: transparent;
-		width: 190px;
-		height: 254px;
+		width: 300px;
+		height: 400px;
 		perspective: 1000px;
-		font-family: sans-serif;
-		margin: 5px; /* Small margin between cards */
-	}
-	
-	.title, .flip-card-front p, .flip-card-back p {
-		font-size: 1.5em;
-		font-weight: 900;
-		text-align: center;
-		margin: 0;
-		color: white !important; /* Ensure all text on the card is white */
 	}
 	
 	.flip-card-inner {
@@ -52,7 +43,7 @@
 		width: 100%;
 		height: 100%;
 		text-align: center;
-		transition: transform 0.8s;
+		transition: transform 0.6s;
 		transform-style: preserve-3d;
 	}
 	
@@ -61,72 +52,134 @@
 	}
 	
 	.flip-card-front, .flip-card-back {
-		box-shadow: 0 8px 14px 0 rgba(0,0,0,0.2);
 		position: absolute;
+		width: 100%;
+		height: 100%;
+		backface-visibility: hidden;
+	}
+	
+	/* Ensure the entire card is scrollable */
+	.flip-card-back {
+		transform: rotateY(180deg);
+		background-color: #f8f8f8; /* Light background for contrast */
+		border-radius: 10px;
 		display: flex;
 		flex-direction: column;
-		justify-content: center;
+		align-items: center;
+		justify-content: space-evenly;
+		padding: 15px;
+		overflow-y: auto; /* Make the entire card scrollable */
+		-webkit-overflow-scrolling: touch; /* Smooth scrolling on mobile */
+		max-height: 100%; /* Ensure the card doesn't exceed the set height */
+	}
+	
+	/* Image Styling */
+	.image-container img {
 		width: 100%;
-		height: 100%;
-		-webkit-backface-visibility: hidden;
-		backface-visibility: hidden;
-		border-radius: 1rem;
-		color: white !important; /* Ensure all text on the front and back is white */
-		text-align: center; /* Align text to center */
+		max-height: 200px;
+		object-fit: contain; /* Ensures the image fits inside without cropping */
+		border-radius: 15px; /* Rounded corners */
+		transition: transform 0.3s ease-in-out; /* Smooth scaling on hover */
 	}
 	
-	.flip-card-front {
-		background: linear-gradient(120deg, bisque 60%, rgb(255, 231, 222) 88%, rgb(255, 211, 195) 40%, rgba(255, 127, 80, 0.603) 48%);
-		padding: 0;
-		border: 5px solid #fb000b; /* Set bold border color */
-		border-radius: 1rem; /* Rounded corners for the front */
+	.image-container img:hover {
+		transform: scale(1.05); /* Slight zoom effect on hover */
 	}
 	
-	.flip-card-front:hover {
-		border-color: #c70197; /* Change border color on hover */
+	/* Equipment Info Styling */
+	.equipment-info {
+		text-align: center;
+		padding: 10px 0;
 	}
 	
-	.flip-card-back {
-		margin: 5px 0;
-    	font-weight: normal;
-    	color: white; /* Normal text color */
-		background: linear-gradient(120deg, #fb000b 30%, #c70197 88%, #e3014c 40%);
-		transform: rotateY(180deg);
-		padding: 1rem;
-	}
-	
-	.flip-card-front img {
-		width: 100%;
-		height: 100%;
-		object-fit: cover;
-		border-radius: 1rem; /* Rounded corners for the image */
-	}
-	
-	/* Ensuring 3 cards per row with minimal space */
-	.equipment-cards {
-		display: grid;
-		grid-template-columns: repeat(3, 1fr); /* 3 cards per row */
-		gap: 10px; /* Small gap between cards */
-		margin-top: 20px;
-	}
-
-	.flip-card-back p.title {
-		margin: 5px 0;
+	/* Main Info Styling (Type, Name, Brand) */
+	.main-info {
+		font-size: 1em; /* Slightly larger font */
 		font-weight: bold;
-		color: white; /* Title text color */
+		color: black; /* Ensure the red text applies */
+		text-decoration: underline;
+		margin-bottom: 8px; /* Adjust the space between lines */
+		word-wrap: break-word; /* Prevent text from going out */
+		line-height: 1.4; /* Adjust line height for better spacing */
 	}
-	@media screen and (max-width: 1200px) {
-		.equipment-cards {
-			grid-template-columns: repeat(2, 1fr); /* 2 cards per row on smaller screens */
-		}
+	.main-info p {
+		margin: 5px 0; /* Ensure a slight margin between the lines */
 	}
 	
-	@media screen and (max-width: 768px) {
-		.equipment-cards {
-			grid-template-columns: 1fr; /* 1 card per row on mobile */
-		}
+	/* Description Label */
+	.description-label {
+		font-weight: bold; /* Bold text */
+		text-decoration: underline; /* Underlined text */
+		color: white; /* Color of the text */
+		margin-bottom: 5px; /* Optional: space between the label and the content */
 	}
-			
+	
+	/* Description Styling (Smaller text and less line height) */
+	.description {
+		font-size: 0.75em; /* Smaller font for description */
+		line-height: 1.2; /* Reduced line height for less space between lines */
+		color: white; /* White text for description */
+		word-wrap: break-word; /* Break words to fit the container */
+		overflow-wrap: break-word; /* Break long words or URLs */
+		text-align: left; /* Align description to the left */
+		margin-top: 10px; /* Space between description and other content */
+		max-height: none; /* Removed max-height to allow full scrolling */
+		overflow: visible; /* Allow text to be visible */
+	}
+	
+	/* Ensure main info is styled properly */
+	.flip-card-back .main-info {
+		font-size: 1.1em; /* Slightly larger for emphasis */
+		font-weight: bold;
+		text-decoration: underline; /* Underline for emphasis */
+		color: black !important; /* Black color for the underlined text */
+		margin-bottom: 8px; /* Spacing before the description */
+		text-transform: capitalize;
+	}
+	
+	/* Description Styling (Updated) */
+	.flip-card-back .description {
+		font-size: 0.75em; /* Slightly smaller font size for description */
+		font-weight: normal; /* Regular weight */
+		line-height: 1.2; /* Reduced line height */
+		color: white !important; /* White color for description */
+		text-align: left; /* Align description to the left */
+	}
+	
+	/* Scrollbar Styling */
+	::-webkit-scrollbar {
+		width: 8px; /* Slim scrollbar width */
+		height: 8px; /* Slim scrollbar height */
+	}
+	
+	/* Scrollbar Track (background) */
+	::-webkit-scrollbar-track {
+		background: #f1f1f1; /* Light gray track */
+		border-radius: 10px;
+	}
+	
+	/* Scrollbar Thumb (the draggable part) */
+	::-webkit-scrollbar-thumb {
+		background: #888; /* Darker thumb color */
+		border-radius: 10px;
+		transition: background 0.3s ease;
+	}
+	
+	/* Scrollbar Thumb Hover (hover effect on thumb) */
+	::-webkit-scrollbar-thumb:hover {
+		background: #555; /* Darker color when hovering */
+	}
+	
+	/* Adding space below the search bar */
+	#search-box {
+		margin-bottom: 20px; /* Adjust this value as needed */
+	}
+	
+	/* Optional: Add padding to the container holding the cards */
+	.equipment-cards {
+		padding-top: 20px; /* Space above the cards */
+	}
+	
 </style>
 <style>
 	.container {
@@ -172,6 +225,113 @@
 		cursor: text;
 	  }
 	   
+</style>
+<style>
+	/* General Styles for Equipment Cards */
+.equipment-cards {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 20px;
+    justify-content: center;
+}
+
+.flip-card {
+    width: 200px;
+    height: 300px;
+    perspective: 1000px;
+    display: inline-block;
+}
+
+.flip-card-inner {
+    position: relative;
+    width: 100%;
+    height: 100%;
+    transform-style: preserve-3d;
+    transition: transform 0.5s;
+}
+
+.flip-card:hover .flip-card-inner {
+    transform: rotateY(180deg);
+}
+
+.flip-card-front, .flip-card-back {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    backface-visibility: hidden;
+}
+
+.flip-card-front img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    border-radius: 10px;
+}
+
+.flip-card-back {
+    background-color: #c70197;
+    color: white;
+    text-align: left;
+    padding: 15px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+}
+
+.flip-card-back p {
+    margin: 5px 0;
+}
+
+/* Pagination Styles */
+#pagination-controls {
+    text-align: center;
+    margin-top: 20px;
+}
+
+#pagination-controls button {
+    background-color: #c70197;
+    color: white;
+    border: none;
+    padding: 10px 20px;
+    font-size: 16px;
+    cursor: pointer;
+    border-radius: 5px;
+    margin: 0 10px;
+    transition: background-color 0.3s;
+}
+
+#pagination-controls button:hover {
+    background-color: #a6007c;
+}
+
+#pagination-controls button:disabled {
+    background-color: #e0e0e0;
+    cursor: not-allowed;
+}
+
+#pagination-controls span {
+    font-size: 18px;
+    margin: 0 20px;
+    color: #555;
+}
+
+/* Media Query for Mobile View */
+@media (max-width: 600px) {
+    .flip-card {
+        width: 150px;
+        height: 250px;
+    }
+
+    #pagination-controls button {
+        padding: 8px 16px;
+        font-size: 14px;
+    }
+
+    #pagination-controls span {
+        font-size: 16px;
+    }
+}
+
 </style>
 <body>
 	<!--::header part start::-->
@@ -261,6 +421,7 @@
 						{% for equipment in equipments %}
 						<div class="flip-card">
 							<div class="flip-card-inner">
+								<!-- Front of the card -->
 								<div class="flip-card-front">
 									{% if equipment.eq_image %}
 										<img src="{{ equipment.eq_image.url }}" alt="Equipment Image" style="border-radius: 10px;">
@@ -268,32 +429,79 @@
 										<p>No Image Available</p>
 									{% endif %}
 								</div>
-								<div class="flip-card-back" style="background-color: #c70197; color: white; text-align: left; padding: 15px;">
-									<p>
-										<span style="font-weight: bold; font-size: 1em;">Name:</span> 
-										<span style="font-size: 0.75em;">{{ equipment.name }}</span>
-									</p>
-									<p>
-										<span style="font-weight: bold; font-size: 1em;">Brand:</span> 
-										<span style="font-size: 0.75em;">{{ equipment.brand }}</span>
-									</p>
-									<p>
-										<span style="font-weight: bold; font-size: 1em;">Type:</span> 
-										<span style="font-size: 0.75em;">{{ equipment.type }}</span>
-									</p>
+								<div class="flip-card-back">
+									<div class="image-container">
+										{% if equipment.eq_image %}
+											<img src="{{ equipment.eq_image.url }}" alt="Equipment Image">
+										{% endif %}
+									</div>
+									<div class="equipment-info">
+										<!-- Type, Name, and Brand -->
+										<p class="main-info">
+											{{ equipment.type }}: {{ equipment.name }} {{ equipment.brand }}
+										</p>
+										
+										<!-- Description -->
+										<p class="description">
+											<span class="description-label">Description:</span> {{ equipment.description }}
+										</p>
+									</div>
 								</div>
+								
 							</div>
 						</div>
 						{% endfor %}
 					</div>
+					</div>
 				{% else %}
 					<p>No equipment available</p> <!-- In case no equipment exists -->
 				{% endif %}
-				
-		
 				</p>
 			</div>
 		</section>
+		<div id="pagination-controls">
+			<button id="prev-btn" onclick="changePage('prev')">Previous</button>
+			<span id="page-number">Page 1</span>
+			<button id="next-btn" onclick="changePage('next')">Next</button>
+		</div>
+		<script>
+			// JavaScript for Pagination
+			let currentPage = 1;  // The current page number
+			const itemsPerPage = 10;  // Number of items per page
+			const allItems = document.querySelectorAll('.flip-card');  // Get all equipment cards
+			const totalPages = Math.ceil(allItems.length / itemsPerPage);  // Calculate total pages
+		
+			// Function to show only the items for the current page
+			function showPage(page) {
+				// Hide all items
+				allItems.forEach((item, index) => {
+					item.style.display = 'none';  // Hide all items
+					if (index >= (page - 1) * itemsPerPage && index < page * itemsPerPage) {
+						item.style.display = 'block';  // Show the items for the current page
+					}
+				});
+		
+				// Update the page number display
+				document.getElementById('page-number').innerText = `Page ${page}`;
+		
+				// Disable/Enable buttons based on current page
+				document.getElementById('prev-btn').disabled = (page === 1);
+				document.getElementById('next-btn').disabled = (page === totalPages);
+			}
+		
+			// Function to change page when user clicks 'Previous' or 'Next'
+			function changePage(direction) {
+				if (direction === 'prev' && currentPage > 1) {
+					currentPage--;
+				} else if (direction === 'next' && currentPage < totalPages) {
+					currentPage++;
+				}
+				showPage(currentPage);
+			}
+		
+			// Initially show the first page
+			showPage(currentPage);
+		</script>
 		<script>
 			document.addEventListener("DOMContentLoaded", () => {
 				const searchBox = document.getElementById("search-box");

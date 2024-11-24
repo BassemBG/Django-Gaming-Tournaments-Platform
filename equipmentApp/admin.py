@@ -10,7 +10,7 @@ class SupplierAdmin(admin.ModelAdmin):
 
 @admin.register(Equipment)
 class EquipmentAdmin(admin.ModelAdmin):
-    list_display = ('name', 'type', 'brand', 'stock_quantity', 'condition', 'description', 'supplier', 'updated_at', 'is_available')
+    list_display = ('name', 'type', 'brand', 'stock_quantity', 'condition', 'supplier', 'updated_at', 'is_available')
     search_fields = ('name', 'brand', 'type')
     list_filter = ('condition', 'supplier')
     ordering = ('name',)
