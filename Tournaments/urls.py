@@ -28,6 +28,7 @@ urlpatterns = [
     path('', include('gamesman.urls')),
     path('', include('sponsorApp.urls')),
     path('', include('equipmentApp.urls')),
+    path('', include('SponsorshipApp.urls')),
 ]
 if settings.DEBUG:
     urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

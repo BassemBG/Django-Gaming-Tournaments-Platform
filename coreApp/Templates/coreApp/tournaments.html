@@ -85,7 +85,7 @@
 						<div class="collapse navbar-collapse main-menu-item" id="navbarSupportedContent">
 							<ul class="navbar-nav">
 								<li class="nav-item"><a class="nav-link" href="{% url 'home' %}">Home</a></li>
-								<li class="nav-item"><a class="nav-link" href="{% url 'Sponsors_list' %}">sponsors</a></li>
+								<li class="nav-item"><a class="nav-link" href="{% url 'Sponsors_form' %}">sponsor a tournament</a></li>
 								<li class="nav-item">
 									<a class="nav-link" href=" {% url 'Games_list' %}">Our Games</a> <!-- Updated to use the ID -->
 								</li>
@@ -100,15 +100,15 @@
 										<a class="dropdown-item" href="">Single Blog</a>
 									</div>
 								</li>
-								<li class="nav-item"><a class="nav-link" href=" {% url 'Equipments_View' %}">Equipments</a></li>
+								<li class="nav-item"><a class="nav-link" href="">Contact</a></li>
 							</ul>
 						</div>
 						{% if user.is_authenticated %}
 							<a href="{% url 'profile' user.cin %}" class="btn_1 d-none d-sm-block">Profile</a>
 							<a href="{% url 'logout' %}" class="btn_1 d-none d-sm-block">Logout</a>
 						{% else %}
-						<a href="{% url 'login' %}" class="btn_1 d-none d-sm-block">Login</a>
-						<a href="#" class="btn_1 d-none d-sm-block">SignUp</a>
+							<a href="{% url 'login' %}" class="btn_1 d-none d-sm-block">Login</a>
+							<a href="{% url 'register' %}" class="btn_1 d-none d-sm-block">SignUp</a>
 						{% endif %}
 						
 					</nav>
@@ -116,9 +116,11 @@
 			</div>
 		</div>
 	</header>
-	<!-- Header part end-->
+	<Header part end>
 
-	<!-- breadcrumb start-->
+
+
+	<!-- breadcrumb start -->
 	<section class="breadcrumb breadcrumb_bg">
 		<div class="container">
 			<div class="row">
@@ -132,96 +134,574 @@
 			</div>
 		</div>
 	</section>
-	<!-- breadcrumb start-->
-<pre>
 
 
-</pre>
-	<div class="element_page black">
-		<!-- Start Sample Area -->
-		<section class="sample-text-area">
-			<div class="container box_1170">
-				<p class="sample-text">
-					<table class="table-custom" > <!-- Add an ID here -->
-						<thead>
-							<tr>
-								<th>name</th>
-								<th>description</th>
-								<th>start_date</th>
-								<th>location</th>
-								<th>status</th>
-								<th>price</th>
-								<th>prize</th>
-								<th>team_size</th>
-								<th>game</th>
-							</tr>
-						</thead>
-						<tbody>
-							{% for tournament in tournaments %}
-								<tr>
-									<td>{{ tournament.name }}</td>
-									<td>{{ tournament.description }}</td>
-									<td>{{ tournament.start_date }}</td>
-									<td>{{ tournament.location }}</td>
-									<td>{{ tournament.status }}</td>
-									<td>{{ tournament.prize }}</td>
-									<td>{{ tournament.price }}</td>
-									<td>{{ tournament.team_size }}</td>
-									<td>{{ tournament.game }}</td>
-									
-									{% if user.is_authenticated %}
-										<td><a href="#" onclick="checkCondition('{{ tournament.id }}'); return false;"><p  id="RegisterCan_{{ tournament.id|add:1 }}">Register</p></a>
-											<form id="{{ tournament.id }}" action="{% url 'process_payment' tournament.id %}"  style="display: none;" method="post" > 
-												{% comment %} action="{% url 'register_participation' %}" {% endcomment %}
-												{% csrf_token %}
-												<div>Team_Name</div>
-												<input type="team_name" name="team_name" required>
-												<input id="userCin" type="text" name="user" required value="{{ user.cin }}" hidden>
-												<input id="tournamentId"  type="text" name="tournament" required value="{{ tournament.id }}" hidden  >
-												<input type="submit" value="Submit" onclick="checkCondition()">
-											</form>
-										</td>
-									{% endif %}
-								</tr>
-							{% empty %}
-								<tr>
-									<td colspan="8">No tournaments available.</td>
-								</tr>
-							{% endfor %}
-						</tbody>
-					</table>
-
-				</p>
-			</div>
-		</section>
-		<!-- End Sample Area -->
-	</div>
-	<script>
-		// Function to toggle form visibility based on a condition
-		function checkCondition(tournamentId) {
-			const form = document.getElementById(tournamentId);
-			if (form.style.display === "none" || form.style.display === "") {
-				document.getElementById("userCin").value = "{{ user.cin }}"; 
-				document.getElementById("tournamentId").value = tournamentId;
-				form.style.display = "block";  // Show the form if it's hidden
-				const id2 = parseInt(tournamentId) + 1;
-				const pTag = document.getElementById("RegisterCan_" + id2);
-				
-				if (pTag) {
-					pTag.innerHTML = "Cancel";
-				}
-			} else {
-				form.style.display = "none";   // Hide the form if it's displayed
-				const id2 = parseInt(tournamentId) + 1;
-				const pTag = document.getElementById("RegisterCan_" + id2);
-				
-				if (pTag) {
-					pTag.innerHTML = "Register";
-				}
-			}
+	<!-- Tournament + Form Styles -->
+	<style>
+		/* General Section Styles */
+		.tournament-section {
+			padding: 5%;
+			background-color: transparent;
+			color: #ffffff;
+			font-family: 'Arial', sans-serif;
+			display: flex;
+			justify-content: center; /* Centers the grid horizontally */
+			align-items: center; /* Centers the grid vertically (if needed) */
+			flex-direction: column; /* Ensures content like pagination stays below the grid */
+			min-height: 100vh; /* Ensures the section takes full screen height */
+		}
+		.tournament-wrapper {
+			display: flex;
+			justify-content: center;
 			
-		  }
+		}
+
+		/* Grid Layout for Cards */
+		.tournament-grid {
+			display: grid;
+			grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); /* Ensures cards adapt to available space */
+			gap: 60px; /* Controls the spacing between cards */
+			justify-content: center; /* Centers the grid horizontally */
+			max-width: 1200px; /* Sets a maximum width for the grid */
+			width: 100%; /* Ensures the grid takes up available space */
+		}
+		
+		
+		/* Card Styling */
+		.tournament-card {
+			background: #29293d;
+			border-radius: 10px;
+			box-shadow: 0 4px 6px rgba(0, 0, 0, 0.3);
+			padding: 20px;
+			display: flex;
+			flex-direction: column;
+			justify-content: space-between;
+			min-height: 525px; /* Sets a consistent height for cards */
+			max-width: 350px; /* Sets a consistent width for cards */
+			width: 100%; /* Makes sure the cards are responsive */
+			position: relative;
+			transition: all 0.3s ease-in-out; /* Smooth transition for hover effects */
+		}
+
+		/* Card hover effect */
+		.tournament-card:hover {
+			transform: scale(1.04); /* Slightly enlarges card on hover */
+			transition: transform 0.3s ease-in-out, box-shadow 0.3s ease-in-out; /* Adds smooth scale and shadow effects */
+			box-shadow: 0 6px 10px rgba(0, 0, 0, 0.4);
+		}
+
+	
+		.card-header h3 {
+			font-size: 1.5rem;
+			color: #fff;
+		}
+
+		.status {
+			padding: 5px 10px;
+			border-radius: 5px;
+			font-size: 0.9rem;
+			text-transform: capitalize;
+		}
+
+		.status.upcoming {
+			background-color: #4caf50;
+			color: #fff;
+		}
+
+		.status.cancelled {
+			background-color: #f44336;
+			color: #fff;
+		}
+		.status.completed {
+			background-color: #ccee0e;
+			color: #fff;
+		}
+		.status.ongoing {
+			background-color: #00ff4c;
+			color: #fff;
+		}
+
+		/* Card Footer Styling */
+		.card-footer {
+			margin-top: 10px;
+			border-top: 1px solid rgba(255, 255, 255, 0.1);
+			padding-top: 10px;
+		}
+
+		/* Card Body Styling */
+		.card-body {
+			display: flex;
+			flex-direction: column;
+			gap: 10px;
+			padding: 15px 0;
+			color: #e0e0e0;
+		}
+
+		.card-body p {
+			margin: 0;
+			font-size: 0.95rem;
+			line-height: 1.5;
+			display: flex;
+			align-items: flex-start;
+			gap: 8px;
+
+			transition: all 0.5s ease-in-out; /* Adds smooth transition */
+			cursor: pointer;
+			position: relative;
+		}
+		.card-body p:hover {
+			background: #383848;
+			padding: 10px;
+			border-radius: 8px;
+			position: relative;
+			z-index: 10;
+			max-height: none; /* Removes height limit */
+			box-shadow: 0 4px 6px rgba(0, 0, 0, 0.3);
+			line-height: 1.5; /* Consistent line spacing */
+			white-space: normal; /* Allows text to wrap */
+		}
+
+		.card-body i {
+			color: #fd44a0;
+			font-size: 1.1rem;
+		}
+
+		.card-body strong {
+			font-weight: bold;
+			color: #ffffff;
+		}
+
+		/* Description Styling */
+		.description {
+			overflow: hidden; /* Ensures content doesn't overflow */
+			text-overflow: ellipsis; /* Adds the ellipsis ("...") */
+			display: -webkit-box; /* Required for truncating text with ellipsis */
+			-webkit-line-clamp: 3; /* Limits text to 3 lines */
+			-webkit-box-orient: vertical; /* Specifies vertical box orientation */
+			/* For standard browsers */
+			display: box; /* Fallback for older syntax */
+			box-orient: vertical; /* Fallback */
+			line-clamp: 3; /* For modern browsers */
+			position: relative;
+			cursor: pointer;
+			line-height: 1.5; /* Space between lines */
+			max-height: calc(1.5rem * 3); /* Limit height to 3 lines */
+			white-space: normal; /* Ensures text wraps */
+			transition: all 0.5s ease-in-out; /* Adds smooth transition */
+		}
+
+		/* Expanded View on Hover */
+		.description:hover {
+			overflow: visible; /* Removes overflow restriction */
+			background: #383848;
+			padding: 10px;
+			border-radius: 8px;
+			position: relative;
+			z-index: 10;
+			max-height: none; /* Removes height limit */
+			box-shadow: 0 4px 6px rgba(0, 0, 0, 0.3);
+			line-height: 1.5; /* Consistent line spacing */
+			text-overflow: unset; /* Removes ellipsis */
+			white-space: normal; /* Allows text to wrap */
+		}
+
+
+		/* Form Container Styling */
+		.form-container {
+			background-color: #1e1e2f;
+			padding: 15px;
+			border-radius: 8px;
+			margin-top: 10px;
+			width: 350px;
+			box-shadow: 0 4px 6px rgba(0, 0, 0, 0.3);
+			display: none;
+		}
+
+		.form-container label {
+			color: #fff;
+			font-size: 0.9rem;
+		}
+
+		.form-container input[type="text"] {
+			width: 100%;
+			padding: 8px 10px;
+			border: none;
+			border-radius: 5px;
+			font-size: 0.9rem;
+			margin-bottom: 10px;
+		}
+
+		.form-buttons {
+			display: flex;
+			justify-content: space-between;
+			gap: 10px;
+		}
+
+		.form-container input[type="submit"],
+		.form-container .btn-cancel {
+			padding: 8px 15px;
+			border: none;
+			border-radius: 5px;
+			font-size: 1rem;
+			cursor: pointer;
+			transition: background-color 0.3s ease;
+			width: 48%;
+		}
+
+		.form-container input[type="submit"] {
+			background-color: #4caf50;
+			color: #fff;
+		}
+
+		.form-container input[type="submit"]:hover {
+			background-color: #388e3c;
+		}
+
+		.form-container .btn-cancel {
+			background-color: #f44336;
+			color: #fff;
+		}
+
+		.form-container .btn-cancel:hover {
+			background-color: #d32f2f;
+		}
+
+		/* Register Button Styling */
+		.btn-register {
+			background-color: #4caf50; /* Initial green color */
+			color: #fff; /* White text */
+			padding: 5PX 10px; /* Adds padding for better spacing */
+			border: none; /* Removes default border */
+			border-radius: 5px; /* Rounded edges */
+			text-decoration: none; /* Removes underline */
+			font-size: 1rem; /* Increases font size for readability */
+			font-weight: bold; /* Makes text bold */
+			text-align: center; /* Centers text */
+			display: inline-block; /* Ensures the button behaves like a block element */
+			transition: background-color 0.3s ease, transform 0.2s ease; /* Smooth hover effects */
+			cursor: pointer; /* Pointer cursor on hover */
+		}
+
+		/* Hover Effect for Register Button */
+		.btn-register:hover {
+			background-color: #388e3c; /* Darker green on hover */
+			transform: scale(1.05); /* Slightly enlarges button on hover */
+		}
+
+		/* Disabled Register Button Styling (optional if needed) */
+		.btn-register.disabled, 
+		.btn-register:disabled {
+			background-color: #ccc; /* Gray background for disabled state */
+			cursor: not-allowed; /* Indicates the button is not clickable */
+			color: #777; /* Light gray text */
+			opacity: 0.7; /* Slightly faded */
+			pointer-events: none; /* Disables click events */
+		}
+
+	</style>
+
+
+
+	<!-- Search Bar STYLE -->
+	<style>
+		/* Search Bar Styling */
+		.search-bar {
+			width: 100%; /* Full width of the parent container */
+			display: flex;
+			justify-content: center; /* Centers the search bar horizontally */
+			margin-bottom: 20px; /* Adds spacing between the search bar and the grid */
+		}
+
+		.search-bar input {
+			width: 80%; /* Width of the search input relative to the container */
+			max-width: 500px; /* Limits the search bar width */
+			padding: 10px 15px;
+			border: 1px solid #ccc; /* Adds a light border */
+			border-radius: 5px; /* Rounded corners for the input */
+			font-size: 1rem;
+			color: #333; /* Input text color */
+			transition: border-color 0.3s ease;
+		}
+
+		.search-bar input:focus {
+			outline: none;
+			border-color: #fd44a0; /* Changes border color on focus */
+			box-shadow: 0 0 8px rgba(253, 68, 160, 0.5); /* Adds a subtle glow effect */
+		}
+		/* Tournament Section Adjustments */
+		.tournament-section {
+			padding: 10px;
+			background-color: #f9f9f9; /* Subtle background for contrast */
+			border-radius: 8px; /* Rounded corners for the section */
+			box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1); /* Soft shadow */
+		}
+	</style>
+
+	<!-- Search Bar SCRIPT + PAGINATION-->
+	<script>
+		document.addEventListener("DOMContentLoaded", function () {
+			const cardsPerPage = 3; // Number of cards to display per page
+			const grid = document.getElementById("tournamentGrid");
+			const allCards = Array.from(grid.children); // Get all card elements
+			let filteredCards = [...allCards]; // Start with all cards
+			let currentPage = 1;
+
+			// Function to render cards on the current page
+			function renderPage(page) {
+				// Hide all cards
+				allCards.forEach(card => (card.style.display = "none"));
+
+				// Calculate start and end index for the current page
+				const startIdx = (page - 1) * cardsPerPage;
+				const endIdx = startIdx + cardsPerPage;
+
+				// Show cards for the current page (filtered list)
+				filteredCards.slice(startIdx, endIdx).forEach(card => (card.style.display = "block"));
+
+				// Update pagination controls
+				const totalPages = Math.ceil(filteredCards.length / cardsPerPage);
+				document.getElementById("pageInfo").textContent = `Page ${page} of ${totalPages}`;
+				document.getElementById("prevPage").disabled = page === 1;
+				document.getElementById("firstPage").disabled = page === 1;
+				document.getElementById("nextPage").disabled = page === totalPages;
+				document.getElementById("lastPage").disabled = page === totalPages;
+			}
+
+			// Function to handle search
+			function handleSearch() {
+				const searchInput = document.getElementById("searchBar").value.toLowerCase();
+
+				// Filter cards based on the search input
+				filteredCards = allCards.filter(card => {
+					const name = card.getAttribute("data-name").toLowerCase();
+					const location = card.getAttribute("data-location").toLowerCase();
+					const game = card.getAttribute("data-game").toLowerCase();
+					return name.includes(searchInput) || game.includes(searchInput) || location.includes(searchInput);
+				});
+
+				// Reset to the first page and render
+				currentPage = 1;
+				renderPage(currentPage);
+			}
+
+			// Event listener for search bar input
+			document.getElementById("searchBar").addEventListener("input", handleSearch);
+
+			// Event listeners for pagination buttons
+			document.getElementById("firstPage").addEventListener("click", function () {
+				currentPage = 1;
+				renderPage(currentPage);
+			});
+
+			document.getElementById("prevPage").addEventListener("click", function () {
+				if (currentPage > 1) {
+					currentPage--;
+					renderPage(currentPage);
+				}
+			});
+
+			document.getElementById("nextPage").addEventListener("click", function () {
+				const totalPages = Math.ceil(filteredCards.length / cardsPerPage);
+				if (currentPage < totalPages) {
+					currentPage++;
+					renderPage(currentPage);
+				}
+			});
+
+			document.getElementById("lastPage").addEventListener("click", function () {
+				const totalPages = Math.ceil(filteredCards.length / cardsPerPage);
+				currentPage = totalPages;
+				renderPage(currentPage);
+			});
+
+			// Initial render
+			renderPage(currentPage);
+		});
+
+
 	</script>
+
+	<!-- Pagination Script (NOW INTEGRATED WITHIN FILTERING/SEARCH BAR) -->
+	<!-- Pagination style -->
+	<style>
+		.pagination-controls {
+			display: flex;
+			justify-content: center;
+			margin-top: 20px;
+			gap: 15px;
+			align-items: center;
+			font-family: 'Arial', sans-serif;
+		}
+
+		.pagination-controls button {
+			background-color: #ff0080; /* Bright pink for a vibrant look */
+			color: #ffffff;
+			border: none;
+			border-radius: 10px; /* Rounded buttons for modern look */
+			padding: 10px 20px;
+			cursor: pointer;
+			font-size: 1rem;
+			transition: all 0.3s ease-in-out;
+			box-shadow: 0 3px 6px rgba(0, 0, 0, 0.2); /* Slight shadow for depth */
+		}
+
+		.pagination-controls button:hover:not(:disabled) {
+			background-color: #ff4da6; /* Slightly lighter pink on hover */
+			transform: translateY(-2px); /* Lift the button slightly */
+			box-shadow: 0 6px 12px rgba(0, 0, 0, 0.3); /* Enhanced shadow on hover */
+		}
+
+		.pagination-controls button:disabled {
+			background-color: #e0e0e0;
+			color: #a0a0a0;
+			cursor: not-allowed;
+			box-shadow: none; /* Remove shadow for disabled buttons */
+		}
+
+		.pagination-controls span {
+			font-size: 1rem;
+			color: #f254a3;
+			font-weight: bold;
+			padding: 5px 15px;
+			background: #f3f3f3;
+			border-radius: 10px; /* Rounded background for span */
+			box-shadow: 0 3px 6px rgba(0, 0, 0, 0.1); /* Subtle shadow for span */
+			display: inline-block;
+			text-align: center;
+		}
+
+	</style>
+
+
+
+
+	<!-- TOURNAMENT_START -->
+	<div class="element_page">
+		<!-- Tournament Section -->
+		<div class="tournament-section">
+			<!-- Search Bar -->
+			<div class="search-bar">
+				<input type="text" id="searchBar" placeholder="Enter a Tournament Name, Game or Location.">
+			</div>
+			<!-- Grid Container -->
+			<div class="tournament-grid" id="tournamentGrid">
+				{% for tournament in tournaments %}
+				<!-- Tournament Wrapper -->
+				<div class="tournament-wrapper" data-name="{{ tournament.name }}" data-location="{{ tournament.location }}" data-game="{{ tournament.game }}">
+					<!-- Tournament Card -->
+					<div class="tournament-card">
+						<!-- Card Header -->
+						<div class="card-header">
+							<h3>{{ tournament.name }}</h3>
+							<span class="status {{ tournament.status }}">{{ tournament.status }}</span>
+						</div>
+						<!-- Card Body -->
+						<div class="card-body">
+							<p class="description" data-full-description="{{ tournament.description }}">
+								<i class="fas fa-info-circle"></i>
+								<strong>Description:</strong> 
+								<span>{{ tournament.description }}</span>
+							</p>
+							<p><i class="fas fa-calendar-alt"></i> <strong>Start Date:</strong> {{ tournament.start_date }}</p>
+							<p><i class="fas fa-map-marker-alt"></i> <strong>Location:</strong> {{ tournament.location }}</p>
+							<p><i class="fas fa-tag"></i> <strong>Price:</strong> {{ tournament.price }}</p>
+							<p><i class="fas fa-trophy"></i> <strong>Prize:</strong> {{ tournament.prize }}</p>
+							<p><i class="fas fa-users"></i> <strong>Team Size:</strong> {{ tournament.team_size }}</p>
+							<p><i class="fas fa-gamepad"></i> <strong>Game:</strong> {{ tournament.game }}</p>
+						</div>
+						<!-- Card Footer -->
+						<div class="card-footer">
+							{% if user.is_authenticated %}
+								{% if user.role == 'Sponsor' %}
+									<!-- Sponsor Button -->
+									<a href="{% url 'sponsorship_form_preselected' tournament.id %}" class="btn-register" id="sponsor-btn-{{ tournament.id }}">
+										Sponsor
+									</a>
+								{% else %}
+									<!-- Active Register Button for Logged-in Users -->
+									<a href="#" 
+									onclick="toggleForm('{{ tournament.id }}'); return false;" 
+									class="btn-register" 
+									id="register-btn-{{ tournament.id }}">
+										Register
+									</a>
+								{% endif %}
+							{% else %}
+								<!-- Disabled Button for Logged-out Users -->
+								<a href="#" 
+								class="btn-register disabled" 
+								id="register-btn-{{ tournament.id }}" 
+								disabled
+								title="Please log in to register">
+									Register
+								</a>
+							{% endif %}
+						</div>
+					</div>
+
+					<!-- Registration Form -->
+					<div id="form-container-{{ tournament.id }}" class="form-container">
+						<form id="{{ tournament.id }}" action="{% url 'process_payment' tournament.id %}" method="post">
+							{% csrf_token %}
+							<label for="team_name">Team Name</label>
+							<input type="text" name="team_name" required placeholder="Enter your team name">
+							<div class="form-buttons">
+								<input type="submit" value="Submit">
+								<button type="button" class="btn-cancel" onclick="toggleForm('{{ tournament.id }}')">Cancel</button>
+							</div>
+						</form>
+					</div>
+				</div>
+				{% empty %}
+				<div class="no-tournaments">No tournaments available.</div>
+				{% endfor %}
+			</div>
+
+			<!-- Pagination Controls -->
+			<div class="pagination-controls">
+				<button id="firstPage" disabled>First</button>
+				<button id="prevPage" disabled>Previous</button>
+				<span id="pageInfo"></span>
+				<button id="nextPage">Next</button>
+				<button id="lastPage">Last</button>
+			</div>
+		</div>
+	</div>
+	<!-- TOURNAMENT_END -->
+
+
+
+	<!-- Toggle Form Script -->
+	<script>
+		function toggleForm(tournamentId) {
+			const formContainer = document.getElementById(`form-container-${tournamentId}`);
+			const registerBtn = document.getElementById(`register-btn-${tournamentId}`);
+	
+			// Hide all other forms
+			const allForms = document.querySelectorAll('.form-container');
+			allForms.forEach(form => {
+				if (form !== formContainer) {
+					form.style.display = "none";
+				}
+			});
+	
+			// Toggle current form
+			if (formContainer.style.display === "none" || formContainer.style.display === "") {
+				formContainer.style.display = "block"; // Show the form
+				registerBtn.innerHTML = "Cancel"; // Change button text to Cancel
+			} else {
+				formContainer.style.display = "none"; // Hide the form
+				registerBtn.innerHTML = "Register"; // Reset button text to Register
+			}
+		}
+	</script>
+	
+	<!-- TOURNAMENTS_END -->
+	
+
+
+		
+	
 	<!--::footer_part start::-->
 	<footer class="footer_part black">
 		<div class="footer_top">

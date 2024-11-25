@@ -29,13 +29,21 @@
 	<!--::table style start::-->
 	<style>
         /* Custom CSS to style the login form */
-        .banner_part {
+        {% comment %} .banner_part {
             display: flex;
             align-items: center;
             justify-content: center;
             min-height: 100vh;
 			 background-color: #0f0d0d;
-        }
+        } {% endcomment %}
+		.banner_part {
+			display: flex;
+			flex-direction: column;
+			align-items: center;
+			justify-content: center;
+			min-height: 100vh;
+			background-color: #0f0d0d;
+		}
         .login-form-container {
             max-width: 400px;
             width: 100%;
@@ -84,8 +92,71 @@
 			text-align: center; /* Center the heading */
 		}
         
+		{% comment %} /* Table container */
+		.table-container {
+			width: 80%; /* Keep table aligned with page */
+			max-height: 60vh; /* Prevent table from overflowing */
+			overflow-y: auto; /* Enable scrolling for large tables */
+			margin: 0 auto;
+			border-radius: 8px;
+			box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3); /* Shadow effect */
+			background-color: rgba(0, 0, 0, 0.8); /* Transparent dark background */
+		}
         
-        
+        .filter-container {
+			display: flex;
+			justify-content: center;
+			align-items: center;
+			margin-bottom: 20px;
+			text-align: center;
+		} {% endcomment %}
+
+		.filter-container {
+			display: flex;
+			justify-content: center;
+			align-items: center;
+			margin-bottom: 20px;
+			text-align: center;
+			margin-top: 200px; /* Add this line */
+		}
+		
+		.table-container {
+			width: 100%;
+			{% comment %} max-height: 60vh;
+			overflow-y: auto; {% endcomment %}
+			{% comment %} margin: 0 auto; {% endcomment %}
+			margin-top: 200px;
+			border-radius: 8px;
+			box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
+			background-color: rgba(0, 0, 0, 0.8);
+			/* Remove the negative margin-top */
+		}
+		
+		.filter-container form {
+			display: flex;
+			align-items: center;
+			flex-wrap: wrap; /* Ensure proper layout on smaller screens */
+		}
+		
+		.filter-container label {
+			margin-right: 10px;
+			color: white;
+		}
+		
+		.filter-container select,
+		.filter-container button {
+			margin: 5px;
+			padding: 8px 12px;
+			border-radius: 5px;
+		}
+		{% comment %} .filter-container {
+			margin-top: 20px; /* Adds space between the header and filter */
+			text-align: center;
+		} {% endcomment %}
+		
+		.section-container {
+			margin-top: 50px; /* Use this if the filter-container is part of a larger container */
+		}
     </style>
 	<!--::table style end::-->
 </head>
@@ -120,6 +191,7 @@
 						<a href="{% url 'logout' %}" class="btn_1 d-none d-sm-block">Logout</a>
 						
 						
+						
 					</nav>
 				</div>
 			</div>
@@ -132,30 +204,59 @@
 		<!-- Start Sample Area -->
 		<section class="banner_part">
             <div>
-				<table class="table-custom" border="1" > <!-- Add an ID here -->
-					<thead>
-						<tr>
-							<th>Sponsor</th>
-							<th>Tournament</th>
-						 
-						</tr>
-					</thead>
-					<tbody>
-						{% for sponsorship in sponsorships %}
+				<div class="filter-container" >
+					<form method="get" action="{% url 'sponsorshipList' user.cin %}">
+						<label for="status" style="color: white; margin-right: 10px;">Filter by Status:</label>
+						<select name="status" id="status" class="form-control" style="width: 200px; display: inline;">
+							<option value="" {% if not status_filter %}selected{% endif %}>All</option>
+							<option value="Pending" {% if status_filter == 'Pending' %}selected{% endif %}>Pending</option>
+							<option value="Approved" {% if status_filter == 'Approved' %}selected{% endif %}>Approved</option>
+							<option value="Rejected" {% if status_filter == 'Rejected' %}selected{% endif %}>Rejected</option>
+							<option value="Terminated" {% if status_filter == 'Terminated' %}selected{% endif %}>Terminated</option>
+						</select>
+						<button type="submit" class="btn btn-primary" style="margin-left: 10px;">Filter</button>
+					</form>
+				</div>
+				
+				<div class="table-container">
+					<table class="table-custom" border="1" > <!-- Add an ID here -->
+						<thead>
 							<tr>
-								<td>{{sponsorship.sponsor }}</td>
-								<td>{{sponsorship.tournament }}</td>
-								
+								<th>Sponsor</th>
+								<th>Tournament</th>
+								<th>amount</th>
+								<th>start_date</th>
+								<th>end_date</th>
+								<th>status</th>
+							
 							</tr>
-						{% empty %}
-							<tr>
-								<td colspan="8">No Participation available.</td>
-							</tr>
-						{% endfor %}
+						</thead>
+						<tbody>
+							{% for sponsorship in sponsorships %}
+								<tr>
+									<td>{{sponsorship.sponsor }}</td>
+									<td>{{sponsorship.tournament }}</td>
+									<td>{{sponsorship.amount }}</td>
+									<td>{{sponsorship.start_date }}</td>
+									<td>{{sponsorship.end_date }}</td>
+									<td>{{sponsorship.status }}</td>
+									<td>
+										<a href="{% url 'download_contract' sponsorship.id %}" class="btn btn-primary">Download PDF</a>
+									</td>
+									
+								</tr>
+							{% empty %}
+								<tr>
+									<td colspan="8">No sponsorships match the selected filter.</td>
+								</tr>
+							{% endfor %}
+	
+						</tbody>
+	
+					  </table>
 
-					</tbody>
-
-				  </table>
+				</div>
+				
 				  {% if messages %}
 					<div class="alert alert-info" role="alert">
 					  {% for message in messages %}

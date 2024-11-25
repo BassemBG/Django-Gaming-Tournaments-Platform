@@ -8,17 +8,17 @@ class SponsorshipAdmin(admin.ModelAdmin):
     actions = ['mark_as_pending', 'mark_as_rejected', 'mark_as_approved', 'mark_as_terminated']
 
     def mark_as_pending(self, request, queryset):
-        queryset.update(status="pending")
+        queryset.update(status="Pending")
         self.message_user(request, ("Selected sponsorship marked as Pending."))
 
     def mark_as_rejected(self, request, queryset):
-        queryset.update(status="rejected")
+        queryset.update(status="Rejected")
         self.message_user(request,("Selected sponsorship marked as Rejected."))
 
     def mark_as_approved(self, request, queryset):
-        queryset.update(status="approved")
+        queryset.update(status="Approved")
         self.message_user(request, ("Selected sponsorship marked as Approved."))
         
     def mark_as_terminated(self, request, queryset):
-        queryset.update(status="terminated")
+        queryset.update(status="Terminated")
         self.message_user(request, ("Selected sponsorship marked as Terminated."))

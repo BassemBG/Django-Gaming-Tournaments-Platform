@@ -7,7 +7,7 @@ from .forms import RegisterSponsorForm,SponsorForm
 from django.contrib import messages
 
 
-def Sponsors_list(request):
+def Sponsors_form(request):
     sponsors = sponsor.objects.all()  
     tournaments = tournament.objects.all()
     return render(request, 'coreApp/sponsors.html', {'sponsors': sponsors,'tournaments':tournaments}) 
@@ -36,7 +36,7 @@ def registerSponsor(request):
         if form.is_valid():
             form.save()
             messages.success(request, 'Sponsor registration successful!')
-            return redirect('Sponsors_list')  # Adjust the redirect URL as needed
+            return redirect('Sponsors_form')  # Adjust the redirect URL as needed
         else:
             messages.error(request, 'Please correct the errors below.')
     else:
