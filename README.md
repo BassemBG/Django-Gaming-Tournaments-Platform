@@ -8,4 +8,4 @@ pip install -r requirements.txt
 Everytime you install/add a new dependency or library, please add it to the requirements.txt file so we just need to run the command above in case of missing libraries
 
 IMPORTANT NOTE!!! 
-removed the stats package from setting.py due to package issues . 
+removed the stats package from setting.py due to package issues.
