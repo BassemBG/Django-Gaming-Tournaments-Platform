@@ -14,6 +14,13 @@ from django.contrib.auth.decorators import login_required
 from django.utils.decorators import method_decorator
 from django.core.exceptions import ValidationError
 
+
+from SponsorshipApp.models import sponsorship
+from django.http import HttpResponse
+from reportlab.lib.pagesizes import letter
+from reportlab.pdfgen import canvas
+
+
 class UserDetailView(DetailView):
     model = User
     template_name = 'userApp/profile.html'
@@ -107,7 +114,54 @@ def view_participation(request, pk):
 
 def view_sponsorships(request, pk):
     user = get_object_or_404(User, pk=pk)
+
+    # Get the status filter from the query parameter
+    status_filter = request.GET.get('status', None)
+
+    # Filter sponsorships based on the user and the status filter
+    # sponsorships = sponsorship.objects.filter(sponsor=user) 
+    # Filter sponsorships by the logged-in user
     sponsorships = sponsorship.objects.all()
-    participations = participation.objects.all()
-    return render(request, 'userApp/sponsorships.html', {'user': user,'participations':participations,'sponsorships':sponsorships})
+    if status_filter:
+        sponsorships = sponsorships.filter(status=status_filter)
+
+    # Pass the current filter to the template
+    return render(request, 'userApp/sponsorships.html', {
+        'user': user,
+        'sponsorships': sponsorships,
+        'status_filter': status_filter,
+    })
+    
+def download_contract(request, id):
+    try:
+        # Fetch the sponsorship instance
+        Sponsorship = sponsorship.objects.get(id=id)
+
+        # Create a response object for the PDF
+        response = HttpResponse(content_type='application/pdf')
+        response['Content-Disposition'] = f'attachment; filename="Sponsorship_info_{id}.pdf"'
+
+        # Create a PDF canvas
+        p = canvas.Canvas(response, pagesize=letter)
+        p.setFont("Helvetica", 12)
+
+        # Add content to the PDF
+        p.drawString(100, 750, f"Sponsorship number {id} information")
+        p.drawString(100, 730, f"Sponsor: {Sponsorship.sponsor}")
+        p.drawString(100, 710, f"Tournament: {Sponsorship.tournament}")
+        p.drawString(100, 690, f"Amount: {Sponsorship.amount}")
+        p.drawString(100, 670, f"Start Date: {Sponsorship.start_date}")
+        p.drawString(100, 650, f"End Date: {Sponsorship.end_date}")
+        p.drawString(100, 630, f"Status: {Sponsorship.status}")
+
+        # Add a footer
+        p.drawString(100, 580, "Thank you for your sponsorship!")
+
+        # Finalize the PDF
+        p.showPage()
+        p.save()
+
+        return response
+    except sponsorship.DoesNotExist:
+        return HttpResponse("Sponsorship not found", status=404)
 
