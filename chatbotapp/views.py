@@ -54,4 +54,4 @@ def openai_query_view(request):
     
     else:
         form = OpenAIForm()
-        return render(request, 'blog/index.html', {'form': form, 'response': response})
+        return render(request, 'blog/chatbot.html', {'form': form, 'response': response})

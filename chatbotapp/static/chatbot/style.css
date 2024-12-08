@@ -1,0 +1,106 @@
+body {
+    margin: 0;
+    padding: 0;
+    font-family: 'Arial', sans-serif;
+    display: flex;
+    flex-direction: column;
+    height: 100vh;
+    overflow: hidden; /* To prevent body from scrolling */
+    background-color: #0D0D2B;
+}
+
+h1 {
+    text-align: center;
+    color: #ff00a6;
+    margin: 10px 0; /* Adjust margin as needed */
+}
+
+#chatbot {
+    display: flex;
+    flex-direction: column;
+    flex: 1; /* Allows the chatbot to fill the remaining space */
+    border: 2px solid gray;
+    border-radius: 10px;
+    margin: 20px;
+    position: relative;
+}
+
+#chatMessages {
+    flex: 1;
+    overflow-y: auto; /* Scrolls when there are too many messages */
+    padding: 10px;
+    background-color: #FFF ; /* Background color for the messages */
+    border-bottom: 3px solid #ccc;
+    display: flex;
+    flex-direction: column;
+    gap: 10px; /* Add space between messages */
+}
+
+.userText {
+    text-align: right;
+    background-color: #d1f7d6; /* Light green for user messages */
+    color: #000; /* Text color */
+    padding: 8px 12px;
+    border-radius: 10px;
+    max-width: 80%;
+    display: inline-block;
+    align-self: flex-end; /* Aligns to the right */
+}
+
+.botText {
+    text-align: left;
+    background-color: #f1f0f0; /* Light gray for bot messages */
+    color: #333; /* Text color */
+    padding: 8px 12px;
+    border-radius: 10px;
+    max-width: 80%;
+    display: inline-block;
+    align-self: flex-start; /* Aligns to the left */
+}
+
+#userInput {
+    display: flex;
+    width: 100%; /* Full width of the container */
+    padding: 5px;
+    background-color: #15152F; /* Adjust background as needed */
+    border-top: 1px solid #ccc;
+    box-sizing: border-box; /* Ensure padding doesn't affect width */
+}
+
+#textInput {
+    border: 3px solid white;
+    border-bottom: 3px solid #afafaf;
+    border-radius: 20px;
+    font-family: monospace;
+    font-size: 14px;
+    padding: 10px 15px;
+    color: black;
+    width: 100%;
+
+}
+
+.textInputContainer {
+    flex: 1; /* Takes up remaining space */
+    margin-right: 30px; /* Space between input and button */
+
+}
+
+#buttonInput {
+    padding: 8px 12px;
+    font-family: monospace;
+    font-size: 14px;
+    border: 3px solid #5b605c;
+    background-color: #FF3A3A;
+    color: white;
+    font-weight: bold;
+    border-radius: 10px;
+    cursor: pointer;
+    margin: 15px;
+}
+
+#buttonInput:hover {
+    background-color: rgb(19, 18, 18); /* Change on hover */
+    color: white;
+    scale: 1.05;
+    transition: 0.05s ease-in ;
+}
