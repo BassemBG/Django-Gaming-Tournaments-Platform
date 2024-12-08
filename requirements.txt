@@ -5,3 +5,4 @@ django-nvd3
 django-admin-tools-stats
 django_light
 reportlab==4.2.5
+google-generative
