@@ -94,14 +94,12 @@
 								<li class="nav-item">
 									<a class="nav-link" href=" {% url 'Tournaments_View' %}">Our Tournaments</a> <!-- Updated to use the ID -->
 								</li>
-								<li class="nav-item dropdown">
-									<a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" 
-									   data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Blog</a>
-									<div class="dropdown-menu" aria-labelledby="navbarDropdown">
-										<a class="dropdown-item" href="">Blog</a>
-										<a class="dropdown-item" href="">Single Blog</a>
-									</div>
-								</li>
+								<li class="nav-item">
+                                    <a class="nav-link" href=" {% url 'openai_query' %}"
+                                      >Ask Chatbot</a
+                                    >
+                                    <!-- Updated to use the ID -->
+                                  </li>
 								<li class="nav-item"><a class="nav-link" href=" {% url 'Equipments_View' %}">Equipments</a></li>
 							</ul>
 						</div>
