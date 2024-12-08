@@ -52,6 +52,7 @@ INSTALLED_APPS = [
     'SponsorshipApp',
     'Participation',
     'equipmentApp',
+    'chatbotapp',
 ]
 
 MIDDLEWARE = [
