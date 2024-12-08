@@ -38,8 +38,8 @@ h1 {
 
 .userText {
     text-align: right;
-    background-color: #d1f7d6; /* Light green for user messages */
-    color: #000; /* Text color */
+    background: linear-gradient(45deg, #d82020 0%, #a408a4 100%);
+    color: white; /* Text color */
     padding: 8px 12px;
     border-radius: 10px;
     max-width: 80%;
