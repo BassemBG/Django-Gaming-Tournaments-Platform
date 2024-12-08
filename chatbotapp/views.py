@@ -2,11 +2,11 @@ from django.shortcuts import render
 from django.http import JsonResponse
 import google.generativeai as genai
 import os
-from .forms import OpenAIForm
+from .forms import ChatbotForm
 import json 
 
 # Set your OpenAI API key
-def openai_query_view(request):
+def chatbot_query_view(request):
     genai.configure(api_key="AIzaSyCxleLvgJ5Oqn1hbl6-eUl6XUOFF_nPVbg")
     response = None
     generation_config = {
@@ -53,5 +53,5 @@ def openai_query_view(request):
             return JsonResponse({'error': str(e)}, status=400)
     
     else:
-        form = OpenAIForm()
-        return render(request, 'blog/chatbot.html', {'form': form, 'response': response})
+        form = ChatbotForm()
+        return render(request, 'chatbot/chatbot.html', {'form': form, 'response': response})

@@ -1,6 +1,6 @@
 from django import forms
 
-class OpenAIForm(forms.Form):
+class ChatbotForm(forms.Form):
     user_input = forms.CharField(
         label="",
         widget=forms.TextInput(

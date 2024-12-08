@@ -3,7 +3,7 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>OpenAI Query</title>
+    <title>Chatbot Assistant</title>
     {% load static %}
     <link
       rel="stylesheet"
@@ -42,7 +42,7 @@
         document.querySelector("#textInput").value = "";
 
         // Make an AJAX request to the server
-        fetch("{% url 'openai_query' %}", {
+        fetch("{% url 'chatbot_query' %}", {
           method: "POST",
           headers: {
             "Content-Type": "application/json",
