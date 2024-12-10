@@ -1,0 +1,152 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Voice Command Debug</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            text-align: center;
+            margin: 20px;
+        }
+        #start-btn {
+            padding: 10px 20px;
+            font-size: 16px;
+            background-color: #4CAF50;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+        #start-btn:hover {
+            background-color: #45a049;
+        }
+        #transcription-container, #response {
+            margin-top: 20px;
+        }
+        #transcription {
+            font-size: 18px;
+            color: #333;
+        }
+        #response p {
+            margin: 5px 0;
+        }
+        .error {
+            color: red;
+        }
+        .description {
+            margin-top: 20px;
+            font-size: 14px;
+            color: #555;
+            text-align: left;
+            max-width: 600px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+    </style>
+
+    <script>
+        function getCookie(name) {
+            let cookieValue = null;
+            if (document.cookie && document.cookie !== "") {
+                const cookies = document.cookie.split(";");
+                for (let i = 0; i < cookies.length; i++) {
+                    const cookie = cookies[i].trim();
+                    if (cookie.substring(0, name.length + 1) === (name + "=")) {
+                        cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
+                        break;
+                    }
+                }
+            }
+            return cookieValue;
+        }
+        const csrftoken = getCookie('csrftoken');
+    </script>
+</head>
+
+<body>
+    <h1>Voice Command Debug</h1>
+    <div class="description">
+        <p>This page uses the following technologies:</p>
+        <ul>
+            <li><strong>Transformers (Hugging Face):</strong> A library used for natural language processing (NLP). It employs the <code>facebook/bart-large-mnli</code> model for zero-shot classification of voice commands.</li>
+            <li><strong>Web Speech API:</strong> A browser-based API used to capture and transcribe voice commands into text in real time.</li>
+        </ul>
+        <p>Speak a command such as "open home page" or "go to tournaments page" and see how the system processes it.</p>
+    </div>
+
+    <button id="start-btn">🎙️ Start Voice Command</button>
+    <div id="transcription-container">
+        <p id="transcription">Press the button and speak your command...</p>
+    </div>
+    <div id="response"></div>
+
+    <script>
+        const startButton = document.getElementById("start-btn");
+        const transcriptionElement = document.getElementById("transcription");
+        const responseDiv = document.getElementById("response");
+
+        // Check for Speech Recognition API
+        const SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
+
+        if (!SpeechRecognition) {
+            alert("Your browser does not support the Web Speech API. Please use Chrome or Edge.");
+        }
+
+        startButton.addEventListener("click", () => {
+            const recognition = new SpeechRecognition();
+            recognition.lang = "en-US";
+            recognition.interimResults = false;
+            recognition.maxAlternatives = 1;
+
+            // Inform user that listening has started
+            transcriptionElement.textContent = "Listening... Please speak your command.";
+
+            recognition.start();
+
+            recognition.onresult = async (event) => {
+                // Get the transcribed text
+                const transcript = event.results[0][0].transcript;
+                transcriptionElement.textContent = `Voice-to-Text: "${transcript}"`;
+
+                // Show loading message
+                responseDiv.innerHTML = "<p>Processing your command...</p>";
+
+                // Send the transcript to the backend for NLP classification
+                try {
+                    const response = await fetch("/api/voice-command/", {
+                        method: "POST",
+                        headers: {
+                            "Content-Type": "application/json",
+                            "X-CSRFToken": csrftoken,
+                        },
+                        body: JSON.stringify({ text: transcript }),
+                    });
+
+                    const result = await response.json();
+                    if (result.error) {
+                        responseDiv.innerHTML = `<p class="error">Error: ${result.error}</p>`;
+                    } else {
+                        const { command, description, confidence } = result;
+                        responseDiv.innerHTML = `
+                            <p><strong>NLP Translation:</strong> ${description}</p>
+                            <p><strong>Confidence:</strong> ${(confidence * 100).toFixed(2)}%</p>
+                        `;
+                    }
+                } catch (error) {
+                    responseDiv.innerHTML = `<p class="error">Error: ${error.message}</p>`;
+                }
+            };
+
+            recognition.onerror = (event) => {
+                transcriptionElement.textContent = "Error occurred: " + event.error;
+            };
+
+            recognition.onend = () => {
+                transcriptionElement.textContent += " (Listening complete.)";
+            };
+        });
+    </script>
+</body>
+</html>
