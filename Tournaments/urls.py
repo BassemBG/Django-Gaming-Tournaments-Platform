@@ -30,6 +30,7 @@ urlpatterns = [
     path('', include('equipmentApp.urls')),
     path('', include('SponsorshipApp.urls')),
     path('chatbot/', include('chatbotapp.urls')),
+    path('api/', include('voiceapp.urls')),
 
 ]
 if settings.DEBUG:
