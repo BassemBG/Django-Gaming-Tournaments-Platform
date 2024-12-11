@@ -9,3 +9,6 @@ Everytime you install/add a new dependency or library, please add it to the requ
 
 IMPORTANT NOTE!!! 
 removed the stats package from setting.py due to package issues.
+
+
+Note: Changed requirements.txt, delete the virtual environment folder, create a new one and run the command: pip install -r requirements.txt

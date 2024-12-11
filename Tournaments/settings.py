@@ -53,6 +53,7 @@ INSTALLED_APPS = [
     'Participation',
     'equipmentApp',
     'chatbotapp',
+    'voiceapp',
 ]
 
 MIDDLEWARE = [

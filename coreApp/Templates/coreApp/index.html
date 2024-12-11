@@ -143,6 +143,11 @@
                     >Equipments</a
                   >
                 </li>
+                <li class="nav-item">
+                  <a class="nav-link" href="#" onclick="startVoiceCommand()">
+                    🎙️ Voice Command
+                  </a>
+                </li>
               </ul>
             </div>
             {% if user.is_authenticated %}
@@ -165,6 +170,91 @@
           </nav>
         </div>
       </header>
+      <!-- Script START for voice commands -->
+      <script>
+        // Helper function to get CSRF token
+        function getCookie(name) {
+            let cookieValue = null;
+            if (document.cookie && document.cookie !== "") {
+                const cookies = document.cookie.split(";");
+                for (let i = 0; i < cookies.length; i++) {
+                    const cookie = cookies[i].trim();
+                    if (cookie.substring(0, name.length + 1) === name + "=") {
+                        cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
+                        break;
+                    }
+                }
+            }
+            return cookieValue;
+        }
+        const csrftoken = getCookie("csrftoken");
+    
+        async function startVoiceCommand() {
+            const SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
+    
+            if (!SpeechRecognition) {
+                alert("Your browser does not support the Web Speech API. Please use Chrome or Edge.");
+                return;
+            }
+    
+            const recognition = new SpeechRecognition();
+            recognition.lang = "en-US";
+            recognition.interimResults = false;
+            recognition.maxAlternatives = 1;
+    
+            recognition.start();
+    
+            recognition.onresult = async (event) => {
+                const transcript = event.results[0][0].transcript;
+    
+                try {
+                    // Step 1: Send transcript to classify the command
+                    const classifyResponse = await fetch("/api/voice-command/", {
+                        method: "POST",
+                        headers: {
+                            "Content-Type": "application/json",
+                            "X-CSRFToken": csrftoken,
+                        },
+                        body: JSON.stringify({ text: transcript }),
+                    });
+    
+                    const classifyResult = await classifyResponse.json();
+                    if (classifyResult.error) {
+                        alert(`Error: ${classifyResult.error}`);
+                        return;
+                    }
+    
+                    const { command } = classifyResult;
+    
+                    // Step 2: Get the resolved URL
+                    const redirectResponse = await fetch("/api/voice-command-redirect/", {
+                        method: "POST",
+                        headers: {
+                            "Content-Type": "application/json",
+                            "X-CSRFToken": csrftoken,
+                        },
+                        body: JSON.stringify({ command }),
+                    });
+    
+                    const redirectResult = await redirectResponse.json();
+                    if (redirectResult.redirect_url) {
+                        // Redirect to the resolved URL
+                        window.location.href = redirectResult.redirect_url;
+                    } else if (redirectResult.error) {
+                        alert(`Error: ${redirectResult.error}`);
+                    }
+                } catch (error) {
+                    alert(`Error: ${error.message}`);
+                }
+            };
+    
+            recognition.onerror = (event) => {
+                alert(`Error: ${event.error}`);
+            };
+        }
+      </script>
+      <!-- Script END for voice commands -->
+       
       <!-- Header part end-->
 
       <!-- banner part start-->
