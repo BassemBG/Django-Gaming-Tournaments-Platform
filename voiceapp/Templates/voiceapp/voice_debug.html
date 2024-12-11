@@ -82,71 +82,119 @@
     </div>
     <div id="response"></div>
 
-    <script>
-        const startButton = document.getElementById("start-btn");
-        const transcriptionElement = document.getElementById("transcription");
-        const responseDiv = document.getElementById("response");
+<script>
+    const startButton = document.getElementById("start-btn");
+    const transcriptionElement = document.getElementById("transcription");
+    const responseDiv = document.getElementById("response");
 
-        // Check for Speech Recognition API
-        const SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
+    // Check for Speech Recognition API
+    const SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
 
-        if (!SpeechRecognition) {
-            alert("Your browser does not support the Web Speech API. Please use Chrome or Edge.");
-        }
+    if (!SpeechRecognition) {
+        alert("Your browser does not support the Web Speech API. Please use Chrome or Edge.");
+    }
 
-        startButton.addEventListener("click", () => {
-            const recognition = new SpeechRecognition();
-            recognition.lang = "en-US";
-            recognition.interimResults = false;
-            recognition.maxAlternatives = 1;
+    startButton.addEventListener("click", () => {
+        const recognition = new SpeechRecognition();
+        recognition.lang = "en-US";
+        recognition.interimResults = false;
+        recognition.maxAlternatives = 1;
 
-            // Inform user that listening has started
-            transcriptionElement.textContent = "Listening... Please speak your command.";
+        // Inform user that listening has started
+        transcriptionElement.textContent = "Listening... Please speak your command.";
 
-            recognition.start();
+        recognition.start();
 
-            recognition.onresult = async (event) => {
-                // Get the transcribed text
-                const transcript = event.results[0][0].transcript;
-                transcriptionElement.textContent = `Voice-to-Text: "${transcript}"`;
+        recognition.onresult = async (event) => {
+            // Get the transcribed text
+            const transcript = event.results[0][0].transcript;
+            transcriptionElement.textContent = `Voice-to-Text: "${transcript}"`;
 
-                // Show loading message
-                responseDiv.innerHTML = "<p>Processing your command...</p>";
+            // Show loading message
+            responseDiv.innerHTML = "<p>Processing your command...</p>";
 
-                // Send the transcript to the backend for NLP classification
-                try {
-                    const response = await fetch("/api/voice-command/", {
-                        method: "POST",
-                        headers: {
-                            "Content-Type": "application/json",
-                            "X-CSRFToken": csrftoken,
-                        },
-                        body: JSON.stringify({ text: transcript }),
-                    });
+            try {
+                // Step 1: Send the transcript to classify the command
+                const classificationResponse = await fetch("/api/voice-command/", {
+                    method: "POST",
+                    headers: {
+                        "Content-Type": "application/json",
+                        "X-CSRFToken": csrftoken,
+                    },
+                    body: JSON.stringify({ text: transcript }),
+                });
 
-                    const result = await response.json();
-                    if (result.error) {
-                        responseDiv.innerHTML = `<p class="error">Error: ${result.error}</p>`;
-                    } else {
-                        const { command, description, confidence } = result;
-                        responseDiv.innerHTML = `
-                            <p><strong>NLP Translation:</strong> ${description}</p>
-                            <p><strong>Confidence:</strong> ${(confidence * 100).toFixed(2)}%</p>
-                        `;
-                    }
-                } catch (error) {
-                    responseDiv.innerHTML = `<p class="error">Error: ${error.message}</p>`;
+                const classificationResult = await classificationResponse.json();
+
+                if (classificationResult.error) {
+                    responseDiv.innerHTML = `<p class="error">Error: ${classificationResult.error}</p>`;
+                    return;
                 }
-            };
 
-            recognition.onerror = (event) => {
-                transcriptionElement.textContent = "Error occurred: " + event.error;
-            };
+                const { command, description, confidence } = classificationResult;
 
-            recognition.onend = () => {
-                transcriptionElement.textContent += " (Listening complete.)";
-            };
-        });
-    </script>
+                // Display the NLP translation and confidence
+                responseDiv.innerHTML = `
+                    <p><strong>NLP Translation:</strong> ${description}</p>
+                    <p><strong>Confidence:</strong> ${(confidence * 100).toFixed(2)}%</p>
+                `;
+
+                // Step 2: Use the classified command to get the resolved URL
+                const redirectionResponse = await fetch("/api/voice-command-redirect/", {
+                    method: "POST",
+                    headers: {
+                        "Content-Type": "application/json",
+                        "X-CSRFToken": csrftoken,
+                    },
+                    body: JSON.stringify({ command }),
+                });
+
+                const redirectionResult = await redirectionResponse.json();
+
+                if (redirectionResult.redirect_url) {
+                    // Print the resolved URL
+                    responseDiv.innerHTML += `
+                        <p><strong>Resolved URL:</strong> ${redirectionResult.redirect_url}</p>
+                        <p>Redirecting in 3 seconds...</p>
+                    `;
+
+                    // Add a 3-second delay before redirection
+                    setTimeout(() => {
+                        window.location.href = redirectionResult.redirect_url;
+                    }, 3000);
+                } else if (redirectionResult.error) {
+                    responseDiv.innerHTML += `<p class="error">Error: ${redirectionResult.error}</p>`;
+                }
+            } catch (error) {
+                responseDiv.innerHTML = `<p class="error">Error: ${error.message}</p>`;
+            }
+        };
+
+        recognition.onerror = (event) => {
+            transcriptionElement.textContent = "Error occurred: " + event.error;
+        };
+
+        recognition.onend = () => {
+            transcriptionElement.textContent += " (Listening complete.)";
+        };
+    });
+
+    function getCookie(name) {
+        let cookieValue = null;
+        if (document.cookie && document.cookie !== "") {
+            const cookies = document.cookie.split(";");
+            for (let i = 0; i < cookies.length; i++) {
+                const cookie = cookies[i].trim();
+                if (cookie.substring(0, name.length + 1) === name + "=") {
+                    cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
+                    break;
+                }
+            }
+        }
+        return cookieValue;
+    }
+</script>
+
+
 </body>
 </html>
