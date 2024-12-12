@@ -1,0 +1,603 @@
+<!doctype html>
+<html lang="zxx">
+{% load static %}
+<head>
+	<!-- Required meta tags -->
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+	<title>gaming</title>
+	<link rel="icon" href="{% static 'img/favicon.png' %}">
+	<!-- Bootstrap CSS -->
+	<link rel="stylesheet" href="{% static 'css/bootstrap.min.css' %}">
+	<!-- animate CSS -->
+	<link rel="stylesheet" href="{% static 'css/animate.css' %}">
+	<!-- owl carousel CSS -->
+	<link rel="stylesheet" href="{% static 'css/owl.carousel.min.css' %}">
+	<!-- font awesome CSS -->
+	<link rel="stylesheet" href="{% static 'css/all.css' %}">
+	<!-- flaticon CSS -->
+	<link rel="stylesheet" href="{% static 'css/flaticon.css' %}">
+	<link rel="stylesheet" href="{% static 'css/themify-icons.css' %}">
+	<link rel="stylesheet" href="{% static 'css/nice-select.css' %}">
+	<!-- font awesome CSS -->
+	<link rel="stylesheet" href="{% static 'css/magnific-popup.css' %}">
+	<!-- swiper CSS -->
+	<link rel="stylesheet" href="{% static 'css/slick.css' %}">
+	<!-- style CSS -->
+	<link rel="stylesheet" href="{% static 'css/style.css' %}">
+
+	<!--::table style start::-->
+	<!--::table style end::-->
+</head>
+<style>
+	/* Flip Card Styling */
+	.flip-card {
+		background-color: transparent;
+		width: 300px;
+		height: 400px;
+		perspective: 1000px;
+	}
+	
+	.flip-card-inner {
+		position: relative;
+		width: 100%;
+		height: 100%;
+		text-align: center;
+		transition: transform 0.6s;
+		transform-style: preserve-3d;
+	}
+	
+	.flip-card:hover .flip-card-inner {
+		transform: rotateY(180deg);
+	}
+	
+	.flip-card-front, .flip-card-back {
+		position: absolute;
+		width: 100%;
+		height: 100%;
+		backface-visibility: hidden;
+	}
+	
+	/* Ensure the entire card is scrollable */
+	.flip-card-back {
+		transform: rotateY(180deg);
+		background-color: #f8f8f8; /* Light background for contrast */
+		border-radius: 10px;
+		display: flex;
+		flex-direction: column;
+		align-items: center;
+		justify-content: space-evenly;
+		padding: 15px;
+		overflow-y: auto; /* Make the entire card scrollable */
+		-webkit-overflow-scrolling: touch; /* Smooth scrolling on mobile */
+		max-height: 100%; /* Ensure the card doesn't exceed the set height */
+	}
+	
+	/* Image Styling */
+	.image-container img {
+		width: 100%;
+		max-height: 200px;
+		object-fit: contain; /* Ensures the image fits inside without cropping */
+		border-radius: 15px; /* Rounded corners */
+		transition: transform 0.3s ease-in-out; /* Smooth scaling on hover */
+	}
+	
+	.image-container img:hover {
+		transform: scale(1.05); /* Slight zoom effect on hover */
+	}
+	
+	/* Equipment Info Styling */
+	.equipment-info {
+		text-align: center;
+		padding: 10px 0;
+	}
+	
+	/* Main Info Styling (Type, Name, Brand) */
+	.main-info {
+		font-size: 1em; /* Slightly larger font */
+		font-weight: bold;
+		color: black; /* Ensure the red text applies */
+		text-decoration: underline;
+		margin-bottom: 8px; /* Adjust the space between lines */
+		word-wrap: break-word; /* Prevent text from going out */
+		line-height: 1.4; /* Adjust line height for better spacing */
+	}
+	.main-info p {
+		margin: 5px 0; /* Ensure a slight margin between the lines */
+	}
+	
+	/* Description Label */
+	.description-label {
+		font-weight: bold; /* Bold text */
+		text-decoration: underline; /* Underlined text */
+		color: white; /* Color of the text */
+		margin-bottom: 5px; /* Optional: space between the label and the content */
+	}
+	
+	/* Description Styling (Smaller text and less line height) */
+	.description {
+		font-size: 0.75em; /* Smaller font for description */
+		line-height: 1.2; /* Reduced line height for less space between lines */
+		color: white; /* White text for description */
+		word-wrap: break-word; /* Break words to fit the container */
+		overflow-wrap: break-word; /* Break long words or URLs */
+		text-align: left; /* Align description to the left */
+		margin-top: 10px; /* Space between description and other content */
+		max-height: none; /* Removed max-height to allow full scrolling */
+		overflow: visible; /* Allow text to be visible */
+	}
+	
+	/* Ensure main info is styled properly */
+	.flip-card-back .main-info {
+		font-size: 1.1em; /* Slightly larger for emphasis */
+		font-weight: bold;
+		text-decoration: underline; /* Underline for emphasis */
+		color: black !important; /* Black color for the underlined text */
+		margin-bottom: 8px; /* Spacing before the description */
+		text-transform: capitalize;
+	}
+	
+	/* Description Styling (Updated) */
+	.flip-card-back .description {
+		font-size: 0.75em; /* Slightly smaller font size for description */
+		font-weight: normal; /* Regular weight */
+		line-height: 1.2; /* Reduced line height */
+		color: white !important; /* White color for description */
+		text-align: left; /* Align description to the left */
+	}
+	
+	/* Scrollbar Styling */
+	::-webkit-scrollbar {
+		width: 8px; /* Slim scrollbar width */
+		height: 8px; /* Slim scrollbar height */
+	}
+	
+	/* Scrollbar Track (background) */
+	::-webkit-scrollbar-track {
+		background: #f1f1f1; /* Light gray track */
+		border-radius: 10px;
+	}
+	
+	/* Scrollbar Thumb (the draggable part) */
+	::-webkit-scrollbar-thumb {
+		background: #888; /* Darker thumb color */
+		border-radius: 10px;
+		transition: background 0.3s ease;
+	}
+	
+	/* Scrollbar Thumb Hover (hover effect on thumb) */
+	::-webkit-scrollbar-thumb:hover {
+		background: #555; /* Darker color when hovering */
+	}
+	
+	/* Adding space below the search bar */
+	#search-box {
+		margin-bottom: 20px; /* Adjust this value as needed */
+	}
+	
+	/* Optional: Add padding to the container holding the cards */
+	.equipment-cards {
+		padding-top: 20px; /* Space above the cards */
+	}
+	
+</style>
+<style>
+	.container {
+		position: relative;
+		--size-button: 40px; /* This can be removed if you no longer need it */
+		color: white;
+	  }
+	  
+	  .input {
+		padding-left: 10px; /* Adjust the padding to make room for the text */
+		height: 40px; /* Set height for the input */
+		font-size: 15px;
+		border: none;
+		color: #fff;
+		outline: none;
+		width: 200px; /* Default width before focus */
+		transition: all ease 0.3s;
+		background: linear-gradient(45deg, #fb000b, #c70197, #e3014c); /* Gradient background */
+		box-shadow: 1.5px 1.5px 3px #0e0e0e, 
+					-1.5px -1.5px 3px rgb(95 94 94 / 25%), 
+					inset 0px 0px 0px #0e0e0e, 
+					inset 0px 0px 0px #5f5e5e;
+		border-radius: 50px;
+		cursor: pointer;
+	  }
+	  
+	  .input::placeholder {
+		color: white; /* Set the placeholder text color to white */
+	  }
+	  
+	  .input:focus,
+	  .input:not(:invalid) {
+		width: 250px; /* Expand width on focus */
+		cursor: text;
+		background: linear-gradient(45deg, #e3014c, #c70197, #fb000b); /* Gradient background */
+		box-shadow: 0px 0px 0px #0e0e0e, 
+					0px 0px 0px rgb(95 94 94 / 25%), 
+					inset 1.5px 1.5px 3px #0e0e0e, 
+					inset -1.5px -1.5px 3px #5f5e5e;
+	  }
+	  
+	  .input:focus {
+		cursor: text;
+	  }
+	   
+</style>
+<style>
+	/* General Styles for Equipment Cards */
+.equipment-cards {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 20px;
+    justify-content: center;
+}
+
+.flip-card {
+    width: 200px;
+    height: 300px;
+    perspective: 1000px;
+    display: inline-block;
+}
+
+.flip-card-inner {
+    position: relative;
+    width: 100%;
+    height: 100%;
+    transform-style: preserve-3d;
+    transition: transform 0.5s;
+}
+
+.flip-card:hover .flip-card-inner {
+    transform: rotateY(180deg);
+}
+
+.flip-card-front, .flip-card-back {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    backface-visibility: hidden;
+}
+
+.flip-card-front img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    border-radius: 10px;
+}
+
+.flip-card-back {
+    background-color: #c70197;
+    color: white;
+    text-align: left;
+    padding: 15px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+}
+
+.flip-card-back p {
+    margin: 5px 0;
+}
+
+/* Pagination Styles */
+#pagination-controls {
+    text-align: center;
+    margin-top: 20px;
+}
+
+#pagination-controls button {
+    background-color: #c70197;
+    color: white;
+    border: none;
+    padding: 10px 20px;
+    font-size: 16px;
+    cursor: pointer;
+    border-radius: 5px;
+    margin: 0 10px;
+    transition: background-color 0.3s;
+}
+
+#pagination-controls button:hover {
+    background-color: #a6007c;
+}
+
+#pagination-controls button:disabled {
+    background-color: #e0e0e0;
+    cursor: not-allowed;
+}
+
+#pagination-controls span {
+    font-size: 18px;
+    margin: 0 20px;
+    color: #555;
+}
+
+/* Media Query for Mobile View */
+@media (max-width: 600px) {
+    .flip-card {
+        width: 150px;
+        height: 250px;
+    }
+
+    #pagination-controls button {
+        padding: 8px 16px;
+        font-size: 14px;
+    }
+
+    #pagination-controls span {
+        font-size: 16px;
+    }
+}
+
+</style>
+<body>
+	<!--::header part start::-->
+	<header class="main_menu single_page_menu">
+		<div class="container">
+			<div class="row align-items-center">
+				<div class="col-lg-12">
+					<nav class="navbar navbar-expand-lg navbar-light">
+						<a class="navbar-brand" href=""> <img src="{% static 'img/logo.png' %}" alt="logo" height="200px" > </a>
+						<button class="navbar-toggler" type="button" data-toggle="collapse"
+							data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent"
+							aria-expanded="false" aria-label="Toggle navigation">
+							<span class="menu_icon"><i class="fas fa-bars"></i></span>
+						</button>
+						<div class="collapse navbar-collapse main-menu-item" id="navbarSupportedContent">
+							<ul class="navbar-nav">
+								<li class="nav-item"><a class="nav-link" href="{% url 'home' %}">Home</a></li>
+								<li class="nav-item"><a class="nav-link" href="{% url 'Sponsors_form' %}">sponsor a tournament</a></li>
+								<li class="nav-item">
+									<a class="nav-link" href=" {% url 'Games_list' %}">Our Games</a> <!-- Updated to use the ID -->
+								</li>
+								<li class="nav-item">
+									<a class="nav-link" href=" {% url 'Tournaments_View' %}">Our Tournaments</a> <!-- Updated to use the ID -->
+								</li>
+								<li class="nav-item dropdown">
+									<a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" 
+									   data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Blog</a>
+									<div class="dropdown-menu" aria-labelledby="navbarDropdown">
+										<a class="dropdown-item" href="">Blog</a>
+										<a class="dropdown-item" href="">Single Blog</a>
+									</div>
+								</li>
+								<li class="nav-item"><a class="nav-link" href=" {% url 'Equipments_View' %}">Equipments</a></li>
+							</ul>
+						</div>
+						{% if user.is_authenticated %}
+							<a href="{% url 'profile' user.cin %}" class="btn_1 d-none d-sm-block">Profile</a>
+							<a href="{% url 'logout' %}" class="btn_1 d-none d-sm-block">Logout</a>
+						{% else %}
+						<a href="{% url 'login' %}" class="btn_1 d-none d-sm-block">Login</a>
+						<a href="#" class="btn_1 d-none d-sm-block">SignUp</a>
+						{% endif %}
+						
+					</nav>
+				</div>
+			</div>
+		</div>
+	</header>
+	<!-- Header part end-->
+
+	<!-- breadcrumb start-->
+	<section class="breadcrumb breadcrumb_bg">
+		<div class="container">
+			<div class="row">
+				<div class="col-lg-12">
+					<div class="breadcrumb_iner text-center">
+						<div class="breadcrumb_iner_item">
+							<h2>Equipments</h2>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</section>
+<pre>
+</pre>
+	<div class="element_page black">
+		<!-- Start Sample Area -->
+		<section class="sample-text-area">
+			<div class="container box_1170">
+				<p class="sample-text">
+					{% if equipments.exists %} <!-- Check if the queryset has equipment -->
+					<!-- Custom Search Bar without Icon -->
+					<div class="container text-center w-100" >
+						<input 
+							type="text" 
+							id="search-box" 
+							class="input"
+							required="" 
+							placeholder="Type to search..." 
+							autocomplete="off" 
+						>
+					</div>
+				
+					<div class="equipment-cards">
+						{% for equipment in equipments %}
+						<div class="flip-card">
+							<div class="flip-card-inner">
+								<!-- Front of the card -->
+								<div class="flip-card-front">
+									{% if equipment.eq_image %}
+										<img src="{{ equipment.eq_image.url }}" alt="Equipment Image" style="border-radius: 10px;">
+									{% else %}
+										<p>No Image Available</p>
+									{% endif %}
+								</div>
+								<div class="flip-card-back">
+									<div class="image-container">
+										{% if equipment.eq_image %}
+											<img src="{{ equipment.eq_image.url }}" alt="Equipment Image">
+										{% endif %}
+									</div>
+									<div class="equipment-info">
+										<!-- Type, Name, and Brand -->
+										<p class="main-info">
+											{{ equipment.type }}: {{ equipment.name }} {{ equipment.brand }}
+										</p>
+										
+										<!-- Description -->
+										<p class="description">
+											<span class="description-label">Description:</span> {{ equipment.description }}
+										</p>
+									</div>
+								</div>
+								
+							</div>
+						</div>
+						{% endfor %}
+					</div>
+					</div>
+				{% else %}
+					<p>No equipment available</p> <!-- In case no equipment exists -->
+				{% endif %}
+				</p>
+			</div>
+		</section>
+		<div id="pagination-controls">
+			<button id="prev-btn" onclick="changePage('prev')">Previous</button>
+			<span id="page-number">Page 1</span>
+			<button id="next-btn" onclick="changePage('next')">Next</button>
+		</div>
+		<script>
+			// JavaScript for Pagination
+			let currentPage = 1;  // The current page number
+			const itemsPerPage = 10;  // Number of items per page
+			const allItems = document.querySelectorAll('.flip-card');  // Get all equipment cards
+			const totalPages = Math.ceil(allItems.length / itemsPerPage);  // Calculate total pages
+		
+			// Function to show only the items for the current page
+			function showPage(page) {
+				// Hide all items
+				allItems.forEach((item, index) => {
+					item.style.display = 'none';  // Hide all items
+					if (index >= (page - 1) * itemsPerPage && index < page * itemsPerPage) {
+						item.style.display = 'block';  // Show the items for the current page
+					}
+				});
+		
+				// Update the page number display
+				document.getElementById('page-number').innerText = `Page ${page}`;
+		
+				// Disable/Enable buttons based on current page
+				document.getElementById('prev-btn').disabled = (page === 1);
+				document.getElementById('next-btn').disabled = (page === totalPages);
+			}
+		
+			// Function to change page when user clicks 'Previous' or 'Next'
+			function changePage(direction) {
+				if (direction === 'prev' && currentPage > 1) {
+					currentPage--;
+				} else if (direction === 'next' && currentPage < totalPages) {
+					currentPage++;
+				}
+				showPage(currentPage);
+			}
+		
+			// Initially show the first page
+			showPage(currentPage);
+		</script>
+		<script>
+			document.addEventListener("DOMContentLoaded", () => {
+				const searchBox = document.getElementById("search-box");
+				const equipmentCards = document.querySelectorAll(".flip-card");
+			
+				searchBox.addEventListener("input", () => {
+					const searchValue = searchBox.value.toLowerCase();
+			
+					equipmentCards.forEach(card => {
+						const description = card.querySelector(".flip-card-back p:nth-of-type(2)")?.textContent.toLowerCase() || "";
+			
+						if (description.includes(searchValue)) {
+							card.style.display = "block"; 
+						} else {
+							card.style.display = "none"; 
+						}
+					});
+				});
+			});
+		</script>
+		
+		<!-- End Sample Area -->
+	</div>
+	<!--::footer_part start::-->
+	<footer class="footer_part black">
+		<div class="footer_top">
+			<div class="container">
+				<div class="row">
+					<div class="col-sm-6 col-lg-3">
+						<div class="single_footer_part">
+							<a href="" class="footer_logo_iner"> <img src="{% static 'img/logo.png' %}" alt="#"> </a>
+						</div>
+					</div>
+					<div class="col-sm-6 col-lg-3">
+						<div class="single_footer_part">
+							<h4>Contact Info</h4>
+							<p>Address : 1, Pôle Technologique, 2 Rue André Ampère، Ariana 2083</p>
+							<p>Phone : +216 72 555 638</p>
+							<p>Email : GameMasterLeague@gmail.com</p>
+						</div>
+					</div>
+					</div>
+				</div>
+			</div>
+		</div>
+		<div class="copygight_text">
+			<div class="container">
+				<div class="row align-items-center">
+					<div class="col-lg-8">
+						<div class="copyright_text">
+							<P><!-- Link back to Colorlib can't be removed. Template is licensed under CC BY 3.0. -->
+Copyright &copy;<script>document.write(new Date().getFullYear());</script> All rights reserved | This template is made with <i class="ti-heart" aria-hidden="true"></i> by <a href="https://colorlib.com" target="_blank">Colorlib</a>
+<!-- Link back to Colorlib can't be removed. Template is licensed under CC BY 3.0. --></P>
+						</div>
+					</div>
+					<div class="col-lg-4">
+						<div class="footer_icon social_icon">
+							<ul class="list-unstyled">
+								<li><a href="#" class="single_social_icon"><i class="fab fa-facebook-f"></i></a>
+								</li>
+								<li><a href="#" class="single_social_icon"><i class="fab fa-twitter"></i></a></li>
+								<li><a href="#" class="single_social_icon"><i class="fas fa-globe"></i></a></li>
+								<li><a href="#" class="single_social_icon"><i class="fab fa-behance"></i></a></li>
+							</ul>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</footer>
+	<!--::footer_part end::-->
+	<!-- jquery plugins here-->
+	<script src="{% static 'js/jquery-1.12.1.min.js' %}"></script>
+	<!-- popper js -->
+	<script src="{% static 'js/popper.min.js' %}"></script>
+	<!-- bootstrap js -->
+	<script src="{% static 'js/bootstrap.min.js' %}"></script>
+	<!-- easing js -->
+	<script src="{% static 'js/jquery.magnific-popup.js' %}"></script>
+	<!-- swiper js -->
+	<script src="{% static 'js/swiper.min.js' %}"></script>
+	<!-- swiper js -->
+	<script src="{% static 'js/masonry.pkgd.js' %}"></script>
+	<!-- particles js -->
+	<script src="{% static 'js/owl.carousel.min.js' %}"></script>
+	<script src="{% static 'js/jquery.nice-select.min.js' %}"></script>
+	<!-- slick js -->
+	<script src="{% static 'js/slick.min.js' %}"></script>
+	<script src="{% static 'js/jquery.counterup.min.js' %}"></script>
+	<script src="{% static 'js/waypoints.min.js' %}"></script>
+	<script src="{% static 'js/contact.js' %}"></script>
+	<script src="{% static 'js/jquery.ajaxchimp.min.js' %}"></script>
+	<script src="{% static 'js/jquery.form.js' %}"></script>
+	<script src="{% static 'js/jquery.validate.min.js' %}"></script>
+	<script src="{% static 'js/mail-script.js' %}"></script>
+	<!-- custom js -->
+	<script src="{% static 'js/custom.js' %}"></script>
+</body>
+
+</html>

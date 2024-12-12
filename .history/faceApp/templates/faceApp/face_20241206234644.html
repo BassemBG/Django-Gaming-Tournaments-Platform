@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Face Recognition Video</title>
+    <style>
+        #video-feed {
+            width: 100%;
+            max-width: 600px;
+        }
+    </style>
+</head>
+<body>
+    <h1>Face Recognition Video</h1>
+    <img id="video-feed" src="{% url 'face_recognition_video' %}" alt="Video Feed">
+    <script>
+        const videoFeed = document.getElementById("video-feed");
+
+        videoFeed.addEventListener("load", () => {
+            const xhr = new XMLHttpRequest();
+            xhr.open("GET", videoFeed.src, true);
+            xhr.onreadystatechange = function () {
+                if (xhr.readyState === XMLHttpRequest.DONE) {
+                    // Check if a match was found
+                    if (xhr.responseText.includes("MATCH_FOUND")) {
+                        window.location.href = "{% url 'home' %}";
+                    }
+                }
+            };
+            xhr.send();
+        });
+    </script>
+</body>
+</html>

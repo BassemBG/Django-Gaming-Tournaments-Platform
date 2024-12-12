@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Face Recognition Video</title>
+    <style>
+        #video-feed {
+            width: 100%;
+            max-width: 600px;
+        }
+    </style>
+</head>
+<body>
+    <h1>Face Recognition Video</h1>
+    <img id="video-feed" src="{% url 'face_recognition_video' %}" alt="Video Feed">
+    <script>
+        const videoFeed = document.getElementById("video-feed");
+
+        function checkMatchSignal() {
+            fetch(videoFeed.src, { method: 'HEAD' })
+                .then(response => {
+                    const matchFound = response.headers.get('Match-Found') === 'True';
+                    if (matchFound) {
+                        window.location.href = "{% url 'admin:index' %}";
+                    }
+                })
+                .catch(error => console.error('Error fetching video feed metadata:', error));
+        }
+
+        // Periodically check for match signal
+        setInterval(checkMatchSignal, 1000);
+    </script>
+</body>
+</html>

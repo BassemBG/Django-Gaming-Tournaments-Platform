@@ -27,7 +27,8 @@ class user(AbstractUser):
     choices = (
         ('Sponsor', 'Sponsor'),
         ('Player', 'Player'),
-        ('TournamentAdmin', 'TournamentAdmin')
+        ('TournamentAdmin', 'TournamentAdmin'),
+        ('GamesAdmin', 'GamesAdmin'),
     )
     role = models.CharField('role', choices=choices, max_length=255)    
     is_staff = models.BooleanField(default=False)
