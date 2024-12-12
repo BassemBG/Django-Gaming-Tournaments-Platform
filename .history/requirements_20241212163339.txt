@@ -12,4 +12,3 @@ face_recognition
 dlib
 opencv-python
 numpy
-pandas
