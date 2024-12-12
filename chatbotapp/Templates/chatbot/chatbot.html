@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Chatbot Assistant</title>
+    {% load static %}
+    <link
+      rel="stylesheet"
+      href="{% static 'chatbot/style.css' %}"
+      type="text/css"
+    />
+  </head>
+  <body>
+    <h1>Welcome to the Chatbot Section! It will help you with any question.</h1>
+    <div id="chatbot">
+      <!-- Container for messages -->
+      <div id="chatMessages"></div>
+
+      <!-- Form to send user input -->
+      <form id="userInput" method="post" onsubmit="submitMessage(event)">
+        {% csrf_token %}
+        <div class="textInputContainer">{{ form.as_p }}</div>
+        <button id="buttonInput" type="submit">Send</button>
+      </form>
+    </div>
+
+    <script>
+      // Function to handle form submission and display user and bot messages
+      function submitMessage(event) {
+        event.preventDefault();
+        const userInput = document.querySelector("#textInput").value;
+        if (userInput.trim() === "") return; // Prevent empty submissions
+
+        // Create a new user message element
+        const userMessage = document.createElement("div");
+        userMessage.classList.add("userText");
+        userMessage.textContent = userInput;
+        document.querySelector("#chatMessages").appendChild(userMessage);
+
+        // Clear the input field
+        document.querySelector("#textInput").value = "";
+
+        // Make an AJAX request to the server
+        fetch("{% url 'chatbot_query' %}", {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+            "X-CSRFToken": "{{ csrf_token }}",
+          },
+          body: JSON.stringify({ user_input: userInput }),
+        })
+          .then((response) => response.json())
+          .then((data) => {
+            if (data.error) {
+              alert(data.error);
+            } else {
+              // Create a new bot message element
+              const botResponse = document.createElement("div");
+              botResponse.classList.add("botText");
+              botResponse.textContent = data.response;
+              document.querySelector("#chatMessages").appendChild(botResponse);
+            }
+
+            // Scroll to the bottom of the chat
+            document.querySelector("#chatMessages").scrollTop =
+              document.querySelector("#chatMessages").scrollHeight;
+          })
+          .catch((error) => console.error("Error:", error));
+      }
+    </script>
+  </body>
+</html>
