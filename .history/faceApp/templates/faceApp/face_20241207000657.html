@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Face Recognition</title>
+    <style>
+        video {
+            width: 100%;
+            max-width: 600px;
+        }
+    </style>
+</head>
+<body>
+    <h1>Face Recognition</h1>
+    <img id="video-stream" src="{% url 'face_recognition_video' %}" alt="Video Stream">
+    <script>
+        const stream = document.getElementById("video-stream");
+
+        function checkMatchSignal() {
+            fetch(stream.src, { method: "HEAD" })
+                .then(response => {
+                    const matchFound = response.headers.get("Match-Found") === "True";
+                    const name = response.headers.get("Name");
+
+                    if (matchFound) {
+                        console.log(`Redirecting: Match found for ${name}`);
+                        window.location.href = "{% url 'admin:index' %}";
+                    }
+                })
+                .catch(error => console.error("Error:", error));
+        }
+
+        // Check every second for match
+        setInterval(checkMatchSignal, 1000);
+    </script>
+</body>
+</html>

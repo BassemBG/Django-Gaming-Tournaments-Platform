@@ -1,0 +1,239 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title> Game Dashboard</title>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;700&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Roboto', sans-serif;
+            margin: 0;
+            padding: 0;
+            background: #121212;
+            color: #E0E0E0;
+            overflow-x: hidden;
+        }
+
+        header {
+            background: rgba(0, 0, 0, 0.6);
+            color: #fff;
+            padding: 1rem 2rem;
+            text-align: center;
+            border-bottom: 2px solid #FF00FF;
+            box-shadow: 0 4px 20px rgba(255, 0, 255, 0.2);
+        }
+
+        main {
+            padding: 2rem;
+        }
+
+        .dashboard-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+        }
+
+        .card {
+            background: rgba(30, 30, 30, 0.8); /* Glassmorphism effect */
+            backdrop-filter: blur(10px); /* Blurring the background */
+            border-radius: 20px;
+            padding: 2rem;
+            text-align: center;
+            box-shadow: 0 10px 40px rgba(0, 255, 255, 0.5); /* Neon cyan glow */
+            border: 2px solid transparent;
+            background-image: linear-gradient(45deg, rgba(255, 0, 255, 0.3), rgba(0, 255, 255, 0.3));
+            transition: transform 0.3s ease, box-shadow 0.3s ease; /* Smooth hover effects */
+        }
+
+        .card:hover {
+            transform: translateY(-10px); /* Hover effect for cards */
+            box-shadow: 0 15px 50px rgba(0, 255, 255, 0.7); /* Enhanced neon glow */
+        }
+
+        .card h2 {
+            margin-bottom: 1rem;
+            font-size: 1.8rem;
+            color: #FF00FF; /* Neon pink */
+            text-shadow: 0 0 15px #FF00FF, 0 0 30px #FF00FF;
+            transition: text-shadow 0.3s ease;
+        }
+
+        .card h2:hover {
+            text-shadow: 0 0 30px #FF00FF, 0 0 50px #FF00FF; /* Glowing effect on hover */
+        }
+
+        canvas {
+            max-width: 100%;
+            border-radius: 15px;
+        }
+
+        footer {
+            text-align: center;
+            padding: 1rem;
+            background: rgba(0, 0, 0, 0.8);
+            color: #fff;
+            border-top: 2px solid #FF00FF;
+            box-shadow: 0 4px 20px rgba(255, 0, 255, 0.2);
+            margin-top: 2rem;
+        }
+
+        a {
+            color: #00FFFF; /* Neon cyan */
+            text-decoration: none;
+            font-weight: 600;
+            transition: text-shadow 0.3s ease;
+        }
+
+        a:hover {
+            text-shadow: 0 0 10px #00FFFF, 0 0 30px #00FFFF; /* Glowing effect on hover */
+        }
+
+        /* New Hover Effects for Links in Cards */
+        .card a {
+            color: #FF3D00; /* Neon orange for links inside cards */
+            text-decoration: none;
+            font-weight: 600;
+            text-shadow: 0 0 5px #FF3D00, 0 0 15px #FF3D00;
+            transition: text-shadow 0.3s ease;
+        }
+
+        .card a:hover {
+            text-shadow: 0 0 15px #FF3D00, 0 0 25px #FF3D00;
+        }
+
+        .chart-legend {
+            color: #fff; /* White legend labels */
+        }
+
+        /* Animations */
+        @keyframes neonPulse {
+            0% {
+                box-shadow: 0 0 10px #FF00FF, 0 0 20px #FF00FF;
+            }
+            50% {
+                box-shadow: 0 0 20px #FF00FF, 0 0 40px #FF00FF;
+            }
+            100% {
+                box-shadow: 0 0 10px #FF00FF, 0 0 20px #FF00FF;
+            }
+        }
+
+        .card:hover {
+            animation: neonPulse 1.5s infinite alternate;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <h1> Game Dashboard</h1>
+    </header>
+    <main>
+        <div class="dashboard-container">
+            <div class="card">
+                <h2>Games by Genre</h2>
+                <canvas id="genreChart"></canvas>
+            </div>
+            <div class="card">
+                <h2>Games by Platform</h2>
+                <canvas id="platformChart"></canvas>
+            </div>
+            <div class="card">
+                <h2>Games by Developer</h2>
+                <canvas id="developerChart"></canvas>
+            </div>
+        </div>
+    </main>
+    <footer>
+        <p><a href="/admin/gamesman/game/">Back to Admin</a></p>
+    </footer>
+
+    <script>
+        // Data for Genre Chart
+        var genreData = {
+            labels: {{ genres|safe }},
+            datasets: [{
+                label: 'Games by Genre',
+                data: {{ genre_counts|safe }},
+                backgroundColor: ['#FF00FF', '#00FFFF', '#FF5722', '#4CAF50', '#FFC107'] /* Neon colors */
+            }]
+        };
+        new Chart(document.getElementById('genreChart'), {
+            type: 'pie',
+            data: genreData,
+            options: {
+                responsive: true,
+                plugins: {
+                    legend: {
+                        labels: {
+                            color: '#fff'
+                        }
+                    }
+                }
+            }
+        });
+
+        // Data for Platform Chart
+        var platformData = {
+            labels: {{ platforms|safe }},
+            datasets: [{
+                label: 'Games by Platform',
+                data: {{ platform_counts|safe }},
+                backgroundColor: ['#FF00FF', '#00FFFF', '#FF5722', '#4CAF50', '#FFC107'] /* Neon colors */
+            }]
+        };
+        new Chart(document.getElementById('platformChart'), {
+            type: 'bar',
+            data: platformData,
+            options: {
+                responsive: true,
+                scales: {
+                    y: {
+                        beginAtZero: true,
+                        ticks: {
+                            color: '#fff'
+                        }
+                    },
+                    x: {
+                        ticks: {
+                            color: '#fff'
+                        }
+                    }
+                },
+                plugins: {
+                    legend: {
+                        labels: {
+                            color: '#fff'
+                        }
+                    }
+                }
+            }
+        });
+
+        // Data for Developer Chart
+        var developerData = {
+            labels: {{ developers|safe }},
+            datasets: [{
+                label: 'Games by Developer',
+                data: {{ developer_counts|safe }},
+                backgroundColor: ['#FF00FF', '#00FFFF', '#FF5722', '#4CAF50', '#FFC107'] /* Neon colors */
+            }]
+        };
+        new Chart(document.getElementById('developerChart'), {
+            type: 'doughnut',
+            data: developerData,
+            options: {
+                responsive: true,
+                plugins: {
+                    legend: {
+                        labels: {
+                            color: '#fff'
+                        }
+                    }
+                }
+            }
+        });
+    </script>
+</body>
+</html>

@@ -1,0 +1,164 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>User Dashboard</title>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;700&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Roboto', sans-serif;
+            margin: 0;
+            padding: 0;
+            background: #121212;
+            color: #E0E0E0;
+            overflow-x: hidden;
+        }
+
+        header {
+            background: rgba(0, 0, 0, 0.6);
+            color: #fff;
+            padding: 1rem 2rem;
+            text-align: center;
+            border-bottom: 2px solid #FF00FF;
+            box-shadow: 0 4px 20px rgba(255, 0, 255, 0.2);
+        }
+
+        main {
+            padding: 2rem;
+        }
+
+        .dashboard-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+        }
+
+        .card {
+            background: rgba(30, 30, 30, 0.8);
+            backdrop-filter: blur(10px);
+            border-radius: 20px;
+            padding: 2rem;
+            text-align: center;
+            box-shadow: 0 10px 40px rgba(0, 255, 255, 0.5);
+            border: 2px solid transparent;
+            background-image: linear-gradient(45deg, rgba(255, 0, 255, 0.3), rgba(0, 255, 255, 0.3));
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        .card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 15px 50px rgba(0, 255, 255, 0.7);
+        }
+
+        .card h2 {
+            margin-bottom: 1rem;
+            font-size: 1.8rem;
+            color: #FF00FF;
+            text-shadow: 0 0 15px #FF00FF, 0 0 30px #FF00FF;
+        }
+
+        canvas {
+            max-width: 100%;
+            border-radius: 15px;
+        }
+
+        footer {
+            text-align: center;
+            padding: 1rem;
+            background: rgba(0, 0, 0, 0.8);
+            color: #fff;
+            border-top: 2px solid #FF00FF;
+            box-shadow: 0 4px 20px rgba(255, 0, 255, 0.2);
+            margin-top: 2rem;
+        }
+
+        a {
+            color: #00FFFF;
+            text-decoration: none;
+            font-weight: 600;
+        }
+
+        a:hover {
+            text-shadow: 0 0 10px #00FFFF, 0 0 30px #00FFFF;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <h1>User Dashboard</h1>
+    </header>
+    <main>
+        <div class="dashboard-container">
+            <div class="card">
+                <h2>Users by Role</h2>
+                <canvas id="roleChart"></canvas>
+            </div>
+            <div class="card">
+                <h2>Staff vs Non-Staff</h2>
+                <canvas id="staffChart"></canvas>
+            </div>
+        </div>
+    </main>
+    <footer>
+        <p><a href="/admin/userApp/user/">Back to Admin</a></p>
+    </footer>
+
+    <script>
+        // Data for Role Chart
+        var roleData = {
+            labels: {{ roles|safe }},
+            datasets: [{
+                label: 'Users by Role',
+                data: {{ role_counts|safe }},
+                backgroundColor: [
+                    '#FF00FF', '#00FFFF', '#9B00FF', '#FF5722',
+                ]
+            }]
+        };
+        new Chart(document.getElementById('roleChart'), {
+            type: 'pie',
+            data: roleData,
+            options: {
+                responsive: true,
+                plugins: {
+                    legend: {
+                        labels: {
+                            color: '#fff'
+                        }
+                    }
+                }
+            }
+        });
+
+        // Data for Staff Chart based on `is_staff` boolean field
+        var staffData = {
+            labels: ['Staff', 'Non-Staff'],
+            datasets: [{
+                label: 'Staff Distribution',
+                data: [{{ staff_count }},{{ Notstaff_count }}, {{ total_users|default:0|add:"-staff_count" }}],
+                backgroundColor: [
+                    '#FF00FF', // Pink for Staff
+                    '#00FFFF'  // Green for Non-Staff
+                ]
+            }]
+        };
+
+        new Chart(document.getElementById('staffChart'), {
+            type: 'doughnut',
+            data: staffData,
+            options: {
+                responsive: true,
+                plugins: {
+                    legend: {
+                        labels: {
+                            color: '#fff'
+                        }
+                    }
+                }
+            }
+        });
+    </script>
+</body>
+</html>

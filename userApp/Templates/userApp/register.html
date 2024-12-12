@@ -122,68 +122,132 @@
             
             <div class="login-form-container">
                 <h1>Register</h1>
-                {% if messages %}
-					<div class="alert alert-info" role="alert">
-					  {% for message in messages %}
-						{{ message }}
-					  {% endfor %}
-					</div>
-				  {% endif %}
+
                 <form method="POST" action="{% url 'register' %}">
                     {% csrf_token %}
+                    
                     <div class="textbox">
                         <input type="text" name="username" placeholder="Username" value="{{ form.username.value|default:'' }}" required>
                         {% if form.username.errors %}
-                        <span class="check-message">{{ form.username.errors.0 }}</span>
+                            <span class="check-message">{{ form.username.errors.0 }}</span>
+                        {% endif %}
+                        {% if errors_dict.username %}
+                            <div class="error-message">
+                                <strong style="color: red;">Username:</strong>
+                                {% for error in errors_dict.username %}
+                                    <span class="check-message" style="color: red;">{{ error }}</span><br>
+                                {% endfor %}
+                            </div>
                         {% endif %}
                     </div>
+
                     <div class="textbox">
                         <input type="text" name="cin" placeholder="CIN" value="{{ form.cin.value|default:'' }}" required>
                         {% if form.cin.errors %}
-                        <span class="check-message">{{ form.cin.errors.0 }}</span>
+                            <span class="check-message">{{ form.cin.errors.0 }}</span>
                         {% endif %}
+                        {% if errors_dict.cin %}
+                            <div class="error-message">
+                                <strong style="color: red;">CIN:</strong>
+                                {% for error in errors_dict.cin %}
+                                    <span class="check-message" style="color: red;">{{ error }}</span><br>
+                                {% endfor %}
+                            </div>
+                        {% endif %}
+                        
                     </div>
+
                     <div class="textbox">
                         <input type="text" name="email" placeholder="Email" value="{{ form.email.value|default:'' }}" required>
                         {% if form.email.errors %}
-                        <span class="check-message">{{ form.email.errors.0 }}</span>
+                            <span class="check-message">{{ form.email.errors.0 }}</span>
+                        {% endif %}
+                        {% if errors_dict.email %}
+                            <div class="error-message">
+                                <strong style="color: red;">Email:</strong>
+                                {% for error in errors_dict.email %}
+                                    <span class="check-message" style="color: red;">{{ error }}</span><br>
+                                {% endfor %}
+                            </div>
                         {% endif %}
                     </div>
+
                     <div class="textbox">
                         <input type="text" name="first_name" placeholder="First Name" value="{{ form.first_name.value|default:'' }}" required>
                         {% if form.first_name.errors %}
-                        <span class="check-message">{{ form.first_name.errors.0 }}</span>
+                            <span class="check-message">{{ form.first_name.errors.0 }}</span>
+                        {% endif %}
+                        {% if errors_dict.first_name %}
+                            <div class="error-message">
+                                <strong style="color: red;">First_name:</strong>
+                                {% for error in errors_dict.first_name %}
+                                    <span class="check-message" style="color: red;">{{ error }}</span><br>
+                                {% endfor %}
+                            </div>
                         {% endif %}
                     </div>
+
                     <div class="textbox">
                         <input type="text" name="last_name" placeholder="Last Name" value="{{ form.last_name.value|default:'' }}" required>
                         {% if form.last_name.errors %}
-                        <span class="check-message">{{ form.last_name.errors.0 }}</span>
+                            <span class="check-message">{{ form.last_name.errors.0 }}</span>
+                        {% endif %}
+                        {% if errors_dict.last_name %}
+                            <div class="error-message">
+                                <strong style="color: red;">Last_name:</strong>
+                                {% for error in errors_dict.last_name %}
+                                    <span class="check-message" style="color: red;">{{ error }}</span><br>
+                                {% endfor %}
+                            </div>
                         {% endif %}
                     </div>
+
                     <div class="textbox">
                         <input type="password" name="password" placeholder="Password" required>
                         {% if form.password.errors %}
-                        <span class="check-message">{{ form.password.errors.0 }}</span>
+                            <span class="check-message">{{ form.password.errors.0 }}</span>
                         {% endif %}
+                        {% if messages|length == 1 %}
+                            {% for message in messages %}
+                                {% if forloop.counter0 == 0 %}
+                                    <span class="check-message" style="color: red;"> {{ message }}</span>
+                                {% endif %}
+                            {% endfor %}
+                        {% endif %}    
                     </div>
+
                     <div class="textbox">
                         <input type="password" name="confirm_password" placeholder="Confirm Password" required>
                         {% if form.confirm_password.errors %}
-                        <span class="check-message">{{ form.confirm_password.errors.0 }}</span>
+                            <span class="check-message">{{ form.confirm_password.errors.0 }}</span>
                         {% endif %}
+                        {% if messages|length == 1 %}
+                            {% for message in messages %}
+                                {% if forloop.counter0 == 0 %}
+                                    <span class="check-message" style="color: red;"> {{ message }}</span>
+                                {% endif %}
+                            {% endfor %}
+                        {% endif %}    
                     </div>
+
                     <div class="textbox">
                         <select name="role" required>
                             <option value="Player">Player</option>
                             <option value="Sponsor">Sponsor</option>
                         </select>
                         {% if form.role.errors %}
-                        <span class="check-message">{{ form.role.errors.0 }}</span>
+                            <span class="check-message">{{ form.role.errors.0 }}</span>
                         {% endif %}
+                        {% for message in messages %}
+                            {% if 'role' in message %}
+                                <span class="check-message">{{ message }}</span>
+                            {% endif %}
+                        {% endfor %}
                     </div>
+
                     <input type="submit" value="Register" class="btn_1 d-none d-sm-block">
                 </form>
+
                 <div class="dont-have-account">
                     Already have an account? <a href="{% url 'login' %}">Log In</a>
                 </div>

@@ -1,0 +1,429 @@
+<!doctype html>
+<html lang="zxx">
+{% load static %}
+<head>
+
+    	<!-- Required meta tags -->
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+	<title>Sponsorship Form</title>
+	<link rel="icon" href="{% static 'img/favicon.png' %}">
+	<!-- Bootstrap CSS -->
+	<link rel="stylesheet" href="{% static 'css/bootstrap.min.css' %}">
+	<!-- animate CSS -->
+	<link rel="stylesheet" href="{% static 'css/animate.css' %}">
+	<!-- owl carousel CSS -->
+	<link rel="stylesheet" href="{% static 'css/owl.carousel.min.css' %}">
+	<!-- font awesome CSS -->
+	<link rel="stylesheet" href="{% static 'css/all.css' %}">
+	<!-- flaticon CSS -->
+	<link rel="stylesheet" href="{% static 'css/flaticon.css' %}">
+	<link rel="stylesheet" href="{% static 'css/themify-icons.css' %}">
+	<link rel="stylesheet" href="{% static 'css/nice-select.css' %}">
+	<!-- font awesome CSS -->
+	<link rel="stylesheet" href="{% static 'css/magnific-popup.css' %}">
+	<!-- swiper CSS -->
+	<link rel="stylesheet" href="{% static 'css/slick.css' %}">
+	<!-- style CSS -->
+	<link rel="stylesheet" href="{% static 'css/style.css' %}">
+
+    <style>
+        body {
+            background-color: #f8f9fa; /* Light background for better visibility */
+        }
+
+        .login-form-container {
+            max-width: 600px;
+            margin: 50px auto;
+            padding: 20px;
+            background: rgba(255, 255, 255, 0.9);
+            border-radius: 10px;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+        }
+
+        .login-form-container h1 {
+            text-align: center;
+            margin-bottom: 20px;
+            color: #333;
+            font-size: 24px;
+            font-weight: bold;
+        }
+
+        .form-group {
+            margin-bottom: 15px;
+        }
+
+        .form-group label {
+            font-weight: bold;
+            margin-bottom: 5px;
+            display: block;
+            color: #444;
+        }
+
+        .form-control {
+            width: 100%;
+            padding: 10px;
+            border-radius: 5px;
+            border: 1px solid #ccc;
+            font-size: 14px;
+            background-color: #fff;
+        }
+
+        .form-control:focus {
+            border-color: #007bff;
+            box-shadow: 0 0 5px rgba(0, 123, 255, 0.5);
+        }
+
+        .btn {
+            width: 100%;
+            padding: 10px;
+            background: linear-gradient(to right, red, #8B008B);
+            border: none;
+            border-radius: 5px;
+            color: white;
+            font-size: 16px;
+            font-weight: bold;
+            cursor: pointer;
+            transition: background 0.3s ease;
+        }
+
+        .btn:hover {
+            background: linear-gradient(to right, darkred, #4B0082);
+        }
+
+        .text-danger {
+            color: red;
+            font-size: 13px;
+        }
+
+        /* Card Footer Styling */
+		.card-footer {
+			margin-top: 10px;
+			border-top: 1px solid rgba(255, 255, 255, 0.1);
+			padding-top: 10px;
+		}
+    </style>
+</head>
+
+<body>
+    	<!--::header part start::-->
+	<header class="main_menu single_page_menu">
+		<div class="container">
+			<div class="row align-items-center">
+				<div class="col-lg-12">
+					<nav class="navbar navbar-expand-lg navbar-light">
+						<a class="navbar-brand" href=""> <img src="{% static 'img/logo.png' %}" alt="logo" height="200px" > </a>
+						<button class="navbar-toggler" type="button" data-toggle="collapse"
+							data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent"
+							aria-expanded="false" aria-label="Toggle navigation">
+							<span class="menu_icon"><i class="fas fa-bars"></i></span>
+						</button>
+                <div class="collapse navbar-collapse main-menu-item" id="navbarSupportedContent">
+                    <ul class="navbar-nav">
+                        <li class="nav-item"><a class="nav-link" href="{% url 'home' %}">Home</a></li>
+                        <li class="nav-item"><a class="nav-link" href="{% url 'Sponsors_form' %}">Sponsor a Tournament</a></li>
+                        <li class="nav-item"><a class="nav-link" href="{% url 'Games_list' %}">Our Games</a></li>
+                        <li class="nav-item"><a class="nav-link" href="{% url 'Tournaments_View' %}">Our Tournaments</a></li>
+                        <li class="nav-item"><a class="nav-link" href="#">Contact</a></li>
+                    </ul>
+                </div>
+                {% if user.is_authenticated %}
+                <a href="{% url 'logout' %}" class="btn btn-danger">Logout</a>
+                <a class="btn btn-primary" href="{% url 'profile' user.cin %}">Profile</a>
+                {% else %}
+                <a href="{% url 'login' %}" class="btn btn-success">Login</a>
+                {% endif %}
+            </nav>
+        </div>
+    </header>
+	<!-- breadcrumb start -->
+	<section class="breadcrumb breadcrumb_bg">
+		<div class="container">
+			<div class="row">
+				<div class="col-lg-12">
+					<div class="breadcrumb_iner text-center">
+						<div class="breadcrumb_iner_item">
+							<h2> Sponsor a Tournament </h2>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</section>
+
+    <!-- Sponsorship Form -->
+    <div class="login-form-container">
+        <h1>Sponsorship Form</h1>
+        <form method="POST" action="{% url 'sponsorship_form' %}">
+            {% csrf_token %}
+
+            <!-- Tournament Selection -->
+            {% if tournament %}
+            <div class="form-group">
+                <label for="tournament">Selected Tournament:</label>
+                <input type="text" class="form-control" value="{{ tournament.name }}" readonly>
+                <input type="hidden" name="tournament" value="{{ tournament.id }}">
+            </div>
+            {% else %}
+            <div class="form-group">
+                <label for="tournament">Select Tournament:</label>
+                <select name="tournament" id="tournament" class="form-control">
+                    {% for tournament in tournaments %}
+                    <option value="{{ tournament.id }}" {% if form.tournament.value == tournament.id %}selected{% endif %}>
+                        {{ tournament.name }}
+                    </option>
+                    {% endfor %}
+                </select>
+                {% if form.tournament.errors %}
+                <span class="text-danger">{{ form.tournament.errors.0 }}</span>
+                {% endif %}
+            </div>
+            {% endif %}
+
+            <!-- Sponsor -->
+            <div class="form-group">
+                <label for="sponsor">Sponsor:</label>
+                <input type="text" id="sponsor" class="form-control" value="{{ request.user.username }}" readonly>
+            </div>
+
+            <!-- Amount -->
+            <div class="form-group">
+                <label for="amount">Amount:</label>
+                <input type="number" id="amount" name="amount" class="form-control" placeholder="Enter amount" required>
+            </div>
+
+            <!-- Start Date -->
+            <div class="form-group">
+                <label for="start_date">Start Date:</label>
+                <input type="date" id="start_date" name="start_date" class="form-control" required>
+            </div>
+
+            <!-- End Date -->
+            <div class="form-group">
+                <label for="end_date">End Date:</label>
+                <input type="date" id="end_date" name="end_date" class="form-control" required>
+            </div>
+
+            <!-- Status -->
+            <div class="form-group">
+                <label for="status">Status:</label>
+                <select name="status" id="status" class="form-control">
+                    <option value="Pending" selected>Pending</option>
+                </select>
+            </div>
+
+            <button type="submit" class="btn">Submit</button>
+			
+        </form>
+    </div>
+
+    <!-- sponsorship_form_END -->
+	
+
+
+		
+	
+	<!--::footer_part start::-->
+	<footer class="footer_part black">
+		<div class="footer_top">
+			<div class="container">
+				<div class="row">
+					<div class="col-sm-6 col-lg-3">
+						<div class="single_footer_part">
+							<a href="" class="footer_logo_iner"> <img src="{% static 'img/logo.png' %}" alt="#"> </a>
+							<p>Heaven fruitful doesn't over lesser days appear creeping seasons so behold bearing
+								days
+								open
+							</p>
+						</div>
+					</div>
+					<div class="col-sm-6 col-lg-3">
+						<div class="single_footer_part">
+							<h4>Contact Info</h4>
+							<p>Address : Your address goes
+								here, your demo address.
+								Bangladesh.</p>
+							<p>Phone : +8880 44338899</p>
+							<p>Email : info@colorlib.com</p>
+						</div>
+					</div>
+					<div class="col-sm-6 col-lg-3">
+						<div class="single_footer_part">
+							<h4>Important Link</h4>
+							<ul class="list-unstyled">
+								<li><a href=""> WHMCS-bridge</a></li>
+								<li><a href="">Search Domain</a></li>
+								<li><a href="">My Account</a></li>
+								<li><a href="">Shopping Cart</a></li>
+								<li><a href="">Our Shop</a></li>
+							</ul>
+						</div>
+					</div>
+					<div class="col-sm-6 col-lg-3">
+						<div class="single_footer_part">
+							<h4>Newsletter</h4>
+							<p>Heaven fruitful doesn't over lesser in days. Appear creeping seasons deve behold
+								bearing
+								days
+								open
+							</p>
+							<div id="mc_embed_signup">
+								<form target="_blank"
+									action="https://spondonit.us12.list-manage.com/subscribe/post?u=1462626880ade1ac87bd9c93a&amp;id=92a4423d01"
+									method="get" class="subscribe_form relative mail_part">
+									<input type="email" name="email" id="newsletter-form-email"
+										placeholder="Email Address" class="placeholder hide-on-focus"
+										onfocus="this.placeholder = ''" onblur="this.placeholder = ' Email Address '">
+									<button type="submit" name="submit" id="newsletter-submit"
+										class="email_icon newsletter-submit button-contactForm"><i
+											class="far fa-paper-plane"></i></button>
+									<div class="mt-10 info"></div>
+								</form>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+		<div class="copygight_text">
+			<div class="container">
+				<div class="row align-items-center">
+					<div class="col-lg-8">
+						<div class="copyright_text">
+							<P><!-- Link back to Colorlib can't be removed. Template is licensed under CC BY 3.0. -->
+Copyright &copy;<script>document.write(new Date().getFullYear());</script> All rights reserved | This template is made with <i class="ti-heart" aria-hidden="true"></i> by <a href="https://colorlib.com" target="_blank">Colorlib</a>
+<!-- Link back to Colorlib can't be removed. Template is licensed under CC BY 3.0. --></P>
+						</div>
+					</div>
+					<div class="col-lg-4">
+						<div class="footer_icon social_icon">
+							<ul class="list-unstyled">
+								<li><a href="#" class="single_social_icon"><i class="fab fa-facebook-f"></i></a>
+								</li>
+								<li><a href="#" class="single_social_icon"><i class="fab fa-twitter"></i></a></li>
+								<li><a href="#" class="single_social_icon"><i class="fas fa-globe"></i></a></li>
+								<li><a href="#" class="single_social_icon"><i class="fab fa-behance"></i></a></li>
+							</ul>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</footer>
+	<!--::footer_part end::-->
+    	<!--::footer_part end::-->
+	<!-- jquery plugins here-->
+	<script src="{% static 'js/jquery-1.12.1.min.js' %}"></script>
+	<!-- popper js -->
+	<script src="{% static 'js/popper.min.js' %}"></script>
+	<!-- bootstrap js -->
+	<script src="{% static 'js/bootstrap.min.js' %}"></script>
+	<!-- easing js -->
+	<script src="{% static 'js/jquery.magnific-popup.js' %}"></script>
+	<!-- swiper js -->
+	<script src="{% static 'js/swiper.min.js' %}"></script>
+	<!-- swiper js -->
+	<script src="{% static 'js/masonry.pkgd.js' %}"></script>
+	<!-- particles js -->
+	<script src="{% static 'js/owl.carousel.min.js' %}"></script>
+	<script src="{% static 'js/jquery.nice-select.min.js' %}"></script>
+	<!-- slick js -->
+	<script src="{% static 'js/slick.min.js' %}"></script>
+	<script src="{% static 'js/jquery.counterup.min.js' %}"></script>
+	<script src="{% static 'js/waypoints.min.js' %}"></script>
+	<script src="{% static 'js/contact.js' %}"></script>
+	<script src="{% static 'js/jquery.ajaxchimp.min.js' %}"></script>
+	<script src="{% static 'js/jquery.form.js' %}"></script>
+	<script src="{% static 'js/jquery.validate.min.js' %}"></script>
+	<script src="{% static 'js/mail-script.js' %}"></script>
+	<!-- custom js -->
+	<script src="{% static 'js/custom.js' %}"></script>
+
+    
+    
+</body>
+</html>
+      <!-- Script START for voice commands -->
+      <script>
+        // Helper function to get CSRF token
+        function getCookie(name) {
+            let cookieValue = null;
+            if (document.cookie && document.cookie !== "") {
+                const cookies = document.cookie.split(";");
+                for (let i = 0; i < cookies.length; i++) {
+                    const cookie = cookies[i].trim();
+                    if (cookie.substring(0, name.length + 1) === name + "=") {
+                        cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
+                        break;
+                    }
+                }
+            }
+            return cookieValue;
+        }
+        const csrftoken = getCookie("csrftoken");
+    
+        async function startVoiceCommand() {
+            const SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
+    
+            if (!SpeechRecognition) {
+                alert("Your browser does not support the Web Speech API. Please use Chrome or Edge.");
+                return;
+            }
+    
+            const recognition = new SpeechRecognition();
+            recognition.lang = "en-US";
+            recognition.interimResults = false;
+            recognition.maxAlternatives = 1;
+    
+            recognition.start();
+    
+            recognition.onresult = async (event) => {
+                const transcript = event.results[0][0].transcript;
+    
+                try {
+                    // Step 1: Send transcript to classify the command
+                    const classifyResponse = await fetch("/api/voice-command/", {
+                        method: "POST",
+                        headers: {
+                            "Content-Type": "application/json",
+                            "X-CSRFToken": csrftoken,
+                        },
+                        body: JSON.stringify({ text: transcript }),
+                    });
+    
+                    const classifyResult = await classifyResponse.json();
+                    if (classifyResult.error) {
+                        alert(`Error: ${classifyResult.error}`);
+                        return;
+                    }
+    
+                    const { command } = classifyResult;
+    
+                    // Step 2: Get the resolved URL
+                    const redirectResponse = await fetch("/api/voice-command-redirect/", {
+                        method: "POST",
+                        headers: {
+                            "Content-Type": "application/json",
+                            "X-CSRFToken": csrftoken,
+                        },
+                        body: JSON.stringify({ command }),
+                    });
+    
+                    const redirectResult = await redirectResponse.json();
+                    if (redirectResult.redirect_url) {
+                        // Redirect to the resolved URL
+                        window.location.href = redirectResult.redirect_url;
+                    } else if (redirectResult.error) {
+                        alert(`Error: ${redirectResult.error}`);
+                    }
+                } catch (error) {
+                    alert(`Error: ${error.message}`);
+                }
+            };
+    
+            recognition.onerror = (event) => {
+                alert(`Error: ${event.error}`);
+            };
+        }
+      </script>
+      <!-- Script END for voice commands -->
