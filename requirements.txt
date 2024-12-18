@@ -8,3 +8,7 @@ reportlab==4.2.5
 google-generativeai
 transformers==4.47.0
 torch==2.5.1
+django_recaptcha
+face_recognition_models
+captcha
+face_recognition

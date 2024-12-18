@@ -55,7 +55,7 @@ INSTALLED_APPS = [
     'SponsorshipApp',
     'Participation',
     'equipmentApp',
-    'faceApp'
+    'faceApp',
     'chatbotapp',
     'voiceapp',
 ]
