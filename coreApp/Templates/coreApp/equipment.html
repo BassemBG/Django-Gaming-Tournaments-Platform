@@ -368,12 +368,7 @@
 								  >
 								  <!-- Updated to use the ID -->
 								</li>
-								<li class="nav-item">
-								  <a class="nav-link" href=" {% url 'chatbot_query' %}"
-									>Ask Chatbot</a
-								  >
-								  <!-- Updated to use the ID -->
-								</li>
+							
 								<li class="nav-item">
 								  <a class="nav-link" href=" {% url 'Equipments_View' %}"
 									>Equipments</a
@@ -590,6 +585,8 @@ Copyright &copy;<script>document.write(new Date().getFullYear());</script> All r
 			</div>
 		</div>
 	</footer>
+	{% include 'chatbot/chatbot.html' %}
+
 	<!--::footer_part end::-->
 	<!-- jquery plugins here-->
 	<script src="{% static 'js/jquery-1.12.1.min.js' %}"></script>

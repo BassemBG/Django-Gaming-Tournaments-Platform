@@ -70,6 +70,8 @@
 </head>
 
 <body>
+	{% include 'chatbot/chatbot.html' %}
+
 	<!--::header part start::-->
 	<header class="main_menu single_page_menu">
 		<div class="container">
@@ -104,12 +106,7 @@
 								  >
 								  <!-- Updated to use the ID -->
 								</li>
-								<li class="nav-item">
-								  <a class="nav-link" href=" {% url 'chatbot_query' %}"
-									>Ask Chatbot</a
-								  >
-								  <!-- Updated to use the ID -->
-								</li>
+								
 								<li class="nav-item">
 								  <a class="nav-link" href=" {% url 'Equipments_View' %}"
 									>Equipments</a
